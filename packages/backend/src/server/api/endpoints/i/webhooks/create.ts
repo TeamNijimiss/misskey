@@ -68,9 +68,11 @@ export const paramDef = {
 		name: { type: 'string', minLength: 1, maxLength: 100 },
 		url: { type: 'string', minLength: 1, maxLength: 1024 },
 		secret: { type: 'string', maxLength: 1024, default: '' },
-		on: { type: 'array', items: {
-			type: 'string', enum: webhookEventTypes,
-		} },
+		on: {
+			type: 'array', items: {
+				type: 'string', enum: webhookEventTypes,
+			}
+		},
 	},
 	required: ['name', 'url', 'on'],
 } as const;
@@ -95,7 +97,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				throw new ApiError(meta.errors.tooManyWebhooks);
 			}
 
-			if (ps.on.some( item => ['reportCreated','reportResolved','reportAutoResolved','announceCreated'].includes(item) )) {
+			if (ps.on.some(item => ['reportCreated', 'reportResolved', 'reportAutoResolved', 'announceCreated'].includes(item))) {
 				if (!await this.roleService.isAdministrator(me)) {
 					throw new ApiError(meta.errors.youAreNotAdmin);
 				}

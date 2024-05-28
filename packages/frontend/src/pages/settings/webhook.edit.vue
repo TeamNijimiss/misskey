@@ -83,6 +83,7 @@ const event_mention = ref(webhook.on.includes('mention'));
 const event_reportCreated = ref(webhook.on.includes('reportCreated'));
 const event_reportResolved = ref(webhook.on.includes('reportResolved'));
 const event_reportAutoResolved = ref(webhook.on.includes('reportAutoResolved'));
+const event_announceCreated = ref(webhook.on.includes('announceCreated'));
 
 async function save(): Promise<void> {
 	const events = [];

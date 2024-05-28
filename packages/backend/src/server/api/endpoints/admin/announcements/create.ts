@@ -124,7 +124,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				silence: ps.silence,
 				userId: ps.userId,
 			}, me);
-			if(ps.userId === null) {
+			if (ps.userId === null) {
 				this.webhookService.getActiveWebhooks().then(webhooks => {
 					webhooks = webhooks.filter(x => x.on.includes('announceCreated'));
 					for (const webhook of webhooks) {
