@@ -20333,7 +20333,7 @@ export type operations = {
           url: string;
           /** @default */
           secret?: string;
-          on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved')[];
+          on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved' | 'announceCreated')[];
         };
       };
     };
@@ -20347,7 +20347,7 @@ export type operations = {
             /** Format: misskey:id */
             userId: string;
             name: string;
-            on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved')[];
+            on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved' | 'announceCreated')[];
             url: string;
             secret: string;
             active: boolean;
@@ -20406,7 +20406,7 @@ export type operations = {
               /** Format: misskey:id */
               userId: string;
               name: string;
-              on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved')[];
+              on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved' | 'announceCreated')[];
               url: string;
               secret: string;
               active: boolean;
@@ -20473,7 +20473,7 @@ export type operations = {
             /** Format: misskey:id */
             userId: string;
             name: string;
-            on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved')[];
+            on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved' | 'announceCreated')[];
             url: string;
             secret: string;
             active: boolean;
@@ -20531,7 +20531,7 @@ export type operations = {
           url: string;
           /** @default */
           secret?: string;
-          on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved')[];
+          on: ('mention' | 'unfollow' | 'follow' | 'followed' | 'note' | 'reply' | 'renote' | 'reaction' | 'reportCreated' | 'reportResolved' | 'reportAutoResolved' | 'announceCreated')[];
           active: boolean;
         };
       };
