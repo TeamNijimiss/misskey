@@ -32,6 +32,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<MkSwitch v-if="$i?.isAdmin" v-model="event_reportCreated">{{ i18n.ts._webhookSettings._events.reportCreated }}</MkSwitch>
 			<MkSwitch v-if="$i?.isAdmin" v-model="event_reportResolved">{{ i18n.ts._webhookSettings._events.reportResolved }}</MkSwitch>
 			<MkSwitch v-if="$i?.isAdmin" v-model="event_reportAutoResolved">{{ i18n.ts._webhookSettings._events.reportAutoResolved }}</MkSwitch>
+			<MkSwitch v-if="$i?.isAdmin" v-model="event_announceCreated">{{ i18n.ts._webhookSettings._events.announceCreated }}</MkSwitch>
 		</div>
 	</FormSection>
 
@@ -95,6 +96,7 @@ async function save(): Promise<void> {
 	if (event_reportCreated.value) events.push('reportCreated');
 	if (event_reportResolved.value) events.push('reportResolved');
 	if (event_reportAutoResolved.value) events.push('reportAutoResolved');
+	if (event_announceCreated.value) events.push('announceCreated');
 
 	os.apiWithDialog('i/webhooks/update', {
 		name: name.value,

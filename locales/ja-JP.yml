@@ -2542,6 +2542,7 @@ _webhookSettings:
     reportCreated: "通報が登録されたとき"
     reportResolved: "通報が解決されたとき"
     reportAutoResolved: "通報が自動解決されたとき"
+    announceCreated: "お知らせが作成されたとき"
 
 _abuse:
   _resolver:

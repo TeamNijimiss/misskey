@@ -11,6 +11,7 @@ import type { MiAbuseUserReport } from '@/models/AbuseUserReport.js';
 import type { MiWebhook } from '@/models/Webhook.js';
 import type { IActivity } from '@/core/activitypub/type.js';
 import type httpSignature from '@peertube/http-signature';
+import { MiAnnouncement } from '@/models/Announcement.js';
 
 export type DeliverJobData = {
 	/** Actor */
@@ -101,6 +102,8 @@ export type DbUserImportToDbJobData = {
 };
 
 export type DbAbuseReportJobData = MiAbuseUserReport;
+
+export type DbAnnouncementJobData = MiAnnouncement;
 
 export type ObjectStorageJobData = ObjectStorageFileJobData | Record<string, unknown>;
 

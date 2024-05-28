@@ -9607,6 +9607,10 @@ export interface Locale extends ILocale {
              * 通報が自動解決されたとき
              */
             "reportAutoResolved": string;
+            /**
+             * お知らせが作成されたとき
+             */
+            "announceCreated": string;
         };
     };
     "_abuse": {

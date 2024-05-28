@@ -6,6 +6,8 @@
 import { Injectable } from '@nestjs/common';
 import { Endpoint } from '@/server/api/endpoint-base.js';
 import { AnnouncementService } from '@/core/AnnouncementService.js';
+import { QueueService } from '@/core/QueueService.js';
+import { WebhookService } from '@/core/WebhookService.js';
 
 export const meta = {
 	tags: ['admin'],
@@ -104,6 +106,8 @@ export const paramDef = {
 export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-disable-line import/no-default-export
 	constructor(
 		private announcementService: AnnouncementService,
+		private queueService: QueueService,
+		private webhookService: WebhookService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
 			const { raw, packed } = await this.announcementService.create({
@@ -120,7 +124,16 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				silence: ps.silence,
 				userId: ps.userId,
 			}, me);
-
+			if(ps.userId === null) {
+				this.webhookService.getActiveWebhooks().then(webhooks => {
+					webhooks = webhooks.filter(x => x.on.includes('announceCreated'));
+					for (const webhook of webhooks) {
+						this.queueService.webhookDeliver(webhook, 'announceCreated', {
+							announcement: packed,
+						});
+					}
+				});
+			}
 			return packed;
 		});
 	}

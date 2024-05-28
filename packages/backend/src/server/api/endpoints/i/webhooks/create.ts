@@ -95,7 +95,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				throw new ApiError(meta.errors.tooManyWebhooks);
 			}
 
-			if (ps.on.includes('reportCreated') || ps.on.includes('reportResolved') || ps.on.includes('reportAutoResolved')) {
+			if (ps.on.some( item => ['reportCreated','reportResolved','reportAutoResolved','announceCreated'].includes(item) )) {
 				if (!await this.roleService.isAdministrator(me)) {
 					throw new ApiError(meta.errors.youAreNotAdmin);
 				}

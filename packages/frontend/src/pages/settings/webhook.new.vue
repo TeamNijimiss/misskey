@@ -32,6 +32,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<MkSwitch v-if="$i?.isAdmin" v-model="event_reportCreated">{{ i18n.ts._webhookSettings._events.reportCreated }}</MkSwitch>
 			<MkSwitch v-if="$i?.isAdmin" v-model="event_reportResolved">{{ i18n.ts._webhookSettings._events.reportResolved }}</MkSwitch>
 			<MkSwitch v-if="$i?.isAdmin" v-model="event_reportAutoResolved">{{ i18n.ts._webhookSettings._events.reportAutoResolved }}</MkSwitch>
+			<MkSwitch v-if="$i?.isAdmin" v-model="event_announceCreated">{{ i18n.ts._webhookSettings._events.announceCreated }}</MkSwitch>
 		</div>
 	</FormSection>
 
@@ -66,6 +67,7 @@ const event_mention = ref(true);
 const event_reportCreated = ref(false);
 const event_reportResolved = ref(false);
 const event_reportAutoResolved = ref(false);
+const event_announceCreated = ref(false);
 
 async function create(): Promise<void> {
 	const events = [];
@@ -79,6 +81,7 @@ async function create(): Promise<void> {
 	if (event_reportCreated.value) events.push('reportCreated');
 	if (event_reportResolved.value) events.push('reportResolved');
 	if (event_reportAutoResolved.value) events.push('reportAutoResolved');
+	if (event_announceCreated.value) events.push('announceCreated');
 
 	os.apiWithDialog('i/webhooks/create', {
 		name: name.value,
