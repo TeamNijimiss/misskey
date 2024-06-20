@@ -330,7 +330,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.hcaptchaSiteKey = ps.hcaptchaSiteKey;
 			}
 
-			if (ps.hcaptchaSecretKey !== undefined) {
+			if (ps.hcaptchaSecretKey !== undefined && ps.hcaptchaSecretKey !== metaService.getMaskString() ) {
 				set.hcaptchaSecretKey = ps.hcaptchaSecretKey;
 			}
 
@@ -346,7 +346,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.mcaptchaInstanceUrl = ps.mcaptchaInstanceUrl;
 			}
 
-			if (ps.mcaptchaSecretKey !== undefined) {
+			if (ps.mcaptchaSecretKey !== undefined && ps.mcaptchaSecretKey !== metaService.getMaskString()) {
 				set.mcaptchaSecretKey = ps.mcaptchaSecretKey;
 			}
 
@@ -358,7 +358,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.recaptchaSiteKey = ps.recaptchaSiteKey;
 			}
 
-			if (ps.recaptchaSecretKey !== undefined) {
+			if (ps.recaptchaSecretKey !== undefined && ps.recaptchaSecretKey !== metaService.getMaskString()) {
 				set.recaptchaSecretKey = ps.recaptchaSecretKey;
 			}
 
@@ -370,7 +370,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.turnstileSiteKey = ps.turnstileSiteKey;
 			}
 
-			if (ps.turnstileSecretKey !== undefined) {
+			if (ps.turnstileSecretKey !== undefined && ps.turnstileSecretKey !== metaService.getMaskString()) {
 				set.turnstileSecretKey = ps.turnstileSecretKey;
 			}
 
@@ -430,7 +430,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.smtpUser = ps.smtpUser;
 			}
 
-			if (ps.smtpPass !== undefined) {
+			if (ps.smtpPass !== undefined && ps.smtpPass !== metaService.getMaskString()) {
 				set.smtpPass = ps.smtpPass;
 			}
 
@@ -442,7 +442,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.swPublicKey = ps.swPublicKey;
 			}
 
-			if (ps.swPrivateKey !== undefined) {
+			if (ps.swPrivateKey !== undefined && ps.swPrivateKey !== metaService.getMaskString()) {
 				set.swPrivateKey = ps.swPrivateKey;
 			}
 
@@ -498,7 +498,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.objectStorageAccessKey = ps.objectStorageAccessKey;
 			}
 
-			if (ps.objectStorageSecretKey !== undefined) {
+			if (ps.objectStorageSecretKey !== undefined && ps.objectStorageSecretKey !== metaService.getMaskString()) {
 				set.objectStorageSecretKey = ps.objectStorageSecretKey;
 			}
 
@@ -518,7 +518,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.objectStorageS3ForcePathStyle = ps.objectStorageS3ForcePathStyle;
 			}
 
-			if (ps.deeplAuthKey !== undefined) {
+			if (ps.deeplAuthKey !== undefined && ps.deeplAuthKey !== metaService.getMaskString()) {
 				if (ps.deeplAuthKey === '') {
 					set.deeplAuthKey = null;
 				} else {
@@ -542,7 +542,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.enableVerifymailApi = ps.enableVerifymailApi;
 			}
 
-			if (ps.verifymailAuthKey !== undefined) {
+			if (ps.verifymailAuthKey !== undefined && ps.verifymailAuthKey !== metaService.getMaskString()) {
 				if (ps.verifymailAuthKey === '') {
 					set.verifymailAuthKey = null;
 				} else {
@@ -562,7 +562,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				}
 			}
 
-			if (ps.truemailAuthKey !== undefined) {
+			if (ps.truemailAuthKey !== undefined && ps.truemailAuthKey !== metaService.getMaskString()) {
 				if (ps.truemailAuthKey === '') {
 					set.truemailAuthKey = null;
 				} else {

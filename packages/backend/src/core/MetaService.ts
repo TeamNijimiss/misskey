@@ -156,4 +156,9 @@ export class MetaService implements OnApplicationShutdown {
 	public onApplicationShutdown(signal?: string | undefined): void {
 		this.dispose();
 	}
+
+	@bindThis
+	public getMaskString(): string {
+		return '*****************';
+	}
 }
