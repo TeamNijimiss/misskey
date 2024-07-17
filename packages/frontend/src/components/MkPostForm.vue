@@ -880,6 +880,18 @@ async function post(ev?: MouseEvent) {
 }
 
 function cancel() {
+	if (!posting.value && !posted.value &&
+		(1 <= textLength.value || 1 <= files.value.length || !!poll.value || !!props.renote)) {
+		os.confirm({
+			type: 'question',
+			text: i18n.ts.saveDraftNote,
+			okText: i18n.ts.yes,
+			cancelText: i18n.ts.no,
+		}).then(( { canceled } ) => {
+			if (!canceled) return;
+			deleteDraft();
+		});
+	}
 	emit('cancel');
 }
 

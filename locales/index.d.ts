@@ -4153,6 +4153,10 @@ export interface Locale extends ILocale {
      */
     "thisPostMayBeAnnoyingIgnore": string;
     /**
+     * 投稿を保存しますか？
+     */
+    "saveDraftNote": string;
+    /**
      * 見たことのあるリノートを省略して表示
      */
     "collapseRenotes": string;
