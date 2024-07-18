@@ -53,6 +53,19 @@ function toggleSensitive(file: Misskey.entities.DriveFile) {
 	});
 }
 
+function toggleAiGenerated(file: Misskey.entities.DriveFile) {
+	misskeyApi('drive/files/update', {
+		fileId: file.id,
+		isAiGenerated: !file.isAiGenerated,
+	}).catch(err => {
+		os.alert({
+			type: 'error',
+			title: i18n.ts.error,
+			text: err.message,
+		});
+	});
+}
+
 function copyUrl(file: Misskey.entities.DriveFile) {
 	copyToClipboard(file.url);
 	os.success();
@@ -91,6 +104,10 @@ export function getDriveFileMenu(file: Misskey.entities.DriveFile, folder?: Miss
 		text: file.isSensitive ? i18n.ts.unmarkAsSensitive : i18n.ts.markAsSensitive,
 		icon: file.isSensitive ? 'ti ti-eye' : 'ti ti-eye-exclamation',
 		action: () => toggleSensitive(file),
+	}, {
+		text: file.isAiGenerated ? i18n.ts.unmarkAsAiGenerated : i18n.ts.markAsAiGenerated,
+		icon: file.isAiGenerated ? 'ti ti-robot-off' : 'ti ti-robot',
+		action: () => { toggleAiGenerated(file); },
 	}, {
 		text: i18n.ts.describeFile,
 		icon: 'ti ti-text-caption',

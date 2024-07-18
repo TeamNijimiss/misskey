@@ -39,6 +39,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<div>
 				<MkSwitch v-model="isSensitive" @update:modelValue="toggleIsSensitive">{{ i18n.ts.sensitive }}</MkSwitch>
 			</div>
+			<div>
+				<MkSwitch v-model="isAiGenerated" @update:modelValue="toggleAiGenerated">{{ i18n.ts.aiGenerated }}</MkSwitch>
+			</div>
 
 			<div>
 				<MkButton danger @click="del"><i class="ti ti-trash"></i> {{ i18n.ts.delete }}</MkButton>
@@ -88,6 +91,7 @@ const tab = ref('overview');
 const file = ref<Misskey.entities.DriveFile | null>(null);
 const info = ref<Misskey.entities.AdminDriveShowFileResponse | null>(null);
 const isSensitive = ref<boolean>(false);
+const isAiGenerated = ref<boolean>(false);
 
 const props = defineProps<{
 	fileId: string,
@@ -97,6 +101,7 @@ async function fetch() {
 	file.value = await misskeyApi('drive/files/show', { fileId: props.fileId });
 	info.value = await misskeyApi('admin/drive/show-file', { fileId: props.fileId });
 	isSensitive.value = file.value.isSensitive;
+	isAiGenerated.value = file.value.isAiGenerated;
 }
 
 fetch();
@@ -116,6 +121,11 @@ async function del() {
 async function toggleIsSensitive(v) {
 	await misskeyApi('drive/files/update', { fileId: props.fileId, isSensitive: v });
 	isSensitive.value = v;
+}
+
+async function toggleAiGenerated(v) {
+	await misskeyApi('drive/files/update', { fileId: props.fileId, isAiGenerated: v });
+	isAiGenerated.value = v;
 }
 
 const headerActions = computed(() => [{

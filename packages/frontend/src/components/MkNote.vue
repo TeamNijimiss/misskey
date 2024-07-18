@@ -143,6 +143,13 @@ SPDX-License-Identifier: AGPL-3.0-only
 			</MkA>
 		</template>
 	</I18n>
+	<I18n v-else-if="muted === 'aiMute'" :src="i18n.ts.userSaysSomethingAiGenerated" tag="small">
+		<template #name>
+			<MkA v-user-preview="appearNote.userId" :to="userPage(appearNote.user)">
+				<MkUserName :user="appearNote.user"/>
+			</MkA>
+		</template>
+	</I18n>
 	<I18n v-else :src="i18n.ts.userSaysSomething" tag="small">
 		<template #name>
 			<MkA v-user-preview="appearNote.userId" :to="userPage(appearNote.user)">
@@ -277,6 +284,7 @@ function checkMute(noteToCheck: Misskey.entities.Note, mutedWords: Array<string 
 	if (noteToCheck.renote && checkWordMute(noteToCheck.renote, $i, mutedWords)) return true;
 
 	if (inTimeline && ($i ? !defaultStore.state.tl.filter.withSensitive : true) && noteToCheck.files?.some((v) => v.isSensitive)) return 'sensitiveMute';
+	if (inTimeline && ($i ? !defaultStore.state.tl.filter.withAiGenerated : true) && noteToCheck.files?.some((v) => v.isAiGenerated)) return 'aiMute';
 	return false;
 }
 

@@ -4458,6 +4458,7 @@ export type components = {
       /** @example 51469 */
       size: number;
       isSensitive: boolean;
+      isAiGenerated: boolean;
       blurhash: string | null;
       properties: {
         /** @example 1280 */
@@ -7184,6 +7185,7 @@ export type operations = {
              */
             folderId: string | null;
             isSensitive: boolean;
+            isAiGenerated: boolean;
             isLink: boolean;
           };
         };
@@ -14586,6 +14588,8 @@ export type operations = {
           /** @default false */
           isSensitive?: boolean;
           /** @default false */
+          isAiGenerated?: boolean;
+          /** @default false */
           force?: boolean;
           /**
            * Format: binary
@@ -14874,6 +14878,7 @@ export type operations = {
           folderId?: string | null;
           name?: string;
           isSensitive?: boolean;
+          isAiGenerated?: boolean;
           comment?: string | null;
         };
       };

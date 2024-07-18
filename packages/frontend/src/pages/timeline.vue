@@ -116,11 +116,16 @@ const withSensitive = computed<boolean>({
 	set: (x) => saveTlFilter('withSensitive', x),
 });
 
+const withAiGenerated = computed<boolean>({
+	get: () => defaultStore.reactiveState.tl.value.filter.withAiGenerated,
+	set: (x) => saveTlFilter('withAiGenerated', x),
+});
+
 watch(src, () => {
 	queue.value = 0;
 });
 
-watch(withSensitive, () => {
+watch([withSensitive, withAiGenerated], () => {
 	// これだけはクライアント側で完結する処理なので手動でリロード
 	tlComponent.value?.reloadTimeline();
 });
@@ -259,6 +264,10 @@ const headerActions = computed(() => {
 					type: 'switch',
 					text: i18n.ts.withSensitive,
 					ref: withSensitive,
+				}, {
+					type: 'switch',
+					text: i18n.ts.withAiGenerated,
+					ref: withAiGenerated,
 				}, {
 					type: 'switch',
 					text: i18n.ts.fileAttachedOnly,

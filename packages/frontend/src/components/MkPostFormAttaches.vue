@@ -12,6 +12,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<div v-if="element.isSensitive" :class="$style.sensitive">
 					<i class="ti ti-eye-exclamation" style="margin: auto;"></i>
 				</div>
+				<div v-else-if="element.isAiGenerated" :class="$style.sensitive">
+					<i class="ti ti-robot" style="margin: auto;"></i>
+				</div>
 			</div>
 		</template>
 	</Sortable>
@@ -40,6 +43,7 @@ const emit = defineEmits<{
 	(ev: 'update:modelValue', value: any[]): void;
 	(ev: 'detach', id: string): void;
 	(ev: 'changeSensitive', file: Misskey.entities.DriveFile, isSensitive: boolean): void;
+	(ev: 'changeAiGenerated', file: Misskey.entities.DriveFile, isAiGenerated: boolean): void;
 	(ev: 'changeName', file: Misskey.entities.DriveFile, newName: string): void;
 	(ev: 'replaceFile', file: Misskey.entities.DriveFile, newFile: Misskey.entities.DriveFile): void;
 }>();
@@ -84,6 +88,20 @@ function toggleSensitive(file) {
 		isSensitive: !file.isSensitive,
 	}).then(() => {
 		emit('changeSensitive', file, !file.isSensitive);
+	});
+}
+
+function toggleAiGenerated(file) {
+	if (mock) {
+		emit('changeAiGenerated', file, !file.isAiGenerated);
+		return;
+	}
+
+	misskeyApi('drive/files/update', {
+		fileId: file.id,
+		isAiGenerated: !file.isAiGenerated,
+	}).then(() => {
+		emit('changeAiGenerated', file, !file.isAiGenerated);
 	});
 }
 
@@ -143,6 +161,10 @@ function showFileMenu(file: Misskey.entities.DriveFile, ev: MouseEvent): void {
 		text: file.isSensitive ? i18n.ts.unmarkAsSensitive : i18n.ts.markAsSensitive,
 		icon: file.isSensitive ? 'ti ti-eye' : 'ti ti-eye-exclamation',
 		action: () => { toggleSensitive(file); },
+	}, {
+		text: file.isAiGenerated ? i18n.ts.unmarkAsAiGenerated : i18n.ts.markAsAiGenerated,
+		icon: file.isAiGenerated ? 'ti ti-robot-off' : 'ti ti-robot',
+		action: () => { toggleAiGenerated(file); },
 	}, {
 		text: i18n.ts.describeFile,
 		icon: 'ti ti-text-caption',

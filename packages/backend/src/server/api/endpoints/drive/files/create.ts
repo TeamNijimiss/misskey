@@ -85,6 +85,7 @@ export const paramDef = {
 		name: { type: 'string', nullable: true, default: null },
 		comment: { type: 'string', nullable: true, maxLength: DB_MAX_IMAGE_COMMENT_LENGTH, default: null },
 		isSensitive: { type: 'boolean', default: false },
+		isAiGenerated: { type: 'boolean', default: false },
 		force: { type: 'boolean', default: false },
 	},
 	required: [],
@@ -163,6 +164,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					folderId: ps.folderId,
 					force: ps.force,
 					sensitive: ps.isSensitive,
+					aiGenerated: ps.isAiGenerated,
 					requestIp: instance.enableIpLogging ? ip : null,
 					requestHeaders: instance.enableIpLogging ? headers : null,
 				});

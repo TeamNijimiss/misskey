@@ -501,6 +501,10 @@ export interface Locale extends ILocale {
      */
     "sensitive": string;
     /**
+     * AI生成
+     */
+    "aiGenerated": string;
+    /**
      * 追加
      */
     "add": string;
@@ -560,6 +564,14 @@ export interface Locale extends ILocale {
      * センシティブを解除する
      */
     "unmarkAsSensitive": string;
+    /**
+     * AI生成として設定
+     */
+    "markAsAiGenerated": string;
+    /**
+     * AI生成を解除する
+     */
+    "unmarkAsAiGenerated": string;
     /**
      * ファイル名を入力
      */
@@ -5012,9 +5024,17 @@ export interface Locale extends ILocale {
      */
     "withSensitive": string;
     /**
+     * AIによって生成されたファイルを含むノートを表示
+     */
+    "withAiGenerated": string;
+    /**
      * {name}のセンシティブなファイルを含む投稿
      */
     "userSaysSomethingSensitive": ParameterizedString<"name">;
+    /**
+     * {name}のAIによって生成されたファイルを含む投稿
+     */
+    "userSaysSomethingAiGenerated": ParameterizedString<"name">;
     /**
      * スワイプしてタブを切り替える
      */
