@@ -6,7 +6,7 @@
 import { App, AsyncComponentLoader, defineAsyncComponent, provide } from 'vue';
 import type { RouteDef } from '@/nirax.js';
 import { IRouter, Router } from '@/nirax.js';
-import { $i, iAmModerator } from '@/account.js';
+import { $i, iAmAdmin, iAmModerator } from '@/account.js';
 import MkLoading from '@/pages/_loading_.vue';
 import MkError from '@/pages/_error_.vue';
 import { setMainRouter } from '@/router/main.js';
@@ -56,6 +56,10 @@ const routes: RouteDef[] = [{
 		path: '/profile',
 		name: 'profile',
 		component: page(() => import('@/pages/settings/profile.vue')),
+	}, {
+		path: '/subscription',
+		name: 'subscription',
+		component: page(() => import('@/pages/settings/subscription.vue')),
 	}, {
 		path: '/avatar-decoration',
 		name: 'avatarDecoration',
@@ -474,6 +478,10 @@ const routes: RouteDef[] = [{
 		path: '/invites',
 		name: 'invites',
 		component: page(() => import('@/pages/admin/invites.vue')),
+	}, {
+		path: '/subscription-plans',
+		name: 'subscription-plans',
+		component: iAmAdmin ? page(() => import('@/pages/admin/subscription-plans.vue')) : page(() => import('@/pages/not-found.vue')),
 	}, {
 		path: '/',
 		component: page(() => import('@/pages/_empty_.vue')),

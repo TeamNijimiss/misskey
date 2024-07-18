@@ -1267,6 +1267,14 @@ reportComplete: "通報完了"
 blockThisUser: "このユーザーをブロックする"
 muteThisUser: "このユーザーをミュートする"
 here: "こちら"
+subscription: "サブスクリプション"
+subscriptionStatus: "サブスクリプションの状態"
+
+_subscription:
+  current: "現在のプラン"
+  createSubscriptionPlan: "プランを作成"
+  updateSubscriptionPlan: "プランを更新"
+  archiveSubscriptionPlan: "プランをアーカイブ"
 
 _bubbleGame:
   howToPlay: "遊び方"

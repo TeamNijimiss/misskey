@@ -76,6 +76,7 @@ import {
 	MiWebhook,
 	MiBubbleGameRecord,
 	MiReversiGame,
+	MiSubscriptionPlan,
 } from './_.js';
 import type { DataSource } from 'typeorm';
 import type { Provider } from '@nestjs/common';
@@ -500,6 +501,12 @@ const $abuseReportResolversRepository: Provider = {
 	inject: [DI.db],
 };
 
+const $subscriptionPlansRepository: Provider = {
+	provide: DI.subscriptionPlansRepository,
+	useFactory: (db: DataSource) => db.getRepository(MiSubscriptionPlan),
+	inject: [DI.db],
+};
+
 @Module({
 	imports: [
 	],
@@ -574,6 +581,7 @@ const $abuseReportResolversRepository: Provider = {
 		$bubbleGameRecordsRepository,
 		$reversiGamesRepository,
 		$abuseReportResolversRepository,
+		$subscriptionPlansRepository,
 	],
 	exports: [
 		$usersRepository,
@@ -646,6 +654,7 @@ const $abuseReportResolversRepository: Provider = {
 		$bubbleGameRecordsRepository,
 		$reversiGamesRepository,
 		$abuseReportResolversRepository,
+		$subscriptionPlansRepository,
 	],
 })
 export class RepositoryModule {}

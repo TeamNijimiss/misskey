@@ -552,4 +552,9 @@ export class MiMeta {
 		nullable: true,
 	})
 	public urlPreviewUserAgent: string | null;
+
+	@Column('boolean', {
+		default: false,
+	})
+	public enableSubscriptions: boolean;
 }

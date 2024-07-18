@@ -5087,6 +5087,32 @@ export interface Locale extends ILocale {
      * こちら
      */
     "here": string;
+    /**
+     * サブスクリプション
+     */
+    "subscription": string;
+    /**
+     * サブスクリプションの状態
+     */
+    "subscriptionStatus": string;
+    "_subscription": {
+        /**
+         * 現在のプラン
+         */
+        "current": string;
+        /**
+         * プランを作成
+         */
+        "createSubscriptionPlan": string;
+        /**
+         * プランを更新
+         */
+        "updateSubscriptionPlan": string;
+        /**
+         * プランをアーカイブ
+         */
+        "archiveSubscriptionPlan": string;
+    };
     "_bubbleGame": {
         /**
          * 遊び方

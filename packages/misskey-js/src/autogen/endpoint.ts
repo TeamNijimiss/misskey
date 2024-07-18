@@ -119,6 +119,10 @@ import type {
 	AdminSsoListRequest,
 	AdminSsoListResponse,
 	AdminSsoUpdateRequest,
+	AdminSubscriptionPlansCreateRequest,
+	AdminSubscriptionPlansCreateResponse,
+	AdminSubscriptionPlansUpdateRequest,
+	AdminSubscriptionPlansArchiveRequest,
 	AnnouncementRequest,
 	AnnouncementResponse,
 	AnnouncementsRequest,
@@ -348,6 +352,7 @@ import type {
 	IPinResponse,
 	IReadAnnouncementRequest,
 	IRegenerateTokenRequest,
+	IRegisterSubscriptionRequest,
 	IRegistryGetAllRequest,
 	IRegistryGetAllResponse,
 	IRegistryGetDetailRequest,
@@ -490,6 +495,9 @@ import type {
 	ResetPasswordRequest,
 	ServerInfoResponse,
 	StatsResponse,
+	SubscriptionPlansListResponse,
+	SubscriptionPlansShowRequest,
+	SubscriptionPlansShowResponse,
 	SwShowRegistrationRequest,
 	SwShowRegistrationResponse,
 	SwUpdateRegistrationRequest,
@@ -672,6 +680,9 @@ export type Endpoints = {
 	'admin/sso/delete': { req: AdminSsoDeleteRequest; res: EmptyResponse };
 	'admin/sso/list': { req: AdminSsoListRequest; res: AdminSsoListResponse };
 	'admin/sso/update': { req: AdminSsoUpdateRequest; res: EmptyResponse };
+	'admin/subscription-plans/create': { req: AdminSubscriptionPlansCreateRequest; res: AdminSubscriptionPlansCreateResponse };
+	'admin/subscription-plans/update': { req: AdminSubscriptionPlansUpdateRequest; res: EmptyResponse };
+	'admin/subscription-plans/archive': { req: AdminSubscriptionPlansArchiveRequest; res: EmptyResponse };
 	'announcement': { req: AnnouncementRequest; res: AnnouncementResponse };
 	'announcements': { req: AnnouncementsRequest; res: AnnouncementsResponse };
 	'antennas/create': { req: AntennasCreateRequest; res: AntennasCreateResponse };
@@ -795,6 +806,7 @@ export type Endpoints = {
 	'i/authorized-apps': { req: IAuthorizedAppsRequest; res: IAuthorizedAppsResponse };
 	'i/claim-achievement': { req: IClaimAchievementRequest; res: EmptyResponse };
 	'i/change-password': { req: IChangePasswordRequest; res: EmptyResponse };
+	'i/customer-portal': { req: EmptyRequest; res: EmptyResponse };
 	'i/delete-account': { req: IDeleteAccountRequest; res: EmptyResponse };
 	'i/export-blocking': { req: EmptyRequest; res: EmptyResponse };
 	'i/export-following': { req: IExportFollowingRequest; res: EmptyResponse };
@@ -820,6 +832,7 @@ export type Endpoints = {
 	'i/read-all-unread-notes': { req: EmptyRequest; res: EmptyResponse };
 	'i/read-announcement': { req: IReadAnnouncementRequest; res: EmptyResponse };
 	'i/regenerate-token': { req: IRegenerateTokenRequest; res: EmptyResponse };
+	'i/register-subscription': { req: IRegisterSubscriptionRequest; res: EmptyResponse };
 	'i/registry/get-all': { req: IRegistryGetAllRequest; res: IRegistryGetAllResponse };
 	'i/registry/get-detail': { req: IRegistryGetDetailRequest; res: IRegistryGetDetailResponse };
 	'i/registry/get': { req: IRegistryGetRequest; res: IRegistryGetResponse };
@@ -917,6 +930,8 @@ export type Endpoints = {
 	'reset-password': { req: ResetPasswordRequest; res: EmptyResponse };
 	'server-info': { req: EmptyRequest; res: ServerInfoResponse };
 	'stats': { req: EmptyRequest; res: StatsResponse };
+	'subscription-plans/list': { req: EmptyRequest; res: SubscriptionPlansListResponse };
+	'subscription-plans/show': { req: SubscriptionPlansShowRequest; res: SubscriptionPlansShowResponse };
 	'sw/show-registration': { req: SwShowRegistrationRequest; res: SwShowRegistrationResponse };
 	'sw/update-registration': { req: SwUpdateRegistrationRequest; res: SwUpdateRegistrationResponse };
 	'sw/register': { req: SwRegisterRequest; res: SwRegisterResponse };
