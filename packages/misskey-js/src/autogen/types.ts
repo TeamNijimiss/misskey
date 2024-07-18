@@ -5133,6 +5133,7 @@ export type components = {
       impressumUrl: string | null;
       logoImageUrl: string | null;
       privacyPolicyUrl: string | null;
+      commerceDisclosureUrl: string | null;
       serverRules: string[];
       themeColor: string | null;
       policies: components['schemas']['RolePolicies'];
@@ -5348,6 +5349,7 @@ export type operations = {
             summalyProxy: string | null;
             themeColor: string | null;
             tosUrl: string | null;
+            commerceDisclosureUrl: string | null;
             uri: string;
             version: string;
             urlPreviewEnabled: boolean;
@@ -9929,6 +9931,7 @@ export type operations = {
           perUserHomeTimelineCacheMax?: number;
           perUserListTimelineCacheMax?: number;
           notesPerOneAd?: number;
+          commerceDisclosureUrl?: string | null;
           silencedHosts?: string[] | null;
           sensitiveMediaHosts?: string[] | null;
           wellKnownWebsites?: string[] | null;

@@ -114,6 +114,7 @@ export class MetaEntityService {
 			enableUrlPreview: instance.urlPreviewEnabled,
 			enableSkebStatus: !!this.config.skebStatus,
 			enableSubscriptions: instance.enableSubscriptions,
+			commerceDisclosureUrl: instance.commerceDisclosureUrl,
 		};
 	}
 
