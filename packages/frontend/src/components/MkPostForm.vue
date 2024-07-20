@@ -208,7 +208,7 @@ const imeText = ref('');
 const showingOptions = ref(false);
 const textAreaReadOnly = ref(false);
 
-const nsfwGuideUrl = 'https://go.misskey.io/media-guideline';
+const nsfwGuideUrl = 'https://nijimiss.org/post-guideline/';
 
 const draftKey = computed((): string => {
 	let key = props.channel ? `channel:${props.channel.id}` : '';
