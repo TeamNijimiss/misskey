@@ -1787,6 +1787,7 @@ _role:
     antennaNotesMax: "アンテナに保持する最大ノート数"
     wordMuteMax: "ワードミュートの最大文字数"
     webhookMax: "Webhookの作成可能数"
+    accessTokenMax: "アクセストークンの作成可能数"
     clipMax: "クリップの作成可能数"
     noteEachClipsMax: "クリップ内のノートの最大数"
     userListMax: "ユーザーリストの作成可能数"

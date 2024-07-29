@@ -6923,6 +6923,10 @@ export interface Locale extends ILocale {
              */
             "webhookMax": string;
             /**
+             * アクセストークンの作成可能数
+             */
+            "accessTokenMax": string;
+            /**
              * クリップの作成可能数
              */
             "clipMax": string;

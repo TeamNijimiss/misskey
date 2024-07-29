@@ -26,17 +26,18 @@ function generateToken() {
 	os.popup(defineAsyncComponent(() => import('@/components/MkTokenGenerateWindow.vue')), {}, {
 		done: async result => {
 			const { name, permissions } = result;
-			const { token } = await misskeyApi('miauth/gen-token', {
+
+			os.apiWithDialog('miauth/gen-token', {
 				session: null,
 				name: name,
 				permission: permissions,
-			});
-
-			os.alert({
-				type: 'success',
-				title: i18n.ts.token,
-				text: token,
-			});
+			}).then(({ token }) => {
+				os.alert({
+					type: 'success',
+					title: i18n.ts.token,
+					text: token,
+				});
+			}).catch(() => {});
 		},
 	}, 'closed');
 }

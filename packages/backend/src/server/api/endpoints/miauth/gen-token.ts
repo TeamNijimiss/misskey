@@ -9,6 +9,7 @@ import type { AccessTokensRepository } from '@/models/_.js';
 import { IdService } from '@/core/IdService.js';
 import { secureRndstr } from '@/misc/secure-rndstr.js';
 import { DI } from '@/di-symbols.js';
+import { RoleService } from '@/core/RoleService.js';
 
 export const meta = {
 	tags: ['auth'],
@@ -49,9 +50,15 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		@Inject(DI.accessTokensRepository)
 		private accessTokensRepository: AccessTokensRepository,
 
+		private roleService: RoleService,
 		private idService: IdService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
+			const currentCount = await accessTokensRepository.countBy({ userId: me.id });
+			if (currentCount >= (await this.roleService.getUserPolicies(me.id)).accessTokenLimit) {
+				throw new Error('Too many access tokens');
+			}
+
 			// Generate access token
 			const accessToken = secureRndstr(32);
 

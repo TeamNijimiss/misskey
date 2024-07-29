@@ -242,6 +242,13 @@ SPDX-License-Identifier: AGPL-3.0-only
 							</MkInput>
 						</MkFolder>
 
+						<MkFolder v-if="matchQuery([i18n.ts._role._options.accessTokenMax, 'accessTokenLimit'])">
+							<template #label>{{ i18n.ts._role._options.accessTokenMax }}</template>
+							<template #suffix>{{ policies.accessTokenLimit }}</template>
+							<MkInput v-model="policies.accessTokenLimit" type="number">
+							</MkInput>
+						</MkFolder>
+
 						<MkFolder v-if="matchQuery([i18n.ts._role._options.clipMax, 'clipLimit'])">
 							<template #label>{{ i18n.ts._role._options.clipMax }}</template>
 							<template #suffix>{{ policies.clipLimit }}</template>
