@@ -51,7 +51,6 @@ import { AvatarDecorationService } from '@/core/AvatarDecorationService.js';
 import { isNotNull } from '@/misc/is-not-null.js';
 import type { OnModuleInit } from '@nestjs/common';
 import type { NoteEntityService } from './NoteEntityService.js';
-import type { DriveFileEntityService } from './DriveFileEntityService.js';
 import type { PageEntityService } from './PageEntityService.js';
 
 const Ajv = _Ajv.default;
@@ -500,13 +499,16 @@ export class UserEntityService implements OnModuleInit {
 			} : undefined) : undefined,
 			emojis: this.customEmojiService.populateEmojis(user.emojis, user.host),
 			onlineStatus: this.getOnlineStatus(user),
-			// パフォーマンス上の理由でローカルユーザーのみ
-			badgeRoles: user.host == null ? this.roleService.getUserBadgeRoles(user.id).then(rs => rs.sort((a, b) => b.displayOrder - a.displayOrder).map(r => ({
-				name: r.name,
-				iconUrl: r.iconUrl,
-				displayOrder: r.displayOrder,
-				behavior: r.badgeBehavior ?? undefined,
-			}))) : undefined,
+			badgeRoles: this.roleService.getUserBadgeRoles(user.id).then((rs) => rs
+				.filter((r) => r.isPublic || iAmModerator)
+				.sort((a, b) => b.displayOrder - a.displayOrder)
+				.map((r) => ({
+					name: r.name,
+					iconUrl: r.iconUrl,
+					displayOrder: r.displayOrder,
+					behavior: r.badgeBehavior ?? undefined,
+				})),
+			),
 
 			...(isDetailed ? {
 				url: profile!.url,
@@ -531,6 +533,7 @@ export class UserEntityService implements OnModuleInit {
 				lang: profile!.lang,
 				fields: profile!.fields,
 				verifiedLinks: profile!.verifiedLinks,
+				mutualLinkSections: profile!.mutualLinkSections,
 				followersCount: followersCount ?? 0,
 				followingCount: followingCount ?? 0,
 				notesCount: user.notesCount,
@@ -560,7 +563,7 @@ export class UserEntityService implements OnModuleInit {
 						isModerator: role.isModerator,
 						isAdministrator: role.isAdministrator,
 						displayOrder: role.displayOrder,
-					}))
+					})),
 				),
 				memo: memo,
 				moderationNote: iAmModerator ? (profile!.moderationNote ?? '') : undefined,

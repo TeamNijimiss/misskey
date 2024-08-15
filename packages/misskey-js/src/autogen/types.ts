@@ -237,6 +237,15 @@ export type paths = {
      */
     post: operations['admin___unset-user-banner'];
   };
+  '/admin/unset-user-mutual-link': {
+    /**
+     * admin/unset-user-mutual-link
+     * @description No description provided.
+     *
+     * **Credential required**: *Yes* / **Permission**: *write:admin:unset-user-mutual-link*
+     */
+    post: operations['admin___unset-user-mutual-link'];
+  };
   '/admin/drive/clean-remote-files': {
     /**
      * admin/drive/clean-remote-files
@@ -3899,6 +3908,18 @@ export type components = {
       roles: components['schemas']['RoleLite'][];
       memo: string | null;
       moderationNote?: string;
+      mutualLinkSections: ({
+          name: string | null;
+          mutualLinks: ({
+              /** Format: misskey:id */
+              id: string;
+              url: string;
+              /** Format: misskey:id */
+              fileId: string;
+              description: string | null;
+              imgSrc: string;
+            })[];
+        })[];
       isFollowing?: boolean;
       isFollowed?: boolean;
       hasPendingFollowRequestFromYou?: boolean;
@@ -4979,6 +5000,7 @@ export type components = {
       canSearchNotes: boolean;
       canUseTranslator: boolean;
       canUseDriveFileInSoundSettings: boolean;
+      canUseReaction: boolean;
       canHideAds: boolean;
       driveCapacityMb: number;
       alwaysMarkNsfw: boolean;
@@ -4994,6 +5016,8 @@ export type components = {
       userEachUserListsLimit: number;
       rateLimitFactor: number;
       avatarDecorationLimit: number;
+      mutualLinkSectionLimit: number;
+      mutualLinkLimit: number;
     };
     ReversiGameLite: {
       /** Format: id */
@@ -6856,6 +6880,58 @@ export type operations = {
    * **Credential required**: *Yes* / **Permission**: *write:admin:unset-user-banner*
    */
   'admin___unset-user-banner': {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** Format: misskey:id */
+          userId: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK (without any results) */
+      204: {
+        content: never;
+      };
+      /** @description Client error */
+      400: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Authentication error */
+      401: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Forbidden error */
+      403: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description I'm Ai */
+      418: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+    };
+  };
+  /**
+   * admin/unset-user-mutual-link
+   * @description No description provided.
+   *
+   * **Credential required**: *Yes* / **Permission**: *write:admin:unset-user-mutual-link*
+   */
+  'admin___unset-user-mutual-link': {
     requestBody: {
       content: {
         'application/json': {
@@ -20561,6 +20637,16 @@ export type operations = {
           };
           emailNotificationTypes?: string[];
           alsoKnownAs?: string[];
+          mutualLinkSections?: ({
+              name?: string | null;
+              mutualLinks: ({
+                  /** Format: url */
+                  url: string;
+                  /** Format: misskey:id */
+                  fileId: string;
+                  description?: string | null;
+                })[];
+            })[];
         };
       };
     };
@@ -25930,7 +26016,7 @@ export type operations = {
           /** @default 0 */
           offset?: number;
           /** @enum {string} */
-          sort?: '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+updatedAt' | '-updatedAt';
+          sort?: '+follower' | '-follower' | '+createdAt' | '-createdAt' | '+updatedAt' | '-updatedAt' | '+pv' | '-pv';
           /**
            * @default all
            * @enum {string}
