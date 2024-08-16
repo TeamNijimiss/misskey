@@ -29,6 +29,12 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<button v-else v-tooltip="i18n.ts.markAsSensitive" class="_button" :class="$style.fileQuickActionsOthersButton" @click="toggleSensitive()">
 					<i class="ti ti-eye-exclamation"></i>
 				</button>
+				<button v-if="file.isAiGenerated" v-tooltip="i18n.ts.unmarkAsAiGenerated" class="_button" :class="$style.fileQuickActionsOthersButton" @click="toggleAiGenerated()">
+					<i class="ti ti-robot-off"></i>
+				</button>
+				<button v-else v-tooltip="i18n.ts.markAsAiGenerated" class="_button" :class="$style.fileQuickActionsOthersButton" @click="toggleAiGenerated()">
+					<i class="ti ti-robot"></i>
+				</button>
 				<a v-tooltip="i18n.ts.download" :href="file.url" :download="file.name" class="_button" :class="$style.fileQuickActionsOthersButton">
 					<i class="ti ti-download"></i>
 				</a>
@@ -128,6 +134,23 @@ function toggleSensitive() {
 	os.apiWithDialog('drive/files/update', {
 		fileId: file.value.id,
 		isSensitive: !file.value.isSensitive,
+	}).then(async () => {
+		await fetch();
+	}).catch(err => {
+		os.alert({
+			type: 'error',
+			title: i18n.ts.error,
+			text: err.message,
+		});
+	});
+}
+
+function toggleAiGenerated() {
+	if (!file.value) return;
+
+	os.apiWithDialog('drive/files/update', {
+		fileId: file.value.id,
+		isAiGenerated: !file.value.isAiGenerated,
 	}).then(async () => {
 		await fetch();
 	}).catch(err => {

@@ -81,6 +81,21 @@ type Source = {
 		}
 	};
 
+	elasticsearch?: {
+		host: string;
+		port: string;
+		user: string;
+		pass: string;
+		ssl?: boolean;
+		rejectUnauthorized?: boolean;
+		index: string;
+	};
+
+	stripe?: {
+		secretKey: string;
+		webhookSecret: string;
+	};
+
 	skebStatus?: {
 		method: string;
 		endpoint: string;
@@ -164,6 +179,15 @@ export type Config = {
 		index: string;
 		scope?: 'local' | 'global' | string[];
 	} | undefined;
+	elasticsearch: {
+		host: string;
+		port: string;
+		user: string;
+		pass: string;
+		ssl?: boolean;
+		rejectUnauthorized?: boolean;
+		index: string;
+	} | undefined;
 	s3: {
 		baseUrl: string;
 		bucket: string;
@@ -178,6 +202,10 @@ export type Config = {
 			forcePathStyle?: boolean;
 			useProxy?: boolean;
 		}
+	} | undefined;
+	stripe: {
+		secretKey: string;
+		webhookSecret?: string;
 	} | undefined;
 	skebStatus: {
 		method: string;
@@ -302,7 +330,9 @@ export function loadConfig(): Config {
 		dbReplications: config.dbReplications,
 		dbSlaves: config.dbSlaves,
 		meilisearch: config.meilisearch,
+		elasticsearch: config.elasticsearch,
 		s3: config.s3,
+		stripe: config.stripe,
 		redis,
 		redisForPubsub: config.redisForPubsub ? convertRedisOptions(config.redisForPubsub, host) : redis,
 		redisForSystemQueue: config.redisForSystemQueue ? convertRedisOptions(config.redisForSystemQueue, host) : redisForJobQueue,

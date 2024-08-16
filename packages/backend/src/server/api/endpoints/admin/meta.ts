@@ -418,6 +418,10 @@ export const meta = {
 				type: 'string',
 				optional: false, nullable: true,
 			},
+			commerceDisclosureUrl: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
 			uri: {
 				type: 'string',
 				optional: false, nullable: false,
@@ -449,6 +453,10 @@ export const meta = {
 			urlPreviewSummaryProxyUrl: {
 				type: 'string',
 				optional: false, nullable: true,
+			},
+			enableSubscriptions: {
+				type: 'boolean',
+				optional: false, nullable: false,
 			},
 		},
 	},
@@ -562,6 +570,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				perUserListTimelineCacheMax: instance.perUserListTimelineCacheMax,
 				wellKnownWebsites: instance.wellKnownWebsites,
 				notesPerOneAd: instance.notesPerOneAd,
+				commerceDisclosureUrl: instance.commerceDisclosureUrl,
 				urlPreviewDenyList: instance.urlPreviewDenyList,
 				featuredGameChannels: instance.featuredGameChannels,
 				summalyProxy: instance.urlPreviewSummaryProxyUrl,
@@ -571,6 +580,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				urlPreviewRequireContentLength: instance.urlPreviewRequireContentLength,
 				urlPreviewUserAgent: instance.urlPreviewUserAgent,
 				urlPreviewSummaryProxyUrl: instance.urlPreviewSummaryProxyUrl,
+				enableSubscriptions: instance.enableSubscriptions,
 			};
 		});
 	}

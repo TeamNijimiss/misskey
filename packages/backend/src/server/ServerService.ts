@@ -34,6 +34,7 @@ import { OpenApiServerService } from './api/openapi/OpenApiServerService.js';
 import { OAuth2ProviderService } from './oauth/OAuth2ProviderService.js';
 import { JWTIdentifyProviderService } from './sso/JWTIdentifyProviderService.js';
 import { SAMLIdentifyProviderService } from './sso/SAMLIdentifyProviderService.js';
+import { StripeWebhookServerService } from './StripeWebhookServerService.js';
 
 const _dirname = fileURLToPath(new URL('.', import.meta.url));
 
@@ -70,6 +71,7 @@ export class ServerService implements OnApplicationShutdown {
 		private oauth2ProviderService: OAuth2ProviderService,
 		private jwtIdentifyProviderService: JWTIdentifyProviderService,
 		private samlIdentifyProviderService: SAMLIdentifyProviderService,
+		private stripeWebhookServerService: StripeWebhookServerService,
 	) {
 		this.logger = this.loggerService.getLogger('server', 'gray', false);
 	}
@@ -123,6 +125,7 @@ export class ServerService implements OnApplicationShutdown {
 		fastify.register(this.samlIdentifyProviderService.createServer, { prefix: '/sso/saml' });
 		fastify.register(this.jwtIdentifyProviderService.createServer, { prefix: '/sso/jwt' });
 		fastify.register(this.jwtIdentifyProviderService.createApiServer, { prefix: '/sso/jwt/api' });
+		fastify.register(this.stripeWebhookServerService.createServer, { prefix: '/transaction' });
 
 		fastify.get<{ Params: { path: string }; Querystring: { static?: any; badge?: any; }; }>('/emoji/:path(.*)', async (request, reply) => {
 			const path = request.params.path;

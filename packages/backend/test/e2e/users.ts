@@ -8,7 +8,7 @@ process.env.NODE_ENV = 'test';
 import * as assert from 'assert';
 import { inspect } from 'node:util';
 import { DEFAULT_POLICIES } from '@/core/RoleService.js';
-import { api, post, role, signup, successfulApiCall, uploadFile } from '../utils.js';
+import { api, failedApiCall, post, role, signup, successfulApiCall, uploadFile } from '../utils.js';
 import type * as misskey from 'misskey-js';
 
 describe('ユーザー', () => {
@@ -74,6 +74,7 @@ describe('ユーザー', () => {
 			lang: user.lang,
 			fields: user.fields,
 			verifiedLinks: user.verifiedLinks,
+			mutualLinkSections: user.mutualLinkSections,
 			followersCount: user.followersCount,
 			followingCount: user.followingCount,
 			notesCount: user.notesCount,
@@ -231,7 +232,7 @@ describe('ユーザー', () => {
 		rolePublic = await role(root, { isPublic: true, name: 'Public Role' });
 		await api('admin/roles/assign', { userId: userRolePublic.id, roleId: rolePublic.id }, root);
 		userRoleBadge = await signup({ username: 'userRoleBadge' });
-		roleBadge = await role(root, { asBadge: true, name: 'Badge Role' });
+		roleBadge = await role(root, { asBadge: true, name: 'Badge Role', isPublic: true });
 		await api('admin/roles/assign', { userId: userRoleBadge.id, roleId: roleBadge.id }, root);
 		userSilenced = await signup({ username: 'userSilenced' });
 		await post(userSilenced, { text: 'test' });
@@ -665,7 +666,16 @@ describe('ユーザー', () => {
 				displayOrder: roleBadge.displayOrder,
 			}]);
 		}
-		assert.deepStrictEqual(response.roles, []); // バッヂだからといってrolesが取れるとは限らない
+		assert.deepStrictEqual(response.roles, [{
+			id: roleBadge.id,
+			name: roleBadge.name,
+			color: roleBadge.color,
+			iconUrl: roleBadge.iconUrl,
+			description: roleBadge.description,
+			isModerator: roleBadge.isModerator,
+			isAdministrator: roleBadge.isAdministrator,
+			displayOrder: roleBadge.displayOrder,
+		}]);
 	});
 	test('をID指定のリスト形式で取得することができる（空）', async () => {
 		const parameters = { userIds: [] };
@@ -872,6 +882,22 @@ describe('ユーザー', () => {
 		assert.deepStrictEqual(response, expected);
 	});
 
+	//#endregion
+
+	//#region 凍結/削除ユーザー
+	test('が凍結済みのユーザー情報を取得できない', async () => {
+		const parameters = { userId: userSuspended.id };
+		await failedApiCall({ endpoint: 'users/show', parameters, user: alice },
+			{ status: 403, code: 'USER_SUSPENDED', id: 'c1e1b0d6-2b7c-4c1d-9f1d-2d3d6e8d7e7f' });
+	});
+
+	test('(Admin)が凍結済みユーザー情報を取得できる', async () => {
+		const parameters = { userId: userSuspended.id };
+		await successfulApiCall({ endpoint: 'users/show', parameters, user: root });
+		// Adminとユーザー情報は持っている情報が違うので、比較はできない
+		// const expected = userSuspended;
+		// assert.deepStrictEqual(response, expected);
+	});
 	//#endregion
 
 	test.todo('を管理人として確認することができる(admin/show-user)');

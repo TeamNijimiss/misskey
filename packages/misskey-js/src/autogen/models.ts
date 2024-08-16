@@ -58,3 +58,4 @@ export type MetaDetailedOnly = components['schemas']['MetaDetailedOnly'];
 export type MetaDetailed = components['schemas']['MetaDetailed'];
 export type AbuseUserReport = components['schemas']['AbuseUserReport'];
 export type ModerationLog = components['schemas']['ModerationLog'];
+export type SubscriptionPlan = components['schemas']['SubscriptionPlan'];

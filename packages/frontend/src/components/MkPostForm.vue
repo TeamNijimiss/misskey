@@ -73,7 +73,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 	</div>
 	<input v-show="withHashtags" ref="hashtagsInputEl" v-model="hashtags" class="mk-input-text" :class="$style.hashtags" :placeholder="i18n.ts.hashtags" list="hashtags">
 	<MkInfo v-if="files.length > 0" warn :class="$style.guidelineInfo" :rounded="false"><Mfm :text="i18n.tsx._postForm.guidelineInfo({ tosUrl: instance.tosUrl, nsfwGuideUrl })"/></MkInfo>
-	<XPostFormAttaches v-model="files" @detach="detachFile" @changeSensitive="updateFileSensitive" @changeName="updateFileName" @replaceFile="replaceFile"/>
+	<XPostFormAttaches v-model="files" @detach="detachFile" @changeSensitive="updateFileSensitive" @changeAiGenerated="updateAiGenerated" @changeName="updateFileName" @replaceFile="replaceFile"/>
 	<MkPollEditor v-if="poll" v-model="poll" @destroyed="poll = null"/>
 	<MkNotePreview v-if="showPreview" :class="$style.preview" :text="text" :files="files" :poll="poll ?? undefined" :useCw="useCw" :cw="cw" :user="postAccount ?? $i"/>
 	<div v-if="showingOptions" style="padding: 8px 16px;">
@@ -171,6 +171,7 @@ const emit = defineEmits<{
 
 	// Mock用
 	(ev: 'fileChangeSensitive', fileId: string, to: boolean): void;
+	(ev: 'fileChangeAiGenerated', fileId: string, to: boolean): void;
 }>();
 
 const textareaEl = shallowRef<HTMLTextAreaElement | null>(null);
@@ -207,7 +208,7 @@ const imeText = ref('');
 const showingOptions = ref(false);
 const textAreaReadOnly = ref(false);
 
-const nsfwGuideUrl = 'https://go.misskey.io/media-guideline';
+const nsfwGuideUrl = 'https://nijimiss.org/post-guideline/';
 
 const draftKey = computed((): string => {
 	let key = props.channel ? `channel:${props.channel.id}` : '';
@@ -446,6 +447,13 @@ function updateFileSensitive(file, sensitive) {
 		emit('fileChangeSensitive', file.id, sensitive);
 	}
 	files.value[files.value.findIndex(x => x.id === file.id)].isSensitive = sensitive;
+}
+
+function updateAiGenerated(file, aiGenerated) {
+	if (props.mock) {
+		emit('fileChangeAiGenerated', file.id, aiGenerated);
+	}
+	files.value[files.value.findIndex(x => x.id === file.id)].isAiGenerated = aiGenerated;
 }
 
 function updateFileName(file, name) {
@@ -880,6 +888,18 @@ async function post(ev?: MouseEvent) {
 }
 
 function cancel() {
+	if (!posting.value && !posted.value &&
+		(1 <= textLength.value || 1 <= files.value.length || !!poll.value || !!props.renote)) {
+		os.confirm({
+			type: 'question',
+			text: i18n.ts.saveDraftNote,
+			okText: i18n.ts.yes,
+			cancelText: i18n.ts.no,
+		}).then(( { canceled } ) => {
+			if (!canceled) return;
+			deleteDraft();
+		});
+	}
 	emit('cancel');
 }
 

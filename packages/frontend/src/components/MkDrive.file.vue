@@ -26,6 +26,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<img :class="$style.labelImg" src="/client-assets/label-red.svg"/>
 			<p :class="$style.labelText">{{ i18n.ts.sensitive }}</p>
 		</div>
+		<div v-if="file.isAiGenerated" :class="[$style.label, $style.green]">
+			<img :class="$style.labelImg" src="/client-assets/label-green.svg"/>
+			<p :class="$style.labelText">{{ i18n.ts.aiGenerated }}</p>
+		</div>
 
 		<MkDriveFileThumbnail :class="$style.thumbnail" :file="file" fit="contain"/>
 
@@ -124,6 +128,13 @@ function onDragend() {
 				&:before,
 				&:after {
 					background: #c12113;
+				}
+			}
+
+			&.green {
+				&:before,
+				&:after {
+					background: #1e9e1e;
 				}
 			}
 		}

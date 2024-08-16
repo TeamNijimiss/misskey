@@ -137,15 +137,17 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'deviceAccount',
 		default: [
 			'notifications',
+			'followRequests',
+			'favorites',
 			'clips',
 			'drive',
-			'followRequests',
 			'-',
-			'explore',
 			'announcements',
+			'explore',
 			'search',
 			'-',
 			'ui',
+			'profile',
 		],
 	},
 	visibility: {
@@ -189,6 +191,7 @@ export const defaultStore = markRaw(new Storage('base', {
 				withReplies: true,
 				withRenotes: true,
 				withSensitive: true,
+				withAiGenerated: true,
 				onlyFiles: false,
 			},
 		},
@@ -242,9 +245,13 @@ export const defaultStore = markRaw(new Storage('base', {
 		where: 'device',
 		default: false,
 	},
-	loadRawImages: {
+	displayEntireImageOnTimeline: {
 		where: 'device',
 		default: false,
+	},
+	loadRawImages: {
+		where: 'device',
+		default: !/mobile|iphone|android/.test(navigator.userAgent.toLowerCase()),
 	},
 	imageNewTab: {
 		where: 'device',
@@ -396,7 +403,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	},
 	notificationStackAxis: {
 		where: 'device',
-		default: 'horizontal' as 'vertical' | 'horizontal',
+		default: 'vertical' as 'vertical' | 'horizontal',
 	},
 	enableCondensedLineForAcct: {
 		where: 'device',

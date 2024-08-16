@@ -31,6 +31,7 @@ import * as ep___admin_avatarDecorations_list from './endpoints/admin/avatar-dec
 import * as ep___admin_avatarDecorations_update from './endpoints/admin/avatar-decorations/update.js';
 import * as ep___admin_unsetUserAvatar from './endpoints/admin/unset-user-avatar.js';
 import * as ep___admin_unsetUserBanner from './endpoints/admin/unset-user-banner.js';
+import * as ep___admin_unsetUserMutualLink from './endpoints/admin/unset-user-mutual-link.js';
 import * as ep___admin_drive_cleanRemoteFiles from './endpoints/admin/drive/clean-remote-files.js';
 import * as ep___admin_drive_cleanup from './endpoints/admin/drive/cleanup.js';
 import * as ep___admin_drive_deleteAllFilesOfAUser from './endpoints/admin/drive/delete-all-files-of-a-user.js';
@@ -95,6 +96,9 @@ import * as ep___admin_sso_create from './endpoints/admin/sso/create.js';
 import * as ep___admin_sso_delete from './endpoints/admin/sso/delete.js';
 import * as ep___admin_sso_list from './endpoints/admin/sso/list.js';
 import * as ep___admin_sso_update from './endpoints/admin/sso/update.js';
+import * as ep___admin_subscriptionPlans_create from './endpoints/admin/subscription-plans/create.js';
+import * as ep___admin_subscriptionPlans_update from './endpoints/admin/subscription-plans/update.js';
+import * as ep___admin_subscriptionPlans_archive from './endpoints/admin/subscription-plans/archive.js';
 import * as ep___announcement from './endpoints/announcement.js';
 import * as ep___announcements from './endpoints/announcements.js';
 import * as ep___antennas_create from './endpoints/antennas/create.js';
@@ -218,6 +222,7 @@ import * as ep___i_apps from './endpoints/i/apps.js';
 import * as ep___i_authorizedApps from './endpoints/i/authorized-apps.js';
 import * as ep___i_claimAchievement from './endpoints/i/claim-achievement.js';
 import * as ep___i_changePassword from './endpoints/i/change-password.js';
+import * as ep___i_customerPortal from './endpoints/i/customer-portal.js';
 import * as ep___i_deleteAccount from './endpoints/i/delete-account.js';
 import * as ep___i_exportBlocking from './endpoints/i/export-blocking.js';
 import * as ep___i_exportFollowing from './endpoints/i/export-following.js';
@@ -243,6 +248,7 @@ import * as ep___i_pin from './endpoints/i/pin.js';
 import * as ep___i_readAllUnreadNotes from './endpoints/i/read-all-unread-notes.js';
 import * as ep___i_readAnnouncement from './endpoints/i/read-announcement.js';
 import * as ep___i_regenerateToken from './endpoints/i/regenerate-token.js';
+import * as ep___i_registerSubscription from './endpoints/i/register-subscription.js';
 import * as ep___i_registry_getAll from './endpoints/i/registry/get-all.js';
 import * as ep___i_registry_getDetail from './endpoints/i/registry/get-detail.js';
 import * as ep___i_registry_get from './endpoints/i/registry/get.js';
@@ -340,6 +346,8 @@ import * as ep___resetDb from './endpoints/reset-db.js';
 import * as ep___resetPassword from './endpoints/reset-password.js';
 import * as ep___serverInfo from './endpoints/server-info.js';
 import * as ep___stats from './endpoints/stats.js';
+import * as ep___subscription_plans_list from './endpoints/subscription-plans/list.js';
+import * as ep___subscription_plans_show from './endpoints/subscription-plans/show.js';
 import * as ep___sw_show_registration from './endpoints/sw/show-registration.js';
 import * as ep___sw_update_registration from './endpoints/sw/update-registration.js';
 import * as ep___sw_register from './endpoints/sw/register.js';
@@ -421,6 +429,7 @@ const $admin_avatarDecorations_list: Provider = { provide: 'ep:admin/avatar-deco
 const $admin_avatarDecorations_update: Provider = { provide: 'ep:admin/avatar-decorations/update', useClass: ep___admin_avatarDecorations_update.default };
 const $admin_unsetUserAvatar: Provider = { provide: 'ep:admin/unset-user-avatar', useClass: ep___admin_unsetUserAvatar.default };
 const $admin_unsetUserBanner: Provider = { provide: 'ep:admin/unset-user-banner', useClass: ep___admin_unsetUserBanner.default };
+const $admin_unsetUserMutualLink: Provider = { provide: 'ep:admin/unset-user-mutual-link', useClass: ep___admin_unsetUserMutualLink.default };
 const $admin_drive_cleanRemoteFiles: Provider = { provide: 'ep:admin/drive/clean-remote-files', useClass: ep___admin_drive_cleanRemoteFiles.default };
 const $admin_drive_cleanup: Provider = { provide: 'ep:admin/drive/cleanup', useClass: ep___admin_drive_cleanup.default };
 const $admin_drive_deleteAllFilesOfAUser: Provider = { provide: 'ep:admin/drive/delete-all-files-of-a-user', useClass: ep___admin_drive_deleteAllFilesOfAUser.default };
@@ -485,6 +494,9 @@ const $admin_sso_create: Provider = { provide: 'ep:admin/sso/create', useClass: 
 const $admin_sso_delete: Provider = { provide: 'ep:admin/sso/delete', useClass: ep___admin_sso_delete.default };
 const $admin_sso_list: Provider = { provide: 'ep:admin/sso/list', useClass: ep___admin_sso_list.default };
 const $admin_sso_update: Provider = { provide: 'ep:admin/sso/update', useClass: ep___admin_sso_update.default };
+const $admin_subscriptionPlans_create: Provider = { provide: 'ep:admin/subscription-plans/create', useClass: ep___admin_subscriptionPlans_create.default };
+const $admin_subscriptionPlans_update: Provider = { provide: 'ep:admin/subscription-plans/update', useClass: ep___admin_subscriptionPlans_update.default };
+const $admin_subscriptionPlans_archive: Provider = { provide: 'ep:admin/subscription-plans/archive', useClass: ep___admin_subscriptionPlans_archive.default };
 const $announcement: Provider = { provide: 'ep:announcement', useClass: ep___announcement.default };
 const $announcements: Provider = { provide: 'ep:announcements', useClass: ep___announcements.default };
 const $antennas_create: Provider = { provide: 'ep:antennas/create', useClass: ep___antennas_create.default };
@@ -608,6 +620,7 @@ const $i_apps: Provider = { provide: 'ep:i/apps', useClass: ep___i_apps.default 
 const $i_authorizedApps: Provider = { provide: 'ep:i/authorized-apps', useClass: ep___i_authorizedApps.default };
 const $i_claimAchievement: Provider = { provide: 'ep:i/claim-achievement', useClass: ep___i_claimAchievement.default };
 const $i_changePassword: Provider = { provide: 'ep:i/change-password', useClass: ep___i_changePassword.default };
+const $i_customerPortal: Provider = { provide: 'ep:i/customer-portal', useClass: ep___i_customerPortal.default };
 const $i_deleteAccount: Provider = { provide: 'ep:i/delete-account', useClass: ep___i_deleteAccount.default };
 const $i_exportBlocking: Provider = { provide: 'ep:i/export-blocking', useClass: ep___i_exportBlocking.default };
 const $i_exportFollowing: Provider = { provide: 'ep:i/export-following', useClass: ep___i_exportFollowing.default };
@@ -633,6 +646,7 @@ const $i_pin: Provider = { provide: 'ep:i/pin', useClass: ep___i_pin.default };
 const $i_readAllUnreadNotes: Provider = { provide: 'ep:i/read-all-unread-notes', useClass: ep___i_readAllUnreadNotes.default };
 const $i_readAnnouncement: Provider = { provide: 'ep:i/read-announcement', useClass: ep___i_readAnnouncement.default };
 const $i_regenerateToken: Provider = { provide: 'ep:i/regenerate-token', useClass: ep___i_regenerateToken.default };
+const $i_registerSubscription: Provider = { provide: 'ep:i/register-subscription', useClass: ep___i_registerSubscription.default };
 const $i_registry_getAll: Provider = { provide: 'ep:i/registry/get-all', useClass: ep___i_registry_getAll.default };
 const $i_registry_getDetail: Provider = { provide: 'ep:i/registry/get-detail', useClass: ep___i_registry_getDetail.default };
 const $i_registry_get: Provider = { provide: 'ep:i/registry/get', useClass: ep___i_registry_get.default };
@@ -730,6 +744,8 @@ const $resetDb: Provider = { provide: 'ep:reset-db', useClass: ep___resetDb.defa
 const $resetPassword: Provider = { provide: 'ep:reset-password', useClass: ep___resetPassword.default };
 const $serverInfo: Provider = { provide: 'ep:server-info', useClass: ep___serverInfo.default };
 const $stats: Provider = { provide: 'ep:stats', useClass: ep___stats.default };
+const $subscription_plans_list: Provider = { provide: 'ep:subscription-plans/list', useClass: ep___subscription_plans_list.default };
+const $subscription_plans_show: Provider = { provide: 'ep:subscription-plans/show', useClass: ep___subscription_plans_show.default };
 const $sw_show_registration: Provider = { provide: 'ep:sw/show-registration', useClass: ep___sw_show_registration.default };
 const $sw_update_registration: Provider = { provide: 'ep:sw/update-registration', useClass: ep___sw_update_registration.default };
 const $sw_register: Provider = { provide: 'ep:sw/register', useClass: ep___sw_register.default };
@@ -815,6 +831,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$admin_avatarDecorations_update,
 		$admin_unsetUserAvatar,
 		$admin_unsetUserBanner,
+		$admin_unsetUserMutualLink,
 		$admin_drive_cleanRemoteFiles,
 		$admin_drive_cleanup,
 		$admin_drive_deleteAllFilesOfAUser,
@@ -879,6 +896,9 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$admin_sso_delete,
 		$admin_sso_list,
 		$admin_sso_update,
+		$admin_subscriptionPlans_create,
+		$admin_subscriptionPlans_update,
+		$admin_subscriptionPlans_archive,
 		$announcement,
 		$announcements,
 		$antennas_create,
@@ -1002,6 +1022,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_authorizedApps,
 		$i_claimAchievement,
 		$i_changePassword,
+		$i_customerPortal,
 		$i_deleteAccount,
 		$i_exportBlocking,
 		$i_exportFollowing,
@@ -1027,6 +1048,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_readAllUnreadNotes,
 		$i_readAnnouncement,
 		$i_regenerateToken,
+		$i_registerSubscription,
 		$i_registry_getAll,
 		$i_registry_getDetail,
 		$i_registry_get,
@@ -1124,6 +1146,8 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$resetPassword,
 		$serverInfo,
 		$stats,
+		$subscription_plans_list,
+		$subscription_plans_show,
 		$sw_show_registration,
 		$sw_update_registration,
 		$sw_register,
@@ -1203,6 +1227,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$admin_avatarDecorations_update,
 		$admin_unsetUserAvatar,
 		$admin_unsetUserBanner,
+		$admin_unsetUserMutualLink,
 		$admin_drive_cleanRemoteFiles,
 		$admin_drive_cleanup,
 		$admin_drive_deleteAllFilesOfAUser,
@@ -1267,6 +1292,9 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$admin_sso_delete,
 		$admin_sso_list,
 		$admin_sso_update,
+		$admin_subscriptionPlans_create,
+		$admin_subscriptionPlans_update,
+		$admin_subscriptionPlans_archive,
 		$announcement,
 		$announcements,
 		$antennas_create,
@@ -1390,6 +1418,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_authorizedApps,
 		$i_claimAchievement,
 		$i_changePassword,
+		$i_customerPortal,
 		$i_deleteAccount,
 		$i_exportBlocking,
 		$i_exportFollowing,
@@ -1415,6 +1444,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_readAllUnreadNotes,
 		$i_readAnnouncement,
 		$i_regenerateToken,
+		$i_registerSubscription,
 		$i_registry_getAll,
 		$i_registry_getDetail,
 		$i_registry_get,
@@ -1512,6 +1542,8 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$resetPassword,
 		$serverInfo,
 		$stats,
+		$subscription_plans_list,
+		$subscription_plans_show,
 		$sw_register,
 		$sw_unregister,
 		$test,

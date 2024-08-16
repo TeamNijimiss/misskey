@@ -40,10 +40,32 @@ function describe(file: Misskey.entities.DriveFile) {
 	}, 'closed');
 }
 
+function move(file: Misskey.entities.DriveFile) {
+	os.selectDriveFolder(false).then(folder => {
+		misskeyApi('drive/files/update', {
+			fileId: file.id,
+			folderId: folder[0] ? folder[0].id : null,
+		});
+	});
+}
+
 function toggleSensitive(file: Misskey.entities.DriveFile) {
 	misskeyApi('drive/files/update', {
 		fileId: file.id,
 		isSensitive: !file.isSensitive,
+	}).catch(err => {
+		os.alert({
+			type: 'error',
+			title: i18n.ts.error,
+			text: err.message,
+		});
+	});
+}
+
+function toggleAiGenerated(file: Misskey.entities.DriveFile) {
+	misskeyApi('drive/files/update', {
+		fileId: file.id,
+		isAiGenerated: !file.isAiGenerated,
 	}).catch(err => {
 		os.alert({
 			type: 'error',
@@ -88,9 +110,17 @@ export function getDriveFileMenu(file: Misskey.entities.DriveFile, folder?: Miss
 		icon: 'ti ti-forms',
 		action: () => rename(file),
 	}, {
+		text: i18n.ts.move,
+		icon: 'ti ti-folder-symlink',
+		action: () => move(file),
+	}, {
 		text: file.isSensitive ? i18n.ts.unmarkAsSensitive : i18n.ts.markAsSensitive,
 		icon: file.isSensitive ? 'ti ti-eye' : 'ti ti-eye-exclamation',
 		action: () => toggleSensitive(file),
+	}, {
+		text: file.isAiGenerated ? i18n.ts.unmarkAsAiGenerated : i18n.ts.markAsAiGenerated,
+		icon: file.isAiGenerated ? 'ti ti-robot-off' : 'ti ti-robot',
+		action: () => { toggleAiGenerated(file); },
 	}, {
 		text: i18n.ts.describeFile,
 		icon: 'ti ti-text-caption',

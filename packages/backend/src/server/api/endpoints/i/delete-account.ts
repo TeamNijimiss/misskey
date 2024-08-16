@@ -29,6 +29,12 @@ export const meta = {
 			code: 'AUTHENTICATION_FAILED',
 			id: 'ea791cff-63e7-4b2a-92fc-646ab641794e',
 		},
+
+		subscriptionIsActive: {
+			message: 'If Subscription is active, cannot move account.',
+			code: 'SUBSCRIPTION_IS_ACTIVE',
+			id: 'f5c8b3b4-9e4d-4b7f-9f4d-9f1f0a7a3d0a',
+		},
 	},
 } as const;
 

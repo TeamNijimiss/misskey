@@ -53,6 +53,7 @@ export type RolePolicies = {
 	canSearchNotes: boolean;
 	canUseTranslator: boolean;
 	canUseDriveFileInSoundSettings: boolean;
+	canUseReaction: boolean;
 	canHideAds: boolean;
 	driveCapacityMb: number;
 	alwaysMarkNsfw: boolean;
@@ -62,12 +63,15 @@ export type RolePolicies = {
 	antennaNotesLimit: number;
 	wordMuteLimit: number;
 	webhookLimit: number;
+	accessTokenLimit: number;
 	clipLimit: number;
 	noteEachClipsLimit: number;
 	userListLimit: number;
 	userEachUserListsLimit: number;
 	rateLimitFactor: number;
 	avatarDecorationLimit: number;
+	mutualLinkSectionLimit: number;
+	mutualLinkLimit: number;
 };
 
 export const DEFAULT_POLICIES: RolePolicies = {
@@ -91,6 +95,7 @@ export const DEFAULT_POLICIES: RolePolicies = {
 	canSearchNotes: false,
 	canUseTranslator: true,
 	canUseDriveFileInSoundSettings: false,
+	canUseReaction: true,
 	canHideAds: false,
 	driveCapacityMb: 100,
 	alwaysMarkNsfw: false,
@@ -100,12 +105,15 @@ export const DEFAULT_POLICIES: RolePolicies = {
 	antennaNotesLimit: 200,
 	wordMuteLimit: 200,
 	webhookLimit: 3,
+	accessTokenLimit: 10,
 	clipLimit: 10,
 	noteEachClipsLimit: 200,
 	userListLimit: 10,
 	userEachUserListsLimit: 50,
 	rateLimitFactor: 1,
 	avatarDecorationLimit: 1,
+	mutualLinkSectionLimit: 1,
+	mutualLinkLimit: 15,
 };
 
 @Injectable()
@@ -402,6 +410,7 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 			canSearchNotes: calc('canSearchNotes', vs => vs.some(v => v === true)),
 			canUseTranslator: calc('canUseTranslator', vs => vs.some(v => v === true)),
 			canUseDriveFileInSoundSettings: calc('canUseDriveFileInSoundSettings', vs => vs.some(v => v === true)),
+			canUseReaction: calc('canUseReaction', vs => vs.some(v => v === true)),
 			canHideAds: calc('canHideAds', vs => vs.some(v => v === true)),
 			driveCapacityMb: calc('driveCapacityMb', vs => Math.max(...vs)),
 			alwaysMarkNsfw: calc('alwaysMarkNsfw', vs => vs.some(v => v === true)),
@@ -411,12 +420,15 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 			antennaNotesLimit: calc('antennaNotesLimit', vs => Math.max(...vs)),
 			wordMuteLimit: calc('wordMuteLimit', vs => Math.max(...vs)),
 			webhookLimit: calc('webhookLimit', vs => Math.max(...vs)),
+			accessTokenLimit: calc('accessTokenLimit', vs => Math.max(...vs)),
 			clipLimit: calc('clipLimit', vs => Math.max(...vs)),
 			noteEachClipsLimit: calc('noteEachClipsLimit', vs => Math.max(...vs)),
 			userListLimit: calc('userListLimit', vs => Math.max(...vs)),
 			userEachUserListsLimit: calc('userEachUserListsLimit', vs => Math.max(...vs)),
 			rateLimitFactor: calc('rateLimitFactor', vs => Math.max(...vs)),
 			avatarDecorationLimit: calc('avatarDecorationLimit', vs => Math.max(...vs)),
+			mutualLinkSectionLimit: calc('mutualLinkSectionLimit', vs => Math.max(...vs)),
+			mutualLinkLimit: calc('mutualLinkLimit', vs => Math.max(...vs)),
 		};
 	}
 

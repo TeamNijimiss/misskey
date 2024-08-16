@@ -113,6 +113,8 @@ export class MetaEntityService {
 			mediaProxy: this.config.mediaProxy,
 			enableUrlPreview: instance.urlPreviewEnabled,
 			enableSkebStatus: !!this.config.skebStatus,
+			enableSubscriptions: instance.enableSubscriptions,
+			commerceDisclosureUrl: instance.commerceDisclosureUrl,
 		};
 	}
 
@@ -153,4 +155,3 @@ export class MetaEntityService {
 		};
 	}
 }
-

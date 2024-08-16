@@ -65,6 +65,8 @@ type AddFileArgs = {
 	uri?: string | null;
 	/** Mark file as sensitive */
 	sensitive?: boolean | null;
+	/** Mark file as AI generated */
+	aiGenerated?: boolean | null;
 	/** Extension to force */
 	ext?: string | null;
 
@@ -449,6 +451,7 @@ export class DriveService {
 		url = null,
 		uri = null,
 		sensitive = null,
+		aiGenerated = null,
 		requestIp = null,
 		requestHeaders = null,
 		ext = null,
@@ -574,6 +577,7 @@ export class DriveService {
 			? this.userEntityService.isLocalUser(user) && profile!.alwaysMarkNsfw ? true :
 			sensitive ?? false
 			: false;
+		file.isAiGenerated = aiGenerated ?? false;
 
 		if (info.sensitive && profile!.autoSensitive) file.isSensitive = true;
 		if (info.sensitive && instance.setSensitiveFlagAutomatically) file.isSensitive = true;

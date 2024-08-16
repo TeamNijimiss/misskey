@@ -39,10 +39,16 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<div>
 				<MkSwitch v-model="isSensitive" @update:modelValue="toggleIsSensitive">{{ i18n.ts.sensitive }}</MkSwitch>
 			</div>
+			<div>
+				<MkSwitch v-model="isAiGenerated" @update:modelValue="toggleAiGenerated">{{ i18n.ts.aiGenerated }}</MkSwitch>
+			</div>
 
 			<div>
 				<MkButton danger @click="del"><i class="ti ti-trash"></i> {{ i18n.ts.delete }}</MkButton>
 			</div>
+		</div>
+		<div v-else-if="tab === 'notes' && info" class="_gaps_m">
+			<XNotes :fileId="fileId"/>
 		</div>
 		<div v-else-if="tab === 'ip' && info" class="_gaps_m">
 			<MkInfo v-if="!iAmAdmin" warn>{{ i18n.ts.requireAdminForView }}</MkInfo>
@@ -67,7 +73,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue';
+import { computed, defineAsyncComponent, ref } from 'vue';
 import * as Misskey from 'misskey-js';
 import MkButton from '@/components/MkButton.vue';
 import MkSwitch from '@/components/MkSwitch.vue';
@@ -88,6 +94,8 @@ const tab = ref('overview');
 const file = ref<Misskey.entities.DriveFile | null>(null);
 const info = ref<Misskey.entities.AdminDriveShowFileResponse | null>(null);
 const isSensitive = ref<boolean>(false);
+const isAiGenerated = ref<boolean>(false);
+const XNotes = defineAsyncComponent(() => import('./drive.file.notes.vue'));
 
 const props = defineProps<{
 	fileId: string,
@@ -97,6 +105,7 @@ async function fetch() {
 	file.value = await misskeyApi('drive/files/show', { fileId: props.fileId });
 	info.value = await misskeyApi('admin/drive/show-file', { fileId: props.fileId });
 	isSensitive.value = file.value.isSensitive;
+	isAiGenerated.value = file.value.isAiGenerated;
 }
 
 fetch();
@@ -118,6 +127,11 @@ async function toggleIsSensitive(v) {
 	isSensitive.value = v;
 }
 
+async function toggleAiGenerated(v) {
+	await misskeyApi('drive/files/update', { fileId: props.fileId, isAiGenerated: v });
+	isAiGenerated.value = v;
+}
+
 const headerActions = computed(() => [{
 	text: i18n.ts.openInNewTab,
 	icon: 'ti ti-external-link',
@@ -131,6 +145,10 @@ const headerTabs = computed(() => [{
 	title: i18n.ts.overview,
 	icon: 'ti ti-info-circle',
 }, iAmModerator ? {
+	key: 'notes',
+	title: i18n.ts._fileViewer.attachedNotes,
+	icon: 'ti ti-pencil',
+} : null, iAmModerator ? {
 	key: 'ip',
 	title: 'IP',
 	icon: 'ti ti-password',

@@ -53,6 +53,7 @@ import { UserFollowingService } from './UserFollowingService.js';
 import { UserKeypairService } from './UserKeypairService.js';
 import { UserListService } from './UserListService.js';
 import { UserMutingService } from './UserMutingService.js';
+import { UserRenoteMutingService } from './UserRenoteMutingService.js';
 import { UserSuspendService } from './UserSuspendService.js';
 import { UserAuthService } from './UserAuthService.js';
 import { VideoProcessingService } from './VideoProcessingService.js';
@@ -116,6 +117,7 @@ import { FlashLikeEntityService } from './entities/FlashLikeEntityService.js';
 import { RoleEntityService } from './entities/RoleEntityService.js';
 import { ReversiGameEntityService } from './entities/ReversiGameEntityService.js';
 import { MetaEntityService } from './entities/MetaEntityService.js';
+import { SubscriptionPlanEntityService } from './entities/SubscriptionPlanEntityService.js';
 
 import { ApAudienceService } from './activitypub/ApAudienceService.js';
 import { ApDbResolverService } from './activitypub/ApDbResolverService.js';
@@ -191,6 +193,7 @@ const $UserFollowingService: Provider = { provide: 'UserFollowingService', useEx
 const $UserKeypairService: Provider = { provide: 'UserKeypairService', useExisting: UserKeypairService };
 const $UserListService: Provider = { provide: 'UserListService', useExisting: UserListService };
 const $UserMutingService: Provider = { provide: 'UserMutingService', useExisting: UserMutingService };
+const $UserRenoteMutingService: Provider = { provide: 'UserRenoteMutingService', useExisting: UserRenoteMutingService };
 const $UserSuspendService: Provider = { provide: 'UserSuspendService', useExisting: UserSuspendService };
 const $UserAuthService: Provider = { provide: 'UserAuthService', useExisting: UserAuthService };
 const $VideoProcessingService: Provider = { provide: 'VideoProcessingService', useExisting: VideoProcessingService };
@@ -256,6 +259,7 @@ const $FlashLikeEntityService: Provider = { provide: 'FlashLikeEntityService', u
 const $RoleEntityService: Provider = { provide: 'RoleEntityService', useExisting: RoleEntityService };
 const $ReversiGameEntityService: Provider = { provide: 'ReversiGameEntityService', useExisting: ReversiGameEntityService };
 const $MetaEntityService: Provider = { provide: 'MetaEntityService', useExisting: MetaEntityService };
+const $SubscriptionPlanEntityService: Provider = { provide: 'SubscriptionPlanEntityService', useExisting: SubscriptionPlanEntityService };
 
 const $ApAudienceService: Provider = { provide: 'ApAudienceService', useExisting: ApAudienceService };
 const $ApDbResolverService: Provider = { provide: 'ApDbResolverService', useExisting: ApDbResolverService };
@@ -332,6 +336,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		UserKeypairService,
 		UserListService,
 		UserMutingService,
+		UserRenoteMutingService,
 		UserSuspendService,
 		UserAuthService,
 		VideoProcessingService,
@@ -395,6 +400,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		RoleEntityService,
 		ReversiGameEntityService,
 		MetaEntityService,
+		SubscriptionPlanEntityService,
 
 		ApAudienceService,
 		ApDbResolverService,
@@ -467,6 +473,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$UserKeypairService,
 		$UserListService,
 		$UserMutingService,
+		$UserRenoteMutingService,
 		$UserSuspendService,
 		$UserAuthService,
 		$VideoProcessingService,
@@ -530,6 +537,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$RoleEntityService,
 		$ReversiGameEntityService,
 		$MetaEntityService,
+		$SubscriptionPlanEntityService,
 
 		$ApAudienceService,
 		$ApDbResolverService,
@@ -603,6 +611,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		UserKeypairService,
 		UserListService,
 		UserMutingService,
+		UserRenoteMutingService,
 		UserSuspendService,
 		UserAuthService,
 		VideoProcessingService,
@@ -665,6 +674,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		RoleEntityService,
 		ReversiGameEntityService,
 		MetaEntityService,
+		SubscriptionPlanEntityService,
 
 		ApAudienceService,
 		ApDbResolverService,
@@ -737,6 +747,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$UserKeypairService,
 		$UserListService,
 		$UserMutingService,
+		$UserRenoteMutingService,
 		$UserSuspendService,
 		$UserAuthService,
 		$VideoProcessingService,
@@ -799,6 +810,7 @@ const $ApQuestionService: Provider = { provide: 'ApQuestionService', useExisting
 		$RoleEntityService,
 		$ReversiGameEntityService,
 		$MetaEntityService,
+		$SubscriptionPlanEntityService,
 
 		$ApAudienceService,
 		$ApDbResolverService,

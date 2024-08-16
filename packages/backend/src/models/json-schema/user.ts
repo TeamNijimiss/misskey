@@ -179,8 +179,18 @@ export const packedUserLiteSchema = {
 					behavior: {
 						type: 'string',
 						nullable: false, optional: true,
-					}
+					},
 				},
+			},
+			subscriptionStatus: {
+				type: 'string',
+				enum: ['incomplete', 'incomplete_expired', 'trialing', 'active', 'past_due', 'paused', 'canceled', 'unpaid', 'none'],
+				nullable: false, optional: false,
+			},
+			subscriptionPlanId: {
+				type: 'string',
+				format: 'id',
+				nullable: true, optional: false,
 			},
 		},
 	},
@@ -385,6 +395,30 @@ export const packedUserDetailedNotMeOnlySchema = {
 		moderationNote: {
 			type: 'string',
 			nullable: false, optional: true,
+		},
+		mutualLinkSections: {
+			type: 'array',
+			items: {
+				type: 'object',
+				properties: {
+					name: { type: 'string', nullable: true },
+					mutualLinks: {
+						type: 'array',
+						items: {
+							type: 'object',
+							properties: {
+								id: { type: 'string', format: 'misskey:id' },
+								url: { type: 'string' },
+								fileId: { type: 'string', format: 'misskey:id' },
+								description: { type: 'string', nullable: true },
+								imgSrc: { type: 'string' },
+							},
+							required: ['id', 'url', 'fileId'],
+						},
+					},
+				},
+				required: ['mutualLinks'],
+			},
 		},
 		//#region relations
 		isFollowing: {
@@ -651,6 +685,14 @@ export const packedMeDetailedOnlySchema = {
 					},
 				},
 			},
+		},
+		stripeCustomerId: {
+			type: 'string',
+			nullable: true, optional: true,
+		},
+		stripeSubscriptionId: {
+			type: 'string',
+			nullable: true, optional: false,
 		},
 		//#endregion
 	},

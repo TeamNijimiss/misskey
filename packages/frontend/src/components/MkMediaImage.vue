@@ -108,6 +108,13 @@ function showMenu(ev: MouseEvent) {
 			action: () => toggleSensitive(props.image),
 		});
 
+		menu.push({
+			text: props.image.isAiGenerated ? i18n.ts.unmarkAsAiGenerated : i18n.ts.markAsAiGenerated,
+			icon: props.image.isAiGenerated ? 'ti ti-robot' : 'ti ti-robot',
+			danger: true,
+			action: () => toggleAiGenerated(props.image),
+		});
+
 		if ($i?.id !== props.image.userId) {
 			menu.push({
 				type: 'link' as const,
@@ -153,6 +160,13 @@ function toggleSensitive(file: Misskey.entities.DriveFile) {
 	os.apiWithDialog('drive/files/update', {
 		fileId: file.id,
 		isSensitive: !file.isSensitive,
+	});
+}
+
+function toggleAiGenerated(file: Misskey.entities.DriveFile) {
+	os.apiWithDialog('drive/files/update', {
+		fileId: file.id,
+		isAiGenerated: !file.isAiGenerated,
 	});
 }
 

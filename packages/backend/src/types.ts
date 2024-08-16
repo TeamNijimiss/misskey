@@ -96,7 +96,24 @@ export const moderationLogTypes = [
 	'deleteAvatarDecoration',
 	'unsetUserAvatar',
 	'unsetUserBanner',
+	'unsetUserMutualLink',
+	'createSubscriptionPlan',
+	'updateSubscriptionPlan',
+	'archiveSubscriptionPlan',
 ] as const;
+
+export const subscriptionStatus = [
+	'incomplete',
+	'incomplete_expired',
+	'trialing',
+	'active',
+	'past_due',
+	'paused',
+	'canceled',
+	'unpaid',
+	'none',
+] as const;
+
 
 export type ModerationLogPayloads = {
 	updateServerSettings: {
@@ -314,6 +331,11 @@ export type ModerationLogPayloads = {
 		userHost: string | null;
 		fileId: string;
 	};
+	unsetUserMutualLink: {
+		userId: string;
+		userUsername: string;
+		userMutualLinkSections: { name: string | null; mutualLinks: { fileId: string; description: string | null; imgSrc: string; }[]; }[] | []
+	}
 };
 
 export type Serialized<T> = {

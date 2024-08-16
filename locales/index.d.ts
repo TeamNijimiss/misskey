@@ -501,6 +501,10 @@ export interface Locale extends ILocale {
      */
     "sensitive": string;
     /**
+     * AI生成
+     */
+    "aiGenerated": string;
+    /**
      * 追加
      */
     "add": string;
@@ -560,6 +564,14 @@ export interface Locale extends ILocale {
      * センシティブを解除する
      */
     "unmarkAsSensitive": string;
+    /**
+     * AI生成として設定
+     */
+    "markAsAiGenerated": string;
+    /**
+     * AI生成を解除する
+     */
+    "unmarkAsAiGenerated": string;
     /**
      * ファイル名を入力
      */
@@ -2401,6 +2413,14 @@ export interface Locale extends ILocale {
      */
     "unsetUserBannerConfirm": string;
     /**
+     * 相互リンクを削除
+     */
+    "unsetUserMutualLink": string;
+    /**
+     * 相互リンクを削除しますか？
+     */
+    "unsetUserMutualLinkConfirm": string;
+    /**
      * すべてのファイルを削除
      */
     "deleteAllFiles": string;
@@ -3008,6 +3028,10 @@ export interface Locale extends ILocale {
      * デフォルトでメディアをセンシティブ設定にする
      */
     "alwaysMarkSensitive": string;
+    /**
+     * タイムライン上で画像全体を表示する
+     */
+    "displayEntireImageOnTimeline": string;
     /**
      * 添付画像のサムネイルをオリジナル画質にする
      */
@@ -4153,6 +4177,10 @@ export interface Locale extends ILocale {
      */
     "thisPostMayBeAnnoyingIgnore": string;
     /**
+     * 投稿を保存しますか？
+     */
+    "saveDraftNote": string;
+    /**
      * 見たことのあるリノートを省略して表示
      */
     "collapseRenotes": string;
@@ -4825,6 +4853,14 @@ export interface Locale extends ILocale {
      */
     "tosAndPrivacyPolicy": string;
     /**
+     * 特定商取引法に基づく表記
+     */
+    "commerceDisclosure": string;
+    /**
+     * 特定商取引法に基づく表記URL
+     */
+    "commerceDisclosureUrl": string;
+    /**
      * アイコンデコレーション
      */
     "avatarDecorations": string;
@@ -5000,9 +5036,17 @@ export interface Locale extends ILocale {
      */
     "withSensitive": string;
     /**
+     * AIによって生成されたファイルを含むノートを表示
+     */
+    "withAiGenerated": string;
+    /**
      * {name}のセンシティブなファイルを含む投稿
      */
     "userSaysSomethingSensitive": ParameterizedString<"name">;
+    /**
+     * {name}のAIによって生成されたファイルを含む投稿
+     */
+    "userSaysSomethingAiGenerated": ParameterizedString<"name">;
     /**
      * スワイプしてタブを切り替える
      */
@@ -5083,6 +5127,84 @@ export interface Locale extends ILocale {
      * こちら
      */
     "here": string;
+    /**
+     * 相互リンク
+     */
+    "mutualLink": string;
+    /**
+     * サブスクリプション
+     */
+    "subscription": string;
+    /**
+     * サブスクリプションの状態
+     */
+    "subscriptionStatus": string;
+    "_subscription": {
+        /**
+         * 現在のプラン
+         */
+        "current": string;
+        /**
+         * 価格
+         */
+        "price": string;
+        /**
+         * 通貨
+         */
+        "currency": string;
+        /**
+         * Stripeの価格ID
+         */
+        "stripePriceId": string;
+        /**
+         * 購入
+         */
+        "subscribe": string;
+        /**
+         * 管理
+         */
+        "manage": string;
+        /**
+         * プランを変更
+         */
+        "changePlan": string;
+        /**
+         * プランを変更しますか？
+         */
+        "confirmChangePlan": string;
+        /**
+         * 未完了
+         */
+        "incomplete": string;
+        /**
+         * 期限切れ
+         */
+        "incomplete_expired": string;
+        /**
+         * トライアル中
+         */
+        "trialing": string;
+        /**
+         * 有効
+         */
+        "active": string;
+        /**
+         * 支払い期限切れ
+         */
+        "past_due": string;
+        /**
+         * キャンセル済み
+         */
+        "canceled": string;
+        /**
+         * 未払い
+         */
+        "unpaid": string;
+        /**
+         * なし
+         */
+        "none": string;
+    };
     "_bubbleGame": {
         /**
          * 遊び方
@@ -5332,9 +5454,9 @@ export interface Locale extends ILocale {
          */
         "haveFun": ParameterizedString<"name">;
         /**
-         * このまま{name}(Misskey)の使い方についてのチュートリアルに進むこともできますが、ここで中断してすぐに使い始めることもできます。
+         * このまま{name}(Misskey)の使い方についてのチュートリアルに進みます。
          */
-        "youCanContinueTutorial": ParameterizedString<"name">;
+        "continueTutorial": ParameterizedString<"name">;
         /**
          * チュートリアルを開始
          */
@@ -5347,6 +5469,10 @@ export interface Locale extends ILocale {
          * 初期設定をあとでやり直しますか？
          */
         "laterAreYouSure": string;
+        /**
+         * Botアカウントは管理者を必ず記載する必要があります。以下から管理者のアカウントを選択してください。
+         */
+        "mustBeSetBotOwner": string;
     };
     "_initialTutorial": {
         /**
@@ -6813,6 +6939,10 @@ export interface Locale extends ILocale {
              */
             "webhookMax": string;
             /**
+             * アクセストークンの作成可能数
+             */
+            "accessTokenMax": string;
+            /**
              * クリップの作成可能数
              */
             "clipMax": string;
@@ -6853,9 +6983,21 @@ export interface Locale extends ILocale {
              */
             "canUseDriveFileInSoundSettings": string;
             /**
+             * リアクションの利用
+             */
+            "canUseReaction": string;
+            /**
              * アイコンデコレーションの最大取付個数
              */
             "avatarDecorationLimit": string;
+            /**
+             * 相互リンクのセクションの最大数
+             */
+            "mutualLinkSectionLimit": string;
+            /**
+             * セクション内の相互リンクの最大数
+             */
+            "mutualLinkLimit": string;
         };
         "_condition": {
             /**
@@ -8205,6 +8347,10 @@ export interface Locale extends ILocale {
          */
         "write:admin:unset-user-banner": string;
         /**
+         * ユーザーの相互リンクを削除する
+         */
+        "write:admin:unset-user-mutual-link": string;
+        /**
          * ユーザーの凍結を解除する
          */
         "write:admin:unsuspend-user": string;
@@ -8790,6 +8936,46 @@ export interface Locale extends ILocale {
          * 最大{max}つまでデコレーションを付けられます。
          */
         "avatarDecorationMax": ParameterizedString<"max">;
+        /**
+         * 相互リンクを編集
+         */
+        "mutualLinksEdit": string;
+        /**
+         * 相互リンクのバナー
+         */
+        "mutualLinksBanner": string;
+        /**
+         * 説明
+         */
+        "mutualLinksDescriptionEdit": string;
+        /**
+         * リンク先のURL
+         */
+        "mutualLinksUrl": string;
+        /**
+         * 相互リンクを設定すると、あなたのプロフィールにバナーが表示されます。
+         */
+        "mutualLinksDescription": string;
+        /**
+         * 相互リンクを追加
+         */
+        "addMutualLink": string;
+        /**
+         * セクションを追加
+         */
+        "addMutualLinkSection": string;
+        /**
+         * セクション名
+         */
+        "sectionName": string;
+        /**
+         * セクション名を表示しないようにする
+         */
+        "sectionNameNoneDescription": string;
+        /**
+         * 名前が表示されないセクション
+         */
+        "sectionNameNone": string;
     };
     "_exportOrImport": {
         /**
@@ -9818,6 +10004,18 @@ export interface Locale extends ILocale {
          * ユーザーのバナーを解除
          */
         "unsetUserBanner": string;
+        /**
+         * サブスクリプションプランを作成
+         */
+        "createSubscriptionPlan": string;
+        /**
+         * サブスクリプションプランを更新
+         */
+        "updateSubscriptionPlan": string;
+        /**
+         * サブスクリプションプランをアーカイブ
+         */
+        "archiveSubscriptionPlan": string;
     };
     "_fileViewer": {
         /**
