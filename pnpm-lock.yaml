@@ -21072,8 +21072,8 @@ snapshots:
 
   stripe@16.2.0:
     dependencies:
-      '@types/node': 20.12.12
-      qs: 6.12.1
+      '@types/node': 22.2.0
+      qs: 6.11.0
 
   strnum@1.0.5: {}
 
