@@ -67,7 +67,7 @@ async function subscribe(plan) {
 }
 
 async function manage() {
-	const redirect = await os.apiWithDialog('i/customer-portal');
+	const redirect = await os.apiWithDialog('subscription/manage');
 	if (redirect) {
 		location.href = redirect.redirect.destination;
 	}
@@ -79,7 +79,7 @@ function change(plan) {
 		type: 'question',
 	}).then((res) => {
 		if (res.canceled) return;
-		os.apiWithDialog('i/register-subscription', {
+		os.apiWithDialog('subscription/create', {
 			planId: plan.id,
 		});
 	}).then(() => {

@@ -115,7 +115,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				if (plan.id !== user.subscriptionPlanId) {
 					// Upgrade or downgrade subscription
 					const subscription = await stripe.subscriptions.list({
-						customer: userProfile.stripeCustomerId,
+						customer: userProfile.stripeCustomerId ?? undefined,
 					});
 					if (subscription.data.length === 0) {
 						throw new ApiError(meta.errors.accessDenied);
@@ -159,7 +159,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			} else if (subscriptionStatus === 'incomplete' || subscriptionStatus === 'past_due' || subscriptionStatus === 'unpaid') {
 				// 決済ができていない場合
 				const session = await stripe.checkout.sessions.create({
-					customer: userProfile.stripeCustomerId,
+					customer: userProfile.stripeCustomerId ?? undefined,
 					allow_promotion_codes: true,
 					return_url: `${this.config.url}/settings/subscription`,
 				}, {});
@@ -184,7 +184,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					],
 					success_url: `${this.config.url}/settings/subscription`,
 					cancel_url: `${this.config.url}/settings/subscription`,
-					customer: userProfile.stripeCustomerId,
+					customer: userProfile.stripeCustomerId ?? undefined,
 				});
 
 				return {
