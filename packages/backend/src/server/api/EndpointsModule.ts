@@ -248,7 +248,6 @@ import * as ep___i_pin from './endpoints/i/pin.js';
 import * as ep___i_readAllUnreadNotes from './endpoints/i/read-all-unread-notes.js';
 import * as ep___i_readAnnouncement from './endpoints/i/read-announcement.js';
 import * as ep___i_regenerateToken from './endpoints/i/regenerate-token.js';
-import * as ep___i_registerSubscription from './endpoints/i/register-subscription.js';
 import * as ep___i_registry_getAll from './endpoints/i/registry/get-all.js';
 import * as ep___i_registry_getDetail from './endpoints/i/registry/get-detail.js';
 import * as ep___i_registry_get from './endpoints/i/registry/get.js';
@@ -346,6 +345,8 @@ import * as ep___resetDb from './endpoints/reset-db.js';
 import * as ep___resetPassword from './endpoints/reset-password.js';
 import * as ep___serverInfo from './endpoints/server-info.js';
 import * as ep___stats from './endpoints/stats.js';
+import * as ep___subscription_create from './endpoints/subscription/create.js';
+import * as ep___subscription_manage from './endpoints/subscription/manage.js';
 import * as ep___subscription_plans_list from './endpoints/subscription-plans/list.js';
 import * as ep___subscription_plans_show from './endpoints/subscription-plans/show.js';
 import * as ep___sw_show_registration from './endpoints/sw/show-registration.js';
@@ -646,7 +647,6 @@ const $i_pin: Provider = { provide: 'ep:i/pin', useClass: ep___i_pin.default };
 const $i_readAllUnreadNotes: Provider = { provide: 'ep:i/read-all-unread-notes', useClass: ep___i_readAllUnreadNotes.default };
 const $i_readAnnouncement: Provider = { provide: 'ep:i/read-announcement', useClass: ep___i_readAnnouncement.default };
 const $i_regenerateToken: Provider = { provide: 'ep:i/regenerate-token', useClass: ep___i_regenerateToken.default };
-const $i_registerSubscription: Provider = { provide: 'ep:i/register-subscription', useClass: ep___i_registerSubscription.default };
 const $i_registry_getAll: Provider = { provide: 'ep:i/registry/get-all', useClass: ep___i_registry_getAll.default };
 const $i_registry_getDetail: Provider = { provide: 'ep:i/registry/get-detail', useClass: ep___i_registry_getDetail.default };
 const $i_registry_get: Provider = { provide: 'ep:i/registry/get', useClass: ep___i_registry_get.default };
@@ -744,6 +744,8 @@ const $resetDb: Provider = { provide: 'ep:reset-db', useClass: ep___resetDb.defa
 const $resetPassword: Provider = { provide: 'ep:reset-password', useClass: ep___resetPassword.default };
 const $serverInfo: Provider = { provide: 'ep:server-info', useClass: ep___serverInfo.default };
 const $stats: Provider = { provide: 'ep:stats', useClass: ep___stats.default };
+const $subscription_create: Provider = { provide: 'ep:subscription/create', useClass: ep___subscription_create.default };
+const $subscription_manage: Provider = { provide: 'ep:subscription/manage', useClass: ep___subscription_manage.default };
 const $subscription_plans_list: Provider = { provide: 'ep:subscription-plans/list', useClass: ep___subscription_plans_list.default };
 const $subscription_plans_show: Provider = { provide: 'ep:subscription-plans/show', useClass: ep___subscription_plans_show.default };
 const $sw_show_registration: Provider = { provide: 'ep:sw/show-registration', useClass: ep___sw_show_registration.default };
@@ -1048,7 +1050,6 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_readAllUnreadNotes,
 		$i_readAnnouncement,
 		$i_regenerateToken,
-		$i_registerSubscription,
 		$i_registry_getAll,
 		$i_registry_getDetail,
 		$i_registry_get,
@@ -1146,6 +1147,8 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$resetPassword,
 		$serverInfo,
 		$stats,
+		$subscription_create,
+		$subscription_manage,
 		$subscription_plans_list,
 		$subscription_plans_show,
 		$sw_show_registration,
@@ -1444,7 +1447,6 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_readAllUnreadNotes,
 		$i_readAnnouncement,
 		$i_regenerateToken,
-		$i_registerSubscription,
 		$i_registry_getAll,
 		$i_registry_getDetail,
 		$i_registry_get,
@@ -1542,6 +1544,8 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$resetPassword,
 		$serverInfo,
 		$stats,
+		$subscription_create,
+		$subscription_manage,
 		$subscription_plans_list,
 		$subscription_plans_show,
 		$sw_register,

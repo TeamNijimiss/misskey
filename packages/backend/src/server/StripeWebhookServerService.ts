@@ -51,6 +51,9 @@ export class StripeWebhookServerService {
 
 		fastify.post('/webhook', { config: { rawBody: true }, bodyLimit: 1024 * 64 }, async (request, reply) => {
 			const instance = await this.metaService.fetch(true);
+			if (!(instance.enableSubscriptions)) {
+				return reply.code(503);
+			}
 			if (!(this.config.stripe && this.config.stripe.secretKey && this.config.stripe.webhookSecret)) {
 				return reply.code(503);
 			}

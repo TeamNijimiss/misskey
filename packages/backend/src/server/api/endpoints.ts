@@ -248,7 +248,6 @@ import * as ep___i_pin from './endpoints/i/pin.js';
 import * as ep___i_readAllUnreadNotes from './endpoints/i/read-all-unread-notes.js';
 import * as ep___i_readAnnouncement from './endpoints/i/read-announcement.js';
 import * as ep___i_regenerateToken from './endpoints/i/regenerate-token.js';
-import * as ep___i_registerSubscription from './endpoints/i/register-subscription.js';
 import * as ep___i_registry_getAll from './endpoints/i/registry/get-all.js';
 import * as ep___i_registry_getDetail from './endpoints/i/registry/get-detail.js';
 import * as ep___i_registry_get from './endpoints/i/registry/get.js';
@@ -346,6 +345,8 @@ import * as ep___resetDb from './endpoints/reset-db.js';
 import * as ep___resetPassword from './endpoints/reset-password.js';
 import * as ep___serverInfo from './endpoints/server-info.js';
 import * as ep___stats from './endpoints/stats.js';
+import * as ep___subscription_create from './endpoints/subscription/create.js';
+import * as ep___subscription_manage from './endpoints/subscription/manage.js';
 import * as ep___subscription_plans_list from './endpoints/subscription-plans/list.js';
 import * as ep___subscription_plans_show from './endpoints/subscription-plans/show.js';
 import * as ep___sw_show_registration from './endpoints/sw/show-registration.js';
@@ -644,7 +645,6 @@ const eps = [
 	['i/read-all-unread-notes', ep___i_readAllUnreadNotes],
 	['i/read-announcement', ep___i_readAnnouncement],
 	['i/regenerate-token', ep___i_regenerateToken],
-	['i/register-subscription', ep___i_registerSubscription],
 	['i/registry/get-all', ep___i_registry_getAll],
 	['i/registry/get-detail', ep___i_registry_getDetail],
 	['i/registry/get', ep___i_registry_get],
@@ -742,6 +742,8 @@ const eps = [
 	['reset-password', ep___resetPassword],
 	['server-info', ep___serverInfo],
 	['stats', ep___stats],
+	['subscription/create', ep___subscription_create],
+	['subscription/manage', ep___subscription_manage],
 	['subscription-plans/list', ep___subscription_plans_list],
 	['subscription-plans/show', ep___subscription_plans_show],
 	['sw/show-registration', ep___sw_show_registration],

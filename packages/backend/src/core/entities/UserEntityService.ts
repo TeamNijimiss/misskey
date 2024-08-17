@@ -584,6 +584,8 @@ export class UserEntityService implements OnModuleInit {
 				preventAiLearning: profile!.preventAiLearning,
 				isExplorable: user.isExplorable,
 				isDeleted: user.isDeleted,
+				subscriptionStatus: user.subscriptionStatus,
+				subscriptionPlanId: user.subscriptionPlanId,
 				twoFactorBackupCodesStock: profile?.twoFactorBackupSecret?.length === 20 ? 'full' : (profile?.twoFactorBackupSecret?.length ?? 0) > 0 ? 'partial' : 'none',
 				hideOnlineStatus: user.hideOnlineStatus,
 				hasUnreadSpecifiedNotes: this.noteUnreadsRepository.count({
@@ -639,6 +641,8 @@ export class UserEntityService implements OnModuleInit {
 				isRenoteMuted: relation.isRenoteMuted,
 				notify: relation.following?.notify ?? 'none',
 				withReplies: relation.following?.withReplies ?? false,
+				stripeCustomerId: profile?.stripeCustomerId,
+				stripeSubscriptionId: user.stripeSubscriptionId,
 			} : {}),
 		} as Promiseable<Packed<S>>;
 
