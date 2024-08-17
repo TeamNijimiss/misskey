@@ -3945,6 +3945,10 @@ export interface Locale extends ILocale {
      */
     "cannotUploadBecauseExceedsFileSizeLimit": string;
     /**
+     * 接続がタイムアウトしたため、ファイルをアップロードできませんでした。
+     */
+    "cannotUploadBecauseTimeout": string;
+    /**
      * ベータ
      */
     "beta": string;
@@ -5131,6 +5135,10 @@ export interface Locale extends ILocale {
      * 相互リンク
      */
     "mutualLink": string;
+    /**
+     * このファイルをドライブに保存する
+     */
+    "saveThisFile": string;
     /**
      * サブスクリプション
      */
@@ -8976,6 +8984,10 @@ export interface Locale extends ILocale {
          * 名前が表示されないセクション
          */
         "sectionNameNone": string;
+        /**
+         * 表示上限({max}個)を超えているため、この項目は表示されません。
+         */
+        "policyDisplayLimitExceeded": ParameterizedString<"max">;
     };
     "_exportOrImport": {
         /**
