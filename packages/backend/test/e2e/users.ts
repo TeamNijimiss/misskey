@@ -153,6 +153,8 @@ describe('ユーザー', () => {
 				emailVerified: user.emailVerified,
 				securityKeysList: user.securityKeysList,
 			} : {}),
+			stripeCustomerId: user.stripeCustomerId,
+			stripeSubscriptionId: user.stripeSubscriptionId,
 		});
 	};
 
