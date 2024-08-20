@@ -114,7 +114,6 @@ export const subscriptionStatus = [
 	'none',
 ] as const;
 
-
 export type ModerationLogPayloads = {
 	updateServerSettings: {
 		before: any | null;
