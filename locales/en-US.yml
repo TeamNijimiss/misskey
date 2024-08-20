@@ -1262,6 +1262,7 @@ alwaysConfirmFollow: "Always confirm when following"
 inquiry: "Contact"
 here: "here"
 mutualLink: "Mutual Link"
+saveThisFile: "Save this file to Drive"
 _bubbleGame:
   howToPlay: "How to play"
   hold: "Hold"
