@@ -44,6 +44,8 @@ describe('ユーザー', () => {
 			emojis: user.emojis,
 			onlineStatus: user.onlineStatus,
 			badgeRoles: user.badgeRoles,
+			subscriptionStatus: user.subscriptionStatus,
+			subscriptionPlanId: user.subscriptionPlanId,
 
 			// BUG isAdmin/isModeratorはUserLiteではなくMeDetailedOnlyに含まれる。
 			isAdmin: undefined,
