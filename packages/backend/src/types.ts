@@ -335,7 +335,19 @@ export type ModerationLogPayloads = {
 		userId: string;
 		userUsername: string;
 		userMutualLinkSections: { name: string | null; mutualLinks: { id: string; url: string; fileId: string; description: string | null; imgSrc: string; }[]; }[] | []
-	}
+	};
+	createSubscriptionPlan: {
+		subscriptionPlanId: string;
+		subscriptionPlan: any;
+	};
+	updateSubscriptionPlan: {
+		subscriptionPlanId: string;
+		before: any;
+		after: any;
+	};
+	archiveSubscriptionPlan: {
+		subscriptionPlanId: string;
+	};
 };
 
 export type Serialized<T> = {

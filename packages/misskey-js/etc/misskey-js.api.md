@@ -1563,7 +1563,6 @@ declare namespace entities {
         IPinResponse,
         IReadAnnouncementRequest,
         IRegenerateTokenRequest,
-        IRegisterSubscriptionRequest,
         IRegistryGetAllRequest,
         IRegistryGetAllResponse,
         IRegistryGetDetailRequest,
@@ -1706,6 +1705,7 @@ declare namespace entities {
         ResetPasswordRequest,
         ServerInfoResponse,
         StatsResponse,
+        SubscriptionCreateRequest,
         SubscriptionPlansListResponse,
         SubscriptionPlansShowRequest,
         SubscriptionPlansShowResponse,
@@ -2274,9 +2274,6 @@ type IReadAnnouncementRequest = operations['i___read-announcement']['requestBody
 
 // @public (undocumented)
 type IRegenerateTokenRequest = operations['i___regenerate-token']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type IRegisterSubscriptionRequest = operations['i___register-subscription']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
 type IRegistryGetAllRequest = operations['i___registry___get-all']['requestBody']['content']['application/json'];
@@ -3040,6 +3037,9 @@ export class Stream extends EventEmitter<StreamEvents> {
     // (undocumented)
     useChannel<C extends keyof Channels>(channel: C, params?: Channels[C]['params'], name?: string): ChannelConnection<Channels[C]>;
 }
+
+// @public (undocumented)
+type SubscriptionCreateRequest = operations['subscription___create']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
 type SubscriptionPlan = components['schemas']['SubscriptionPlan'];
