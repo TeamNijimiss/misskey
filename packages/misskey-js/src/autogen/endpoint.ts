@@ -353,7 +353,6 @@ import type {
 	IPinResponse,
 	IReadAnnouncementRequest,
 	IRegenerateTokenRequest,
-	IRegisterSubscriptionRequest,
 	IRegistryGetAllRequest,
 	IRegistryGetAllResponse,
 	IRegistryGetDetailRequest,
@@ -496,6 +495,7 @@ import type {
 	ResetPasswordRequest,
 	ServerInfoResponse,
 	StatsResponse,
+	SubscriptionCreateRequest,
 	SubscriptionPlansListResponse,
 	SubscriptionPlansShowRequest,
 	SubscriptionPlansShowResponse,
@@ -834,7 +834,6 @@ export type Endpoints = {
 	'i/read-all-unread-notes': { req: EmptyRequest; res: EmptyResponse };
 	'i/read-announcement': { req: IReadAnnouncementRequest; res: EmptyResponse };
 	'i/regenerate-token': { req: IRegenerateTokenRequest; res: EmptyResponse };
-	'i/register-subscription': { req: IRegisterSubscriptionRequest; res: EmptyResponse };
 	'i/registry/get-all': { req: IRegistryGetAllRequest; res: IRegistryGetAllResponse };
 	'i/registry/get-detail': { req: IRegistryGetDetailRequest; res: IRegistryGetDetailResponse };
 	'i/registry/get': { req: IRegistryGetRequest; res: IRegistryGetResponse };
@@ -932,6 +931,8 @@ export type Endpoints = {
 	'reset-password': { req: ResetPasswordRequest; res: EmptyResponse };
 	'server-info': { req: EmptyRequest; res: ServerInfoResponse };
 	'stats': { req: EmptyRequest; res: StatsResponse };
+	'subscription/create': { req: SubscriptionCreateRequest; res: EmptyResponse };
+	'subscription/manage': { req: EmptyRequest; res: EmptyResponse };
 	'subscription-plans/list': { req: EmptyRequest; res: SubscriptionPlansListResponse };
 	'subscription-plans/show': { req: SubscriptionPlansShowRequest; res: SubscriptionPlansShowResponse };
 	'sw/show-registration': { req: SwShowRegistrationRequest; res: SwShowRegistrationResponse };

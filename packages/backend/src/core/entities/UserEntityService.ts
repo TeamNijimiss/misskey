@@ -509,6 +509,8 @@ export class UserEntityService implements OnModuleInit {
 					behavior: r.badgeBehavior ?? undefined,
 				})),
 			),
+			subscriptionStatus: user.subscriptionStatus,
+			subscriptionPlanId: user.subscriptionPlanId,
 
 			...(isDetailed ? {
 				url: profile!.url,
@@ -533,7 +535,7 @@ export class UserEntityService implements OnModuleInit {
 				lang: profile!.lang,
 				fields: profile!.fields,
 				verifiedLinks: profile!.verifiedLinks,
-				mutualLinkSections: profile!.mutualLinkSections,
+				mutualLinkSections: isMe ? profile!.mutualLinkSections : profile!.mutualLinkSections.slice(0, policies!.mutualLinkSectionLimit).map(section => ({ ...section, mutualLinks: section.mutualLinks.slice(0, policies!.mutualLinkLimit) })),
 				followersCount: followersCount ?? 0,
 				followingCount: followingCount ?? 0,
 				notesCount: user.notesCount,
@@ -584,8 +586,6 @@ export class UserEntityService implements OnModuleInit {
 				preventAiLearning: profile!.preventAiLearning,
 				isExplorable: user.isExplorable,
 				isDeleted: user.isDeleted,
-				subscriptionStatus: user.subscriptionStatus,
-				subscriptionPlanId: user.subscriptionPlanId,
 				twoFactorBackupCodesStock: profile?.twoFactorBackupSecret?.length === 20 ? 'full' : (profile?.twoFactorBackupSecret?.length ?? 0) > 0 ? 'partial' : 'none',
 				hideOnlineStatus: user.hideOnlineStatus,
 				hasUnreadSpecifiedNotes: this.noteUnreadsRepository.count({
@@ -628,6 +628,8 @@ export class UserEntityService implements OnModuleInit {
 						},
 					})
 					: [],
+				stripeCustomerId: profile?.stripeCustomerId,
+				stripeSubscriptionId: user.stripeSubscriptionId,
 			} : {}),
 
 			...(relation ? {
@@ -641,8 +643,6 @@ export class UserEntityService implements OnModuleInit {
 				isRenoteMuted: relation.isRenoteMuted,
 				notify: relation.following?.notify ?? 'none',
 				withReplies: relation.following?.withReplies ?? false,
-				stripeCustomerId: profile?.stripeCustomerId,
-				stripeSubscriptionId: user.stripeSubscriptionId,
 			} : {}),
 		} as Promiseable<Packed<S>>;
 

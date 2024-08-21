@@ -982,6 +982,7 @@ failedToUpload: "アップロード失敗"
 cannotUploadBecauseInappropriate: "不適切な内容を含む可能性があると判定されたためアップロードできません。"
 cannotUploadBecauseNoFreeSpace: "ドライブの空き容量が無いためアップロードできません。"
 cannotUploadBecauseExceedsFileSizeLimit: "ファイルサイズの制限を超えているためアップロードできません。"
+cannotUploadBecauseTimeout: "接続がタイムアウトしたため、ファイルをアップロードできませんでした。"
 beta: "ベータ"
 enableAutoSensitive: "自動センシティブ判定"
 enableAutoSensitiveDescription: "利用可能な場合は、機械学習を利用して自動でメディアにセンシティブフラグを設定します。この機能をオフにしても、サーバーによっては自動で設定されることがあります。"
@@ -1278,6 +1279,7 @@ blockThisUser: "このユーザーをブロックする"
 muteThisUser: "このユーザーをミュートする"
 here: "こちら"
 mutualLink: "相互リンク"
+saveThisFile: "このファイルをドライブに保存する"
 subscription: "サブスクリプション"
 subscriptionStatus: "サブスクリプションの状態"
 
@@ -2359,6 +2361,7 @@ _profile:
   sectionName: "セクション名"
   sectionNameNoneDescription: "セクション名を表示しないようにする"
   sectionNameNone: "名前が表示されないセクション"
+  policyDisplayLimitExceeded: "表示上限({max}個)を超えているため、この項目は表示されません。"
 
 _exportOrImport:
   allNotes: "全てのノート"

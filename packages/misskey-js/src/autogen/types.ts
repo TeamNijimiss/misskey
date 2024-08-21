@@ -2334,15 +2334,6 @@ export type paths = {
      */
     post: operations['i___regenerate-token'];
   };
-  '/i/register-subscription': {
-    /**
-     * i/register-subscription
-     * @description No description provided.
-     *
-     * **Credential required**: *Yes* / **Permission**: *write:account*
-     */
-    post: operations['i___register-subscription'];
-  };
   '/i/registry/get-all': {
     /**
      * i/registry/get-all
@@ -3258,6 +3249,24 @@ export type paths = {
      */
     post: operations['stats'];
   };
+  '/subscription/create': {
+    /**
+     * subscription/create
+     * @description No description provided.
+     *
+     * **Credential required**: *Yes* / **Permission**: *write:account*
+     */
+    post: operations['subscription___create'];
+  };
+  '/subscription/manage': {
+    /**
+     * subscription/manage
+     * @description No description provided.
+     *
+     * **Credential required**: *Yes* / **Permission**: *read:account*
+     */
+    post: operations['subscription___manage'];
+  };
   '/subscription-plans/list': {
     /**
      * subscription-plans/list
@@ -3852,6 +3861,10 @@ export type components = {
           displayOrder: number;
           behavior?: string;
         })[];
+      /** @enum {string} */
+      subscriptionStatus: 'incomplete' | 'incomplete_expired' | 'trialing' | 'active' | 'past_due' | 'paused' | 'canceled' | 'unpaid' | 'none';
+      /** Format: id */
+      subscriptionPlanId: string | null;
     };
     UserDetailedNotMeOnly: {
       /** Format: url */
@@ -3913,6 +3926,7 @@ export type components = {
           mutualLinks: ({
               /** Format: misskey:id */
               id: string;
+              /** Format: url */
               url: string;
               /** Format: misskey:id */
               fileId: string;
@@ -6937,6 +6951,8 @@ export type operations = {
         'application/json': {
           /** Format: misskey:id */
           userId: string;
+          /** Format: misskey:id */
+          itemId: string;
         };
       };
     };
@@ -19726,64 +19742,6 @@ export type operations = {
     };
   };
   /**
-   * i/register-subscription
-   * @description No description provided.
-   *
-   * **Credential required**: *Yes* / **Permission**: *write:account*
-   */
-  'i___register-subscription': {
-    requestBody: {
-      content: {
-        'application/json': {
-          /** Format: misskey:id */
-          planId: string;
-        };
-      };
-    };
-    responses: {
-      /** @description OK (without any results) */
-      204: {
-        content: never;
-      };
-      /** @description Client error */
-      400: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Authentication error */
-      401: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Forbidden error */
-      403: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description I'm Ai */
-      418: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description To many requests */
-      429: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-    };
-  };
-  /**
    * i/registry/get-all
    * @description No description provided.
    *
@@ -25508,6 +25466,108 @@ export type operations = {
             driveUsageRemote: number;
           };
         };
+      };
+      /** @description Client error */
+      400: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Authentication error */
+      401: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Forbidden error */
+      403: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description I'm Ai */
+      418: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+    };
+  };
+  /**
+   * subscription/create
+   * @description No description provided.
+   *
+   * **Credential required**: *Yes* / **Permission**: *write:account*
+   */
+  subscription___create: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** Format: misskey:id */
+          planId: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK (without any results) */
+      204: {
+        content: never;
+      };
+      /** @description Client error */
+      400: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Authentication error */
+      401: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Forbidden error */
+      403: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description I'm Ai */
+      418: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description To many requests */
+      429: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+    };
+  };
+  /**
+   * subscription/manage
+   * @description No description provided.
+   *
+   * **Credential required**: *Yes* / **Permission**: *read:account*
+   */
+  subscription___manage: {
+    responses: {
+      /** @description OK (without any results) */
+      204: {
+        content: never;
       };
       /** @description Client error */
       400: {

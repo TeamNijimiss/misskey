@@ -213,7 +213,6 @@ export class MiUser {
 	})
 	public isDeleted: boolean;
 
-
 	@Column('enum', {
 		enum: subscriptionStatus,
 		default: 'none',
