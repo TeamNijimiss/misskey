@@ -31,6 +31,14 @@ export const meta = {
 				type: 'boolean',
 				optional: false, nullable: false,
 			},
+			stripeCustomerId: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
+			stripeSubscriptionId: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
 			autoAcceptFollowed: {
 				type: 'boolean',
 				optional: false, nullable: false,

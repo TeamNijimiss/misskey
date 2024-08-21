@@ -9559,6 +9559,8 @@ export type operations = {
           'application/json': {
             email: string | null;
             emailVerified: boolean;
+            stripeCustomerId: string | null;
+            stripeSubscriptionId: string | null;
             autoAcceptFollowed: boolean;
             noCrawle: boolean;
             preventAiLearning: boolean;

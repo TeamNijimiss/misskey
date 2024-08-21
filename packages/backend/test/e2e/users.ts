@@ -154,9 +154,9 @@ describe('ユーザー', () => {
 				email: user.email,
 				emailVerified: user.emailVerified,
 				securityKeysList: user.securityKeysList,
+				stripeCustomerId: user.stripeCustomerId,
+				stripeSubscriptionId: user.stripeSubscriptionId,
 			} : {}),
-			stripeCustomerId: user.stripeCustomerId,
-			stripeSubscriptionId: user.stripeSubscriptionId,
 		});
 	};
 
