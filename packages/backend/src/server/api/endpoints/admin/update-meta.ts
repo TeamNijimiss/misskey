@@ -156,6 +156,11 @@ export const paramDef = {
 				type: 'string',
 			},
 		},
+		recommendedChannels: {
+			type: 'array', nullable: true, items: {
+				type: 'string',
+			},
+		},
 		summalyProxy: {
 			type: 'string', nullable: true,
 			description: '[Deprecated] Use "urlPreviewSummaryProxyUrl" instead.',
@@ -232,6 +237,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (Array.isArray(ps.featuredGameChannels)) {
 				set.featuredGameChannels = ps.featuredGameChannels.filter(Boolean);
+			}
+
+			if (Array.isArray(ps.recommendedChannels)) {
+				set.recommendedChannels = ps.recommendedChannels.filter(Boolean);
 			}
 
 			if (ps.themeColor !== undefined) {

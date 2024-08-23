@@ -6,30 +6,35 @@ SPDX-License-Identifier: AGPL-3.0-only
 <template>
 <MkStickyContainer>
 	<template #header><MkPageHeader v-model:tab="src" :actions="headerActions" :tabs="$i ? headerTabs : headerTabsWhenNotLogin" :displayMyAvatar="true"/></template>
-	<MkSpacer :contentMax="800">
-		<MkHorizontalSwipe v-model:tab="src" :tabs="$i ? headerTabs : headerTabsWhenNotLogin">
-			<div :key="src" ref="rootEl" v-hotkey.global="keymap">
-				<MkInfo v-if="['home', 'local', 'social', 'global'].includes(src) && !defaultStore.reactiveState.timelineTutorials.value[src]" style="margin-bottom: var(--margin);" closable @close="closeTutorial()">
-					{{ i18n.ts._timelineDescription[src] }}
-				</MkInfo>
-				<MkPostForm v-if="defaultStore.reactiveState.showFixedPostForm.value" :class="$style.postForm" class="post-form _panel" fixed style="margin-bottom: var(--margin);"/>
-				<div v-if="queue > 0" :class="$style.new"><button class="_buttonPrimary" :class="$style.newButton" @click="top()">{{ i18n.ts.newNoteRecived }}</button></div>
-				<div :class="$style.tl">
-					<MkTimeline
-						ref="tlComponent"
-						:key="src + withRenotes + withReplies + onlyFiles"
-						:src="src.split(':')[0]"
-						:list="src.split(':')[1]"
-						:withRenotes="withRenotes"
-						:withReplies="withReplies"
-						:onlyFiles="onlyFiles"
-						:sound="true"
-						@queue="queueUpdated"
-					/>
+	<div v-if="src === 'recommended'">
+		<MkRecommendedTimeline/>
+	</div>
+	<div v-else>
+		<MkSpacer :contentMax="800">
+			<MkHorizontalSwipe v-model:tab="src" :tabs="$i ? headerTabs : headerTabsWhenNotLogin">
+				<div :key="src" ref="rootEl" v-hotkey.global="keymap">
+					<MkInfo v-if="['home', 'local', 'social', 'global'].includes(src) && !defaultStore.reactiveState.timelineTutorials.value[src]" style="margin-bottom: var(--margin);" closable @close="closeTutorial()">
+						{{ i18n.ts._timelineDescription[src] }}
+					</MkInfo>
+					<MkPostForm v-if="defaultStore.reactiveState.showFixedPostForm.value" :class="$style.postForm" class="post-form _panel" fixed style="margin-bottom: var(--margin);"/>
+					<div v-if="queue > 0" :class="$style.new"><button class="_buttonPrimary" :class="$style.newButton" @click="top()">{{ i18n.ts.newNoteRecived }}</button></div>
+					<div :class="$style.tl">
+						<MkTimeline
+							ref="tlComponent"
+							:key="src + withRenotes + withReplies + onlyFiles"
+							:src="src.split(':')[0]"
+							:list="src.split(':')[1]"
+							:withRenotes="withRenotes"
+							:withReplies="withReplies"
+							:onlyFiles="onlyFiles"
+							:sound="true"
+							@queue="queueUpdated"
+						/>
+					</div>
 				</div>
-			</div>
-		</MkHorizontalSwipe>
-	</MkSpacer>
+			</MkHorizontalSwipe>
+		</MkSpacer>
+	</div>
 </MkStickyContainer>
 </template>
 
@@ -53,6 +58,7 @@ import { deviceKind } from '@/scripts/device-kind.js';
 import { deepMerge } from '@/scripts/merge.js';
 import { MenuItem } from '@/types/menu.js';
 import { miLocalStorage } from '@/local-storage.js';
+import MkRecommendedTimeline from "@/components/MkRecommendedTimeline.vue";
 
 provide('shouldOmitHeaderTitle', true);
 
@@ -67,7 +73,7 @@ const rootEl = shallowRef<HTMLElement>();
 
 const queue = ref(0);
 const srcWhenNotSignin = ref<'local' | 'global'>(isLocalTimelineAvailable ? 'local' : 'global');
-const src = computed<'home' | 'local' | 'social' | 'media' | 'global' | `list:${string}`>({
+const src = computed<'home' | 'local' | 'social' | 'media' | 'global' | `list:${string}` | 'recommended'>({
 	get: () => ($i ? defaultStore.reactiveState.tl.value.src : srcWhenNotSignin.value),
 	set: (x) => saveSrc(x),
 });
@@ -204,7 +210,7 @@ async function chooseChannel(ev: MouseEvent): Promise<void> {
 	os.popupMenu(items, ev.currentTarget ?? ev.target);
 }
 
-function saveSrc(newSrc: 'home' | 'local' | 'social' | 'media' | 'global' | `list:${string}`): void {
+function saveSrc(newSrc: 'home' | 'local' | 'social' | 'media' | 'global' | `list:${string}` | 'recommended'): void {
 	const out = deepMerge({ src: newSrc }, defaultStore.state.tl);
 
 	if (newSrc.startsWith('userList:')) {
@@ -246,7 +252,7 @@ function closeTutorial(): void {
 }
 
 const headerActions = computed(() => {
-	const tmp = [
+	const tmp = [...(src.value === 'recommended' ? [] : [
 		{
 			icon: 'ti ti-dots',
 			text: i18n.ts.options,
@@ -276,8 +282,8 @@ const headerActions = computed(() => {
 				}], ev.currentTarget ?? ev.target);
 			},
 		},
-	];
-	if (deviceKind === 'desktop') {
+	])];
+	if (deviceKind === 'desktop' && src.value !== 'recommended') {
 		tmp.unshift({
 			icon: 'ti ti-refresh',
 			text: i18n.ts.reload,
@@ -299,20 +305,15 @@ const headerTabs = computed(() => [...(defaultStore.reactiveState.pinnedUserList
 	title: i18n.ts._timelines.home,
 	icon: 'ti ti-home',
 	iconOnly: true,
-}, ...(isLocalTimelineAvailable ? [{
-	key: 'local',
-	title: i18n.ts._timelines.local,
-	icon: 'ti ti-planet',
-	iconOnly: true,
 }, {
+	key: 'recommended',
+	title: i18n.ts._timelines.recommended,
+	icon: 'ti ti-bolt',
+	iconOnly: true,
+}, ...(isLocalTimelineAvailable ? [{
 	key: 'media',
 	title: i18n.ts._timelines.media,
 	icon: 'ti ti-photo',
-	iconOnly: true,
-}, {
-	key: 'social',
-	title: i18n.ts._timelines.social,
-	icon: 'ti ti-universe',
 	iconOnly: true,
 }] : []), ...(isGlobalTimelineAvailable ? [{
 	key: 'global',

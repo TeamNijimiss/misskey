@@ -521,6 +521,11 @@ export class MiMeta {
 	})
 	public featuredGameChannels: string[];
 
+	@Column('varchar', {
+		length: 1024, array: true, default: '{}',
+	})
+	public recommendedChannels: string[];
+
 	@Column('boolean', {
 		default: true,
 	})

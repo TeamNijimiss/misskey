@@ -388,6 +388,8 @@ pinnedClipId: "ピン留めするクリップのID"
 pinnedNotes: "ピン留めされたノート"
 featuredGameChannels: "Misskey Gamesのピン留めチャンネル"
 featuredGameChannelsDescription: "Misskey Gamesにピン留めしたいチャンネルを改行で区切って記述します。"
+recommendedChannels: "おすすめチャンネル"
+recommendedChannelsDescription: "おすすめタイムラインに表示したいチャンネルを改行で区切って記述します。"
 hcaptcha: "hCaptcha"
 enableHcaptcha: "hCaptchaを有効にする"
 hcaptchaSiteKey: "サイトキー"
@@ -2405,6 +2407,7 @@ _instanceCharts:
 
 _timelines:
   home: "ホーム"
+  recommended: "おすすめ"
   local: "ローカル"
   media: "メディア"
   social: "ソーシャル"

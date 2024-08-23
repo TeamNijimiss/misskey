@@ -849,6 +849,9 @@ type ChannelsOwnedRequest = operations['channels___owned']['requestBody']['conte
 type ChannelsOwnedResponse = operations['channels___owned']['responses']['200']['content']['application/json'];
 
 // @public (undocumented)
+type ChannelsRecommendedResponse = operations['channels___recommended']['responses']['200']['content']['application/json'];
+
+// @public (undocumented)
 type ChannelsSearchRequest = operations['channels___search']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
@@ -1378,6 +1381,7 @@ declare namespace entities {
         ChannelsFollowedResponse,
         ChannelsOwnedRequest,
         ChannelsOwnedResponse,
+        ChannelsRecommendedResponse,
         ChannelsShowRequest,
         ChannelsShowResponse,
         ChannelsTimelineRequest,

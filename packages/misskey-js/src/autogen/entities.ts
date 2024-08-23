@@ -171,6 +171,7 @@ export type ChannelsFollowedRequest = operations['channels___followed']['request
 export type ChannelsFollowedResponse = operations['channels___followed']['responses']['200']['content']['application/json'];
 export type ChannelsOwnedRequest = operations['channels___owned']['requestBody']['content']['application/json'];
 export type ChannelsOwnedResponse = operations['channels___owned']['responses']['200']['content']['application/json'];
+export type ChannelsRecommendedResponse = operations['channels___recommended']['responses']['200']['content']['application/json'];
 export type ChannelsShowRequest = operations['channels___show']['requestBody']['content']['application/json'];
 export type ChannelsShowResponse = operations['channels___show']['responses']['200']['content']['application/json'];
 export type ChannelsTimelineRequest = operations['channels___timeline']['requestBody']['content']['application/json'];

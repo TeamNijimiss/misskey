@@ -50,6 +50,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 						<template #caption>{{ i18n.ts.featuredGameChannelsDescription }}</template>
 					</MkTextarea>
 
+					<MkTextarea v-model="recommendedChannels">
+						<template #label>{{ i18n.ts.recommendedChannels }}</template>
+						<template #caption>{{ i18n.ts.recommendedChannelsDescription }}</template>
+					</MkTextarea>
+
 					<FormSection>
 						<template #label>ServiceWorker</template>
 
@@ -206,6 +211,7 @@ const maintainerEmail = ref<string | null>(null);
 const impressumUrl = ref<string | null>(null);
 const pinnedUsers = ref<string>('');
 const featuredGameChannels = ref<string>('');
+const recommendedChannels = ref<string>('');
 const enableServiceWorker = ref<boolean>(false);
 const swPublicKey = ref<string | null>(null);
 const swPrivateKey = ref<string | null>(null);
@@ -233,6 +239,7 @@ async function init(): Promise<void> {
 	impressumUrl.value = meta.impressumUrl;
 	pinnedUsers.value = meta.pinnedUsers.join('\n');
 	featuredGameChannels.value = meta.featuredGameChannels.join('\n');
+	recommendedChannels.value = meta.recommendedChannels.join('\n');
 	enableServiceWorker.value = meta.enableServiceWorker;
 	swPublicKey.value = meta.swPublickey;
 	swPrivateKey.value = meta.swPrivateKey;
@@ -261,6 +268,7 @@ async function save() {
 		impressumUrl: impressumUrl.value,
 		pinnedUsers: pinnedUsers.value.split('\n'),
 		featuredGameChannels: featuredGameChannels.value.split('\n'),
+		recommendedChannels: recommendedChannels.value.split('\n'),
 		enableServiceWorker: enableServiceWorker.value,
 		swPublicKey: swPublicKey.value,
 		swPrivateKey: swPrivateKey.value,
