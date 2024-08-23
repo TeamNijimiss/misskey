@@ -180,7 +180,7 @@ onMounted(async () => {
 		recommendedChannels.value = result;
 
 		for (const channel of recommendedChannels.value) {
-			channelTabs.value.unshift({
+			channelTabs.value.push({
 				key: `recommended:${channel.id}`,
 				title: channel.name,
 				icon: 'ti ti-device-tv',
