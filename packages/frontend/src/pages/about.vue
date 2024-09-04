@@ -83,6 +83,10 @@ SPDX-License-Identifier: AGPL-3.0-only
 								<template #icon><i class="ti ti-shield-lock"></i></template>
 								{{ i18n.ts.privacyPolicy }}
 							</FormLink>
+							<FormLink v-if="instance.commerceDisclosureUrl" :to="instance.commerceDisclosureUrl" external>
+								<template #icon><i class="ti ti-shopping-cart"></i></template>
+								{{ i18n.ts.commerceDisclosure }}
+							</FormLink>
 							<FormLink v-if="instance.feedbackUrl" :to="instance.feedbackUrl" external>
 								<template #icon><i class="ti ti-message"></i></template>
 								{{ i18n.ts.support }}
