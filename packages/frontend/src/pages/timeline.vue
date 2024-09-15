@@ -257,11 +257,11 @@ const headerActions = computed(() => {
 			icon: 'ti ti-dots',
 			text: i18n.ts.options,
 			handler: (ev) => {
-				os.popupMenu([{
+				os.popupMenu([src.value !== 'media' ? {
 					type: 'switch',
 					text: i18n.ts.showRenotes,
 					ref: withRenotes,
-				}, src.value === 'local' || src.value === 'social' ? {
+				} : undefined, src.value === 'local' || src.value === 'social' ? {
 					type: 'switch',
 					text: i18n.ts.showRepliesToOthersInTimeline,
 					ref: withReplies,
@@ -274,12 +274,12 @@ const headerActions = computed(() => {
 					type: 'switch',
 					text: i18n.ts.withAiGenerated,
 					ref: withAiGenerated,
-				}, {
+				}, src.value !== 'media' ? {
 					type: 'switch',
 					text: i18n.ts.fileAttachedOnly,
 					ref: onlyFiles,
 					disabled: src.value === 'local' || src.value === 'social' ? withReplies : false,
-				}], ev.currentTarget ?? ev.target);
+				} : undefined], ev.currentTarget ?? ev.target);
 			},
 		},
 	])];
