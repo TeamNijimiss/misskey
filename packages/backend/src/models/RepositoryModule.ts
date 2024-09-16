@@ -73,6 +73,7 @@ import {
 	MiUserProfile,
 	MiUserPublickey,
 	MiUserSecurityKey,
+	MiUserAccountMoveLog,
 	MiWebhook,
 	MiBubbleGameRecord,
 	MiReversiGame,
@@ -198,6 +199,12 @@ const $userListFavoritesRepository: Provider = {
 const $userListMembershipsRepository: Provider = {
 	provide: DI.userListMembershipsRepository,
 	useFactory: (db: DataSource) => db.getRepository(MiUserListMembership),
+	inject: [DI.db],
+};
+
+const $userAccountMoveLogRepository: Provider = {
+	provide: DI.userAccountMoveLogRepository,
+	useFactory: (db: DataSource) => db.getRepository(MiUserAccountMoveLog),
 	inject: [DI.db],
 };
 
@@ -531,6 +538,7 @@ const $subscriptionPlansRepository: Provider = {
 		$userListsRepository,
 		$userListFavoritesRepository,
 		$userListMembershipsRepository,
+		$userAccountMoveLogRepository,
 		$userNotePiningsRepository,
 		$userIpsRepository,
 		$usedUsernamesRepository,
@@ -604,6 +612,7 @@ const $subscriptionPlansRepository: Provider = {
 		$userListsRepository,
 		$userListFavoritesRepository,
 		$userListMembershipsRepository,
+		$userAccountMoveLogRepository,
 		$userNotePiningsRepository,
 		$userIpsRepository,
 		$usedUsernamesRepository,

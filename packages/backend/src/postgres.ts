@@ -74,6 +74,7 @@ import { MiUserPending } from '@/models/UserPending.js';
 import { MiUserProfile } from '@/models/UserProfile.js';
 import { MiUserPublickey } from '@/models/UserPublickey.js';
 import { MiUserSecurityKey } from '@/models/UserSecurityKey.js';
+import { MiUserAccountMoveLog } from '@/models/UserAccountMoveLog.js';
 import { MiWebhook } from '@/models/Webhook.js';
 import { MiChannel } from '@/models/Channel.js';
 import { MiRetentionAggregation } from '@/models/RetentionAggregation.js';
@@ -154,6 +155,7 @@ export const entities = [
 	MiUserListMembership,
 	MiUserNotePining,
 	MiUserSecurityKey,
+	MiUserAccountMoveLog,
 	MiUsedUsername,
 	MiFollowing,
 	MiFollowRequest,

@@ -1809,6 +1809,22 @@ export interface Locale extends ILocale {
      */
     "moderationLogs": string;
     /**
+     * アカウント移行使用ログ
+     */
+    "userAccountMoveLogs": string;
+    /**
+     * {from} が {to} にアカウントを移行しました
+     */
+    "userAccountMoveLogsTitle": ParameterizedString<"from" | "to">;
+    /**
+     * 移行先のアカウントのID
+     */
+    "movedToId": string;
+    /**
+     * 移行元のアカウントのID
+     */
+    "moveFromId": string;
+    /**
      * {n}人が投稿
      */
     "nUsersMentioned": ParameterizedString<"n">;
@@ -3677,6 +3693,13 @@ export interface Locale extends ILocale {
      */
     "deleteAccountConfirm": string;
     /**
+     * アカウントが削除されます。
+     * 削除リクエスト後に再ログインすると
+     * アカウントの削除が中断されてしまいますのでご注意ください。
+     * よろしいですか？
+     */
+    "deleteAccountConfirmAndWarn": string;
+    /**
      * パスワードが間違っています。
      */
     "incorrectPassword": string;
@@ -4388,6 +4411,10 @@ export interface Locale extends ILocale {
      * このユーザーは新しいアカウントに移行しました：
      */
     "accountMoved": string;
+    /**
+     * このユーザーは次のアカウントから移行されました：
+     */
+    "accountMovedFrom": string;
     /**
      * このアカウントは移行されています
      */
@@ -7195,6 +7222,10 @@ export interface Locale extends ILocale {
          * 削除が進行中
          */
         "inProgress": string;
+        /**
+         * 削除が中断されてしまいますので、アカウントにログインしないことをおすすめします。
+         */
+        "dontLogin": string;
     };
     "_ad": {
         /**
