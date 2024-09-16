@@ -161,6 +161,11 @@ const menuDef = computed(() => [{
 		text: i18n.ts.moderationLogs,
 		to: '/admin/modlog',
 		active: currentPage.value?.route.name === 'modlog',
+	}, {
+		icon: 'ti ti-list-search',
+		text: i18n.ts.userAccountMoveLogs,
+		to: '/admin/useraccountmovelog',
+		active: currentPage.value?.route.name === 'useraccountmovelog',
 	}],
 }, {
 	title: i18n.ts.settings,

@@ -63,6 +63,7 @@ import { MiUserProfile } from '@/models/UserProfile.js';
 import { MiUserPublickey } from '@/models/UserPublickey.js';
 import { MiUserSecurityKey } from '@/models/UserSecurityKey.js';
 import { MiUserMemo } from '@/models/UserMemo.js';
+import { MiUserAccountMoveLog } from '@/models/UserAccountMoveLog.js';
 import { MiWebhook } from '@/models/Webhook.js';
 import { MiChannel } from '@/models/Channel.js';
 import { MiRetentionAggregation } from '@/models/RetentionAggregation.js';
@@ -147,6 +148,7 @@ export {
 	MiUserMemo,
 	MiBubbleGameRecord,
 	MiReversiGame,
+	MiUserAccountMoveLog,
 	MiSubscriptionPlan,
 };
 
@@ -210,6 +212,7 @@ export type UserPendingsRepository = Repository<MiUserPending>;
 export type UserProfilesRepository = Repository<MiUserProfile>;
 export type UserPublickeysRepository = Repository<MiUserPublickey>;
 export type UserSecurityKeysRepository = Repository<MiUserSecurityKey>;
+export type UserAccountMoveLogRepository = Repository<MiUserAccountMoveLog>;
 export type WebhooksRepository = Repository<MiWebhook>;
 export type ChannelsRepository = Repository<MiChannel>;
 export type RetentionAggregationsRepository = Repository<MiRetentionAggregation>;
