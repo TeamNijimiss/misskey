@@ -846,6 +846,12 @@ type ChannelsFollowedResponse = operations['channels___followed']['responses']['
 type ChannelsFollowRequest = operations['channels___follow']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
+type ChannelsListRequest = operations['channels___list']['requestBody']['content']['application/json'];
+
+// @public (undocumented)
+type ChannelsListResponse = operations['channels___list']['responses']['200']['content']['application/json'];
+
+// @public (undocumented)
 type ChannelsMyFavoritesResponse = operations['channels___my-favorites']['responses']['200']['content']['application/json'];
 
 // @public (undocumented)
@@ -1387,6 +1393,8 @@ declare namespace entities {
         ChannelsFollowRequest,
         ChannelsFollowedRequest,
         ChannelsFollowedResponse,
+        ChannelsListRequest,
+        ChannelsListResponse,
         ChannelsOwnedRequest,
         ChannelsOwnedResponse,
         ChannelsRecommendedResponse,

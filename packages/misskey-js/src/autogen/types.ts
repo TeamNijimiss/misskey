@@ -1079,6 +1079,15 @@ export type paths = {
      */
     post: operations['channels___followed'];
   };
+  '/channels/list': {
+    /**
+     * channels/list
+     * @description No description provided.
+     *
+     * **Credential required**: *Yes* / **Permission**: *read:channels*
+     */
+    post: operations['channels___list'];
+  };
   '/channels/owned': {
     /**
      * channels/owned
@@ -12521,6 +12530,64 @@ export type operations = {
    * **Credential required**: *Yes* / **Permission**: *read:channels*
    */
   channels___followed: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** Format: misskey:id */
+          sinceId?: string;
+          /** Format: misskey:id */
+          untilId?: string;
+          /** @default 5 */
+          limit?: number;
+        };
+      };
+    };
+    responses: {
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Channel'][];
+        };
+      };
+      /** @description Client error */
+      400: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Authentication error */
+      401: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Forbidden error */
+      403: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description I'm Ai */
+      418: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+    };
+  };
+  /**
+   * channels/list
+   * @description No description provided.
+   *
+   * **Credential required**: *Yes* / **Permission**: *read:channels*
+   */
+  channels___list: {
     requestBody: {
       content: {
         'application/json': {

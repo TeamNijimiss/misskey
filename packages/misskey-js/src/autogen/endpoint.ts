@@ -168,6 +168,8 @@ import type {
 	ChannelsFollowRequest,
 	ChannelsFollowedRequest,
 	ChannelsFollowedResponse,
+	ChannelsListRequest,
+	ChannelsListResponse,
 	ChannelsOwnedRequest,
 	ChannelsOwnedResponse,
 	ChannelsRecommendedResponse,
@@ -713,6 +715,7 @@ export type Endpoints = {
 	'channels/featured-games': { req: EmptyRequest; res: ChannelsFeaturedGamesResponse };
 	'channels/follow': { req: ChannelsFollowRequest; res: EmptyResponse };
 	'channels/followed': { req: ChannelsFollowedRequest; res: ChannelsFollowedResponse };
+	'channels/list': { req: ChannelsListRequest; res: ChannelsListResponse };
 	'channels/owned': { req: ChannelsOwnedRequest; res: ChannelsOwnedResponse };
 	'channels/recommended': { req: EmptyRequest; res: ChannelsRecommendedResponse };
 	'channels/show': { req: ChannelsShowRequest; res: ChannelsShowResponse };
