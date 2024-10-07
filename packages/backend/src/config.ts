@@ -206,6 +206,7 @@ export type Config = {
 	stripe: {
 		secretKey: string;
 		webhookSecret?: string;
+		customerPortalUrl?: string;
 	} | undefined;
 	skebStatus: {
 		method: string;
