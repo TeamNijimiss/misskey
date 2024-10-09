@@ -100,6 +100,16 @@ export function getUserMenu(user: Misskey.entities.UserDetailed, router: IRouter
 	}
 
 	function reportAbuse() {
+		if (!$i?.policies.allowReport) {
+			os.alert({
+				type: 'error',
+				title: i18n.ts.abuseAbortTitle,
+				text: i18n.ts.abuseAbortText,
+			});
+
+			return;
+		}
+
 		os.popup(defineAsyncComponent(() => import('@/components/MkAbuseReportWindow.vue')), {
 			user: user,
 		}, {}, 'closed');

@@ -1288,6 +1288,8 @@ mutualLink: "相互リンク"
 saveThisFile: "このファイルをドライブに保存する"
 subscription: "サブスクリプション"
 subscriptionStatus: "サブスクリプションの状態"
+abuseAbortTitle: "通報不可"
+abuseAbortText: "ロールにより通報が制限されているため、通報を行うことができません。"
 
 _subscription:
   current: "現在のプラン"
@@ -1814,6 +1816,7 @@ _role:
     avatarDecorationLimit: "アイコンデコレーションの最大取付個数"
     mutualLinkSectionLimit: "相互リンクのセクションの最大数"
     mutualLinkLimit: "セクション内の相互リンクの最大数"
+    allowReport: "通報の許可"
   _condition:
     roleAssignedTo: "マニュアルロールにアサイン済み"
     isLocal: "ローカルユーザー"
