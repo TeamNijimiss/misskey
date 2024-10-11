@@ -132,6 +132,16 @@ export function getAbuseNoteMenu(note: Misskey.entities.Note, text: string): Men
 		icon: 'ti ti-exclamation-circle',
 		text,
 		action: (): void => {
+			if (!$i?.policies.allowReport) {
+				os.alert({
+					type: 'error',
+					title: i18n.ts.abuseAbortTitle,
+					text: i18n.ts.abuseAbortText,
+				});
+
+				return;
+			}
+
 			const localUrl = `${url}/notes/${note.id}`;
 			let noteInfo = '';
 			if (note.url ?? note.uri != null) noteInfo = `Note: ${note.url ?? note.uri}\n`;

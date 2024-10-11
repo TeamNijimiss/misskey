@@ -5174,6 +5174,14 @@ export interface Locale extends ILocale {
      * サブスクリプションの状態
      */
     "subscriptionStatus": string;
+    /**
+     * 通報不可
+     */
+    "abuseAbortTitle": string;
+    /**
+     * ロールにより通報が制限されているため、通報を行うことができません。
+     */
+    "abuseAbortText": string;
     "_subscription": {
         /**
          * 現在のプラン
@@ -7033,6 +7041,10 @@ export interface Locale extends ILocale {
              * セクション内の相互リンクの最大数
              */
             "mutualLinkLimit": string;
+            /**
+             * 通報の許可
+             */
+            "allowReport": string;
         };
         "_condition": {
             /**

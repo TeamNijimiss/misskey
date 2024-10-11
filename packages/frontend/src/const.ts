@@ -111,6 +111,7 @@ export const ROLE_POLICIES = [
 	'avatarDecorationLimit',
 	'mutualLinkSectionLimit',
 	'mutualLinkLimit',
+	'allowReport',
 ] as const;
 
 // なんか動かない

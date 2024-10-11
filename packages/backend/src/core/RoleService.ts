@@ -72,6 +72,7 @@ export type RolePolicies = {
 	avatarDecorationLimit: number;
 	mutualLinkSectionLimit: number;
 	mutualLinkLimit: number;
+	allowReport: boolean;
 };
 
 export const DEFAULT_POLICIES: RolePolicies = {
@@ -114,6 +115,7 @@ export const DEFAULT_POLICIES: RolePolicies = {
 	avatarDecorationLimit: 1,
 	mutualLinkSectionLimit: 1,
 	mutualLinkLimit: 3,
+	allowReport: true,
 };
 
 @Injectable()
@@ -429,6 +431,7 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 			avatarDecorationLimit: calc('avatarDecorationLimit', vs => Math.max(...vs)),
 			mutualLinkSectionLimit: calc('mutualLinkSectionLimit', vs => Math.max(...vs)),
 			mutualLinkLimit: calc('mutualLinkLimit', vs => Math.max(...vs)),
+			allowReport: calc('allowReport', vs => vs.some(v => v === true)),
 		};
 	}
 
