@@ -124,7 +124,7 @@ import * as ep___channels_featured from './endpoints/channels/featured.js';
 import * as ep___channels_featured_games from './endpoints/channels/featured-games.js';
 import * as ep___channels_follow from './endpoints/channels/follow.js';
 import * as ep___channels_followed from './endpoints/channels/followed.js';
-import * as ep___channels_list from './endpoints/channels/list.js'
+import * as ep___channels_list from './endpoints/channels/list.js';
 import * as ep___channels_owned from './endpoints/channels/owned.js';
 import * as ep___channels_recommended from './endpoints/channels/recommended.js';
 import * as ep___channels_show from './endpoints/channels/show.js';

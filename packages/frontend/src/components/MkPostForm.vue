@@ -27,7 +27,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<span v-if="visibility === 'specified'"><i class="ti ti-mail"></i></span>
 					<span :class="$style.headerRightButtonText">{{ i18n.ts._visibility[visibility] }}</span>
 				</button>
-				<button v-else class="_button" ref="channelButton" :class="[$style.headerRightItem, $style.visibility]" @click="selectChannel">
+				<button v-else ref="channelButton" class="_button" :class="[$style.headerRightItem, $style.visibility]" @click="selectChannel">
 					<span><i class="ti ti-device-tv"></i></span>
 					<span :class="$style.headerRightButtonText">{{ targetChannel.name }}</span>
 				</button>
