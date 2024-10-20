@@ -1783,7 +1783,7 @@ _role:
     middle: "中"
     high: "高"
   _options:
-    required2fa: "二段階認証を必須"
+    required2fa: "二要素認証を必須"
     gtlAvailable: "グローバルタイムラインの閲覧"
     ltlAvailable: "ローカルタイムラインの閲覧"
     canPublicNote: "パブリック投稿の許可"
