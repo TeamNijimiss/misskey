@@ -118,6 +118,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 				const makeCustomer = await stripe.customers.create({
 					email: userProfile.email,
+				}, {
+					idempotencyKey: user.id,
 				});
 				await this.userProfilesRepository.update({ userId: user.id }, {
 					stripeCustomerId: makeCustomer.id,
@@ -167,7 +169,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 						return;
 					}
 
-					await stripe.subscriptionItems.update(subscriptionItem.id, { plan: plan.stripePriceId });
+					await stripe.subscriptionItems.update(subscriptionItem.id, { plan: plan.stripePriceId }, { idempotencyKey: user.id + plan.id });
 					logger.info(`Subscription plan changed for user ${user.id} to plan ${plan.id}`);
 
 					return;
@@ -180,7 +182,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					customer: userProfile.stripeCustomerId ?? undefined,
 					allow_promotion_codes: true,
 					return_url: `${this.config.url}/settings/subscription`,
-				}, {});
+				});
 
 				return {
 					redirect: {
