@@ -8,6 +8,7 @@ import { MetaService } from '@/core/MetaService.js';
 import type { Config } from '@/config.js';
 import { RoleService } from '@/core/RoleService.js';
 import { ApiError } from '../../error.js';
+import { LoggerService } from "@/core/LoggerService.js";
 
 export const meta = {
 	tags: ['subscription'],
@@ -46,6 +47,12 @@ export const meta = {
 			id: 'f1b0a9f3-9f8a-4e8c-9b4d-0d2c1b7a9c0b',
 		},
 
+		statusInconsistency: {
+			message: 'The information registered in the payment service and the information stored on the server do not match.',
+			code: 'STATUS_INCONSENT',
+			id: 'f1d204e7-276a-4277-9e7b-14f5e038c2d8',
+		},
+
 		unavailable: {
 			message: 'Subscription unavailable.',
 			code: 'UNAVAILABLE',
@@ -75,8 +82,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		private subscriptionPlansRepository: SubscriptionPlansRepository,
 		private roleService: RoleService,
 		private metaService: MetaService,
+		private loggerService: LoggerService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
+			const logger = this.loggerService.getLogger('subscription:create');
 			const instance = await this.metaService.fetch(true);
 			if (!(instance.enableSubscriptions)) {
 				throw new ApiError(meta.errors.unavailable);
@@ -101,6 +110,12 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			const stripe = new Stripe(this.config.stripe.secretKey);
 			if (!userProfile.stripeCustomerId) {
+				const searchCustomer = await stripe.customers.search({ query: `email:"${userProfile.email}"` });
+				if (searchCustomer.data.length !== 0) {
+					logger.info(`User with email ${userProfile.email} is already registered in Stripe but not recorded in UserProfile.`);
+					throw new ApiError(meta.errors.statusInconsistency);
+				}
+
 				const makeCustomer = await stripe.customers.create({
 					email: userProfile.email,
 				});
@@ -108,6 +123,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					stripeCustomerId: makeCustomer.id,
 				});
 				userProfile = await this.userProfilesRepository.findOneByOrFail({ userId: user.id });
+				logger.info(`New Stripe customer created with ID ${makeCustomer.id} and associated with user ${user.id}`);
 			}
 
 			const subscriptionStatus = user.subscriptionStatus;
@@ -136,6 +152,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 							for (const role of roles) {
 								if (roleIds.includes(role.id)) {
 									await this.roleService.unassign(user.id, role.id);
+									logger.info(`${user.id} has been unassigned the role "${role.id}".`);
 								}
 							}
 						});
@@ -151,6 +168,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					}
 
 					await stripe.subscriptionItems.update(subscriptionItem.id, { plan: plan.stripePriceId });
+					logger.info(`Subscription plan changed for user ${user.id} to plan ${plan.id}`);
 
 					return;
 				} else {
