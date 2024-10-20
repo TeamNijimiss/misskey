@@ -20,6 +20,7 @@ import { initializeSw } from '@/scripts/initialize-sw.js';
 import { deckStore } from '@/ui/deck/deck-store.js';
 import { emojiPicker } from '@/scripts/emoji-picker.js';
 import { mainRouter } from '@/router/main.js';
+import * as os from "@/os.js";
 
 export async function mainBoot() {
 	const { isClientUpdated } = await common(() => createApp(
@@ -111,6 +112,20 @@ export async function mainBoot() {
 				popup(defineAsyncComponent(() => import('@/components/MkUserSetupDialog.vue')), {}, {}, 'closed');
 			}
 		});
+
+		if ($i.policies.required2fa && !$i.twoFactorEnabled) {
+			const auth = await os.authenticateDialog();
+			if (auth.canceled) return;
+
+			const twoFactorData = await os.apiWithDialog('i/2fa/register', {
+				password: auth.result.password,
+				token: auth.result.token,
+			});
+
+			os.popup(defineAsyncComponent(() => import('@/pages/settings/2fa.qrdialog.vue')), { // TODO どっかのタイミングで専用のコンポーネントにする。
+				twoFactorData,
+			}, {}, 'closed');
+		}
 
 		for (const announcement of ($i.unreadAnnouncements ?? []).filter(x => x.display === 'dialog')) {
 			popup(defineAsyncComponent(() => import('@/components/MkAnnouncementDialog.vue')), {

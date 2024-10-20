@@ -6910,6 +6910,10 @@ export interface Locale extends ILocale {
         };
         "_options": {
             /**
+             * 二段階認証を必須
+             */
+            "required2fa": string;
+            /**
              * グローバルタイムラインの閲覧
              */
             "gtlAvailable": string;
