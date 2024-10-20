@@ -1738,6 +1738,7 @@ _role:
     middle: "Medium"
     high: "High"
   _options:
+    required2fa: "Require 2-factor authentication"
     gtlAvailable: "Can view the global timeline"
     ltlAvailable: "Can view the local timeline"
     canPublicNote: "Can send public notes"

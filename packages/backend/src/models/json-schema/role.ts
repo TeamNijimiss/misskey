@@ -168,6 +168,10 @@ export const packedRolePoliciesSchema = {
 	type: 'object',
 	optional: false, nullable: false,
 	properties: {
+		required2fa: {
+			type: 'boolean',
+			optional: false, nullable: false,
+		},
 		gtlAvailable: {
 			type: 'boolean',
 			optional: false, nullable: false,

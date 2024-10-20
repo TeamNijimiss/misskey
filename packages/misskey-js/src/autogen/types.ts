@@ -5037,6 +5037,7 @@ export type components = {
       usersCount: number;
     });
     RolePolicies: {
+      required2fa: boolean;
       gtlAvailable: boolean;
       ltlAvailable: boolean;
       canPublicNote: boolean;

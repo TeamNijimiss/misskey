@@ -16,6 +16,14 @@ SPDX-License-Identifier: AGPL-3.0-only
 							<template #prefix><i class="ti ti-search"></i></template>
 						</MkInput>
 
+						<MkFolder v-if="matchQuery([i18n.ts._role._options.required2fa, 'required2fa'])">
+							<template #label>{{ i18n.ts._role._options.required2fa }}</template>
+							<template #suffix>{{ policies.gtlAvailable ? i18n.ts.yes : i18n.ts.no }}</template>
+							<MkSwitch v-model="policies.required2fa">
+								<template #label>{{ i18n.ts.enable }}</template>
+							</MkSwitch>
+						</MkFolder>
+
 						<MkFolder v-if="matchQuery([i18n.ts._role._options.rateLimitFactor, 'rateLimitFactor'])">
 							<template #label>{{ i18n.ts._role._options.rateLimitFactor }}</template>
 							<template #suffix>{{ Math.floor(policies.rateLimitFactor * 100) }}%</template>

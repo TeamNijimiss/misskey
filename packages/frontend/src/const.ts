@@ -72,6 +72,7 @@ export const notificationTypes = [
 export const obsoleteNotificationTypes = ['pollVote', 'groupInvited'] as const;
 
 export const ROLE_POLICIES = [
+	'required2fa',
 	'gtlAvailable',
 	'ltlAvailable',
 	'canPublicNote',
