@@ -11,7 +11,6 @@ import { alert, confirm, popup, post, toast } from '@/os.js';
 import { useStream } from '@/stream.js';
 import * as sound from '@/scripts/sound.js';
 import { $i, signout, updateAccount } from '@/account.js';
-import { instance } from '@/instance.js';
 import { ColdDeviceStorage, defaultStore } from '@/store.js';
 import { makeHotkey } from '@/scripts/hotkey.js';
 import { reactionPicker } from '@/scripts/reaction-picker.js';
@@ -21,6 +20,7 @@ import { initializeSw } from '@/scripts/initialize-sw.js';
 import { deckStore } from '@/ui/deck/deck-store.js';
 import { emojiPicker } from '@/scripts/emoji-picker.js';
 import { mainRouter } from '@/router/main.js';
+import * as os from "@/os.js";
 
 export async function mainBoot() {
 	const { isClientUpdated } = await common(() => createApp(
@@ -97,7 +97,7 @@ export async function mainBoot() {
 					}).render();
 				}
 			}
-		}	
+		}
 	} catch (error) {
 		// console.error(error);
 		console.error('Failed to initialise the seasonal screen effect canvas context:', error);
@@ -112,6 +112,20 @@ export async function mainBoot() {
 				popup(defineAsyncComponent(() => import('@/components/MkUserSetupDialog.vue')), {}, {}, 'closed');
 			}
 		});
+
+		if ($i.policies.required2fa && !$i.twoFactorEnabled) {
+			const auth = await os.authenticateDialog();
+			if (auth.canceled) return;
+
+			const twoFactorData = await os.apiWithDialog('i/2fa/register', {
+				password: auth.result.password,
+				token: auth.result.token,
+			});
+
+			os.popup(defineAsyncComponent(() => import('@/pages/settings/2fa.qrdialog.vue')), { // TODO どっかのタイミングで専用のコンポーネントにする。
+				twoFactorData,
+			}, {}, 'closed');
+		}
 
 		for (const announcement of ($i.unreadAnnouncements ?? []).filter(x => x.display === 'dialog')) {
 			popup(defineAsyncComponent(() => import('@/components/MkAnnouncementDialog.vue')), {
@@ -243,10 +257,10 @@ export async function mainBoot() {
 			}
 		}
 
-		const modifiedVersionMustProminentlyOfferInAgplV3Section13Read = miLocalStorage.getItem('modifiedVersionMustProminentlyOfferInAgplV3Section13Read');
-		if (modifiedVersionMustProminentlyOfferInAgplV3Section13Read !== 'true' && instance.repositoryUrl !== 'https://github.com/misskey-dev/misskey') {
-			popup(defineAsyncComponent(() => import('@/components/MkSourceCodeAvailablePopup.vue')), {}, {}, 'closed');
-		}
+		// const modifiedVersionMustProminentlyOfferInAgplV3Section13Read = miLocalStorage.getItem('modifiedVersionMustProminentlyOfferInAgplV3Section13Read');
+		// if (modifiedVersionMustProminentlyOfferInAgplV3Section13Read !== 'true' && instance.repositoryUrl !== 'https://github.com/misskey-dev/misskey') {
+		// 	popup(defineAsyncComponent(() => import('@/components/MkSourceCodeAvailablePopup.vue')), {}, {}, 'closed');
+		// }
 
 		if ('Notification' in window) {
 			// 許可を得ていなかったらリクエスト

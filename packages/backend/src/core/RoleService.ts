@@ -33,6 +33,7 @@ import { NotificationService } from '@/core/NotificationService.js';
 import type { OnApplicationShutdown, OnModuleInit } from '@nestjs/common';
 
 export type RolePolicies = {
+	required2fa: boolean;
 	gtlAvailable: boolean;
 	ltlAvailable: boolean;
 	canPublicNote: boolean;
@@ -72,9 +73,11 @@ export type RolePolicies = {
 	avatarDecorationLimit: number;
 	mutualLinkSectionLimit: number;
 	mutualLinkLimit: number;
+	allowReport: boolean;
 };
 
 export const DEFAULT_POLICIES: RolePolicies = {
+	required2fa: false,
 	gtlAvailable: true,
 	ltlAvailable: true,
 	canPublicNote: true,
@@ -114,6 +117,7 @@ export const DEFAULT_POLICIES: RolePolicies = {
 	avatarDecorationLimit: 1,
 	mutualLinkSectionLimit: 1,
 	mutualLinkLimit: 3,
+	allowReport: true,
 };
 
 @Injectable()
@@ -390,6 +394,7 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 		}
 
 		return {
+			required2fa: calc('required2fa', vs => vs.some(v => v === true)),
 			gtlAvailable: calc('gtlAvailable', vs => vs.some(v => v === true)),
 			ltlAvailable: calc('ltlAvailable', vs => vs.some(v => v === true)),
 			canPublicNote: calc('canPublicNote', vs => vs.some(v => v === true)),
@@ -429,6 +434,7 @@ export class RoleService implements OnApplicationShutdown, OnModuleInit {
 			avatarDecorationLimit: calc('avatarDecorationLimit', vs => Math.max(...vs)),
 			mutualLinkSectionLimit: calc('mutualLinkSectionLimit', vs => Math.max(...vs)),
 			mutualLinkLimit: calc('mutualLinkLimit', vs => Math.max(...vs)),
+			allowReport: calc('allowReport', vs => vs.some(v => v === true)),
 		};
 	}
 

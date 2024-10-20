@@ -168,6 +168,10 @@ export const packedRolePoliciesSchema = {
 	type: 'object',
 	optional: false, nullable: false,
 	properties: {
+		required2fa: {
+			type: 'boolean',
+			optional: false, nullable: false,
+		},
 		gtlAvailable: {
 			type: 'boolean',
 			optional: false, nullable: false,
@@ -318,6 +322,10 @@ export const packedRolePoliciesSchema = {
 		},
 		mutualLinkLimit: {
 			type: 'integer',
+			optional: false, nullable: false,
+		},
+		allowReport: {
+			type: 'boolean',
 			optional: false, nullable: false,
 		},
 	},

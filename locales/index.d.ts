@@ -593,6 +593,18 @@ export interface Locale extends ILocale {
      */
     "renoteUnmute": string;
     /**
+     * リアクションのミュート
+     */
+    "mutedReactions": string;
+    /**
+     * このリアクションをミュートする
+     */
+    "muteThisReaction": string;
+    /**
+     * このリアクションのミュートを解除する
+     */
+    "unmuteThisReaction": string;
+    /**
      * ブロック
      */
     "block": string;
@@ -2809,6 +2821,10 @@ export interface Locale extends ILocale {
      */
     "regenerateLoginToken": string;
     /**
+     * ログイントークンを再生成しますか？
+     */
+    "regenerateLoginTokenConfirm": string;
+    /**
      * ログインに使用される内部トークンを再生成します。通常この操作を行う必要はありません。再生成すると、全てのデバイスでログアウトされます。
      */
     "regenerateLoginTokenDescription": string;
@@ -4288,7 +4304,7 @@ export interface Locale extends ILocale {
      */
     "rolesAssignedToMe": string;
     /**
-     * パスワードリセットしますか？
+     * パスワードをリセットしますか？
      */
     "resetPasswordConfirm": string;
     /**
@@ -5167,6 +5183,10 @@ export interface Locale extends ILocale {
      */
     "saveThisFile": string;
     /**
+     * 名前を変更
+     */
+    "changeUserName": string;
+    /**
      * サブスクリプション
      */
     "subscription": string;
@@ -5174,6 +5194,14 @@ export interface Locale extends ILocale {
      * サブスクリプションの状態
      */
     "subscriptionStatus": string;
+    /**
+     * 通報不可
+     */
+    "abuseAbortTitle": string;
+    /**
+     * ロールにより通報が制限されているため、通報を行うことができません。
+     */
+    "abuseAbortText": string;
     "_subscription": {
         /**
          * 現在のプラン
@@ -5407,9 +5435,17 @@ export interface Locale extends ILocale {
          */
         "needConfirmationToRead": string;
         /**
-         * 有効にすると、このお知らせを既読にする際に確認ダイアログが表示されます。また、一括既読操作の対象になりません。
+         * 有効にすると、このお知らせを既読にする際に確認ダイアログが表示されます。
          */
         "needConfirmationToReadDescription": string;
+        /**
+         * チュートリアルの受講が必要
+         */
+        "needEnrollmentTutorialToRead": string;
+        /**
+         * 有効にすると、このお知らせを既読にするためにはチュートリアルの受講が必要です。
+         */
+        "needEnrollmentTutorialToReadDescription": string;
         /**
          * お知らせを終了
          */
@@ -6874,6 +6910,10 @@ export interface Locale extends ILocale {
         };
         "_options": {
             /**
+             * 二要素認証を必須
+             */
+            "required2fa": string;
+            /**
              * グローバルタイムラインの閲覧
              */
             "gtlAvailable": string;
@@ -7033,6 +7073,10 @@ export interface Locale extends ILocale {
              * セクション内の相互リンクの最大数
              */
             "mutualLinkLimit": string;
+            /**
+             * 通報の許可
+             */
+            "allowReport": string;
         };
         "_condition": {
             /**
@@ -8350,6 +8394,10 @@ export interface Locale extends ILocale {
          */
         "write:admin:reset-password": string;
         /**
+         * ユーザーのログイントークンを再生成する
+         */
+        "write:admin:regenerate-user-token": string;
+        /**
          * ユーザーからの通報を解決する
          */
         "write:admin:resolve-abuse-user-report": string;
@@ -8380,15 +8428,15 @@ export interface Locale extends ILocale {
         /**
          * ユーザーのアバターを削除する
          */
-        "write:admin:unset-user-avatar": string;
+        "write:admin:user-avatar": string;
         /**
          * ユーザーのバーナーを削除する
          */
-        "write:admin:unset-user-banner": string;
+        "write:admin:user-banner": string;
         /**
          * ユーザーの相互リンクを削除する
          */
-        "write:admin:unset-user-mutual-link": string;
+        "write:admin:user-mutual-link": string;
         /**
          * ユーザーの凍結を解除する
          */
@@ -8397,6 +8445,10 @@ export interface Locale extends ILocale {
          * インスタンスのメタデータを操作する
          */
         "write:admin:meta": string;
+        /**
+         * ユーザーの名前を変更する
+         */
+        "write:admin:user-name": string;
         /**
          * モデレーションノートを操作する
          */
