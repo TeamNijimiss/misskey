@@ -30,6 +30,12 @@ export const meta = {
 			code: 'CANNOT_DELETE_MODERATOR',
 			id: 'd195c621-f21a-4c2f-a634-484c2a616311',
 		},
+
+		subscriptionIsActive: {
+			message: 'If Subscription is active, cannot move account.',
+			code: 'SUBSCRIPTION_IS_ACTIVE',
+			id: 'f5c8b3b4-9e4d-4b7f-9f4d-9f1f0a7a3d0a',
+		},
 	},
 } as const;
 
@@ -56,6 +62,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (user == null) throw new ApiError(meta.errors.userNotFound);
 			if (await this.roleService.isModerator(user)) throw new ApiError(meta.errors.cannotDeleteModerator);
+
+			if (!(user.subscriptionStatus === 'unpaid' || user.subscriptionStatus === 'canceled' || user.subscriptionStatus === 'none')) {
+				throw new ApiError(meta.errors.subscriptionIsActive);
+			}
 
 			await this.deleteAccountService.deleteAccount(user, ps.soft, me);
 		});
