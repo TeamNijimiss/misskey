@@ -5076,6 +5076,7 @@ export type components = {
       avatarDecorationLimit: number;
       mutualLinkSectionLimit: number;
       mutualLinkLimit: number;
+      allowReport: boolean;
     };
     ReversiGameLite: {
       /** Format: id */
