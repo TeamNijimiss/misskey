@@ -19,20 +19,20 @@ SPDX-License-Identifier: AGPL-3.0-only
 			</button>
 		</div>
 		<div :class="$style.headerRight">
-			<template v-if="!(channel != null && fixed)">
-				<button v-if="channel == null" ref="visibilityButton" v-click-anime v-tooltip="i18n.ts.visibility" :class="['_button', $style.headerRightItem, $style.visibility]" @click="setVisibility">
+			<template v-if="!(targetChannel != null && fixed)">
+				<button v-if="targetChannel == null" ref="visibilityButton" v-click-anime v-tooltip="i18n.ts.visibility" :class="['_button', $style.headerRightItem, $style.visibility]" @click="setVisibility">
 					<span v-if="visibility === 'public'"><i class="ti ti-world"></i></span>
 					<span v-if="visibility === 'home'"><i class="ti ti-home"></i></span>
 					<span v-if="visibility === 'followers'"><i class="ti ti-lock"></i></span>
 					<span v-if="visibility === 'specified'"><i class="ti ti-mail"></i></span>
 					<span :class="$style.headerRightButtonText">{{ i18n.ts._visibility[visibility] }}</span>
 				</button>
-				<button v-else class="_button" :class="[$style.headerRightItem, $style.visibility]" disabled>
+				<button v-else ref="channelButton" class="_button" :class="[$style.headerRightItem, $style.visibility]" @click="selectChannel">
 					<span><i class="ti ti-device-tv"></i></span>
-					<span :class="$style.headerRightButtonText">{{ channel.name }}</span>
+					<span :class="$style.headerRightButtonText">{{ targetChannel.name }}</span>
 				</button>
 			</template>
-			<button v-click-anime v-tooltip="i18n.ts._visibility.disableFederation" class="_button" :class="[$style.headerRightItem, { [$style.danger]: localOnly }]" :disabled="channel != null || visibility === 'specified'" @click="toggleLocalOnly">
+			<button v-click-anime v-tooltip="i18n.ts._visibility.disableFederation" class="_button" :class="[$style.headerRightItem, { [$style.danger]: localOnly }]" :disabled="targetChannel != null || visibility === 'specified'" @click="toggleLocalOnly">
 				<span v-if="!localOnly"><i class="ti ti-rocket"></i></span>
 				<span v-else><i class="ti ti-rocket-off"></i></span>
 			</button>
@@ -67,7 +67,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<MkInfo v-if="hasNotSpecifiedMentions" warn :class="$style.hasNotSpecifiedMentions">{{ i18n.ts.notSpecifiedMentionWarning }} - <button class="_textButton" @click="addMissingMention()">{{ i18n.ts.add }}</button></MkInfo>
 	<input v-show="useCw" ref="cwInputEl" v-model="cw" class="mk-input-text" :class="$style.cw" :placeholder="i18n.ts.annotation" @keydown="onKeydown">
 	<div :class="[$style.textOuter, { [$style.withCw]: useCw }]">
-		<div v-if="channel" :class="$style.colorBar" :style="{ background: channel.color }"></div>
+		<div v-if="targetChannel" :class="$style.colorBar" :style="{ background: targetChannel.color }"></div>
 		<textarea ref="textareaEl" v-model="text" :class="[$style.text]" :disabled="posting || posted" :readonly="textAreaReadOnly" :placeholder="placeholder" data-cy-post-form-text @keydown="onKeydown" @paste="onPaste" @compositionupdate="onCompositionUpdate" @compositionend="onCompositionEnd"/>
 		<div v-if="maxTextLength - textLength < 100" :class="['_acrylic', $style.textCount, { [$style.textOver]: textLength > maxTextLength }]">{{ maxTextLength - textLength }}</div>
 	</div>
@@ -178,6 +178,7 @@ const textareaEl = shallowRef<HTMLTextAreaElement | null>(null);
 const cwInputEl = shallowRef<HTMLInputElement | null>(null);
 const hashtagsInputEl = shallowRef<HTMLInputElement | null>(null);
 const visibilityButton = shallowRef<HTMLElement>();
+const channelButton = shallowRef<HTMLElement>();
 
 const posting = ref(false);
 const posted = ref(false);
@@ -207,11 +208,12 @@ const recentHashtags = ref(JSON.parse(miLocalStorage.getItem('hashtags') ?? '[]'
 const imeText = ref('');
 const showingOptions = ref(false);
 const textAreaReadOnly = ref(false);
+const targetChannel = ref<Misskey.entities.Channel | null>(props.channel ?? null);
 
 const nsfwGuideUrl = 'https://nijimiss.org/post-guideline/';
 
 const draftKey = computed((): string => {
-	let key = props.channel ? `channel:${props.channel.id}` : '';
+	let key = targetChannel.value ? `channel:${targetChannel.value.id}` : '';
 
 	if (props.renote) {
 		key += `renote:${props.renote.id}`;
@@ -229,7 +231,7 @@ const placeholder = computed((): string => {
 		return i18n.ts._postForm.quotePlaceholder;
 	} else if (props.reply) {
 		return i18n.ts._postForm.replyPlaceholder;
-	} else if (props.channel) {
+	} else if (targetChannel.value) {
 		return i18n.ts._postForm.channelPlaceholder;
 	} else {
 		const xs = [
@@ -324,7 +326,7 @@ if ($i.isSilenced && visibility.value === 'public') {
 	visibility.value = 'home';
 }
 
-if (props.channel) {
+if (targetChannel.value) {
 	visibility.value = 'public';
 	localOnly.value = true; // TODO: チャンネルが連合するようになった折には消す
 }
@@ -473,7 +475,7 @@ function upload(file: File, name?: string): void {
 }
 
 function setVisibility() {
-	if (props.channel) {
+	if (targetChannel.value) {
 		visibility.value = 'public';
 		localOnly.value = true; // TODO: チャンネルが連合するようになった折には消す
 		return;
@@ -495,8 +497,22 @@ function setVisibility() {
 	}, 'closed');
 }
 
+function selectChannel() {
+	os.popup(defineAsyncComponent(() => import('@/components/MkChannelPicker.vue')), {
+		currentChannel: targetChannel.value ?? undefined,
+		src: channelButton.value,
+	}, {
+		changeChannel: channel => {
+			targetChannel.value = channel;
+			if (defaultStore.state.rememberNoteVisibility) {
+				defaultStore.set('postFormTarget', channel);
+			}
+		},
+	}, 'closed');
+}
+
 async function toggleLocalOnly() {
-	if (props.channel) {
+	if (targetChannel.value) {
 		visibility.value = 'public';
 		localOnly.value = true; // TODO: チャンネルが連合するようになった折には消す
 		return;
@@ -774,7 +790,7 @@ async function post(ev?: MouseEvent) {
 		fileIds: files.value.length > 0 ? files.value.filter(f => f?.id).map(f => f.id) : undefined,
 		replyId: props.reply ? props.reply.id : undefined,
 		renoteId: props.renote ? props.renote.id : quoteId.value ? quoteId.value : undefined,
-		channelId: props.channel ? props.channel.id : undefined,
+		channelId: targetChannel.value ? targetChannel.value.id : undefined,
 		poll: poll.value,
 		cw: useCw.value ? cw.value ?? '' : null,
 		localOnly: localOnly.value,
@@ -975,6 +991,10 @@ onMounted(() => {
 	autocompleteHashtagsInput.value = new Autocomplete(hashtagsInputEl.value, hashtags);
 
 	nextTick(() => {
+		if (!props.instant && !props.mention && !props.specified && !props.mock && !props.channel) {
+			targetChannel.value = defaultStore.state.postFormTarget;
+		}
+
 		// 書きかけの投稿を復元
 		if (!props.instant && !props.mention && !props.specified && !props.mock) {
 			const draft = JSON.parse(miLocalStorage.getItem('drafts') ?? '{}')[draftKey.value];
