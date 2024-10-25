@@ -90,13 +90,14 @@ export class StripeWebhookServerService {
 
 				if (!userProfile) {
 					this.logger.warn(`CustomerId: "${customer}" has no user profile found.`);
-					return reply.code(400);
+					throw new Error();
 				}
-				reply.code(204); // Stripeへの応答を設定
+
 				return { userProfile, subscription: eventData };
 			};
 
 			const { userProfile, subscription } = await preprocessEvent(event.data.object);
+			reply.code(204); // Stripeへの応答を設定
 
 			// Handle the event.
 			switch (event.type) {
