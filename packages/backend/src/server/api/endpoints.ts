@@ -11,6 +11,7 @@ import * as ep___admin_abuseUserReports from './endpoints/admin/abuse-user-repor
 import * as ep___admin_accounts_create from './endpoints/admin/accounts/create.js';
 import * as ep___admin_accounts_delete from './endpoints/admin/accounts/delete.js';
 import * as ep___admin_accounts_findByEmail from './endpoints/admin/accounts/find-by-email.js';
+import * as ep___admin_accounts_findByStripeCustomer from './endpoints/admin/accounts/find-by-stripe-customer.js';
 import * as ep___admin_accounts_pending_list from './endpoints/admin/accounts/pending/list.js';
 import * as ep___admin_accounts_pending_revoke from './endpoints/admin/accounts/pending/revoke.js';
 import * as ep___admin_ad_create from './endpoints/admin/ad/create.js';
@@ -225,7 +226,6 @@ import * as ep___i_apps from './endpoints/i/apps.js';
 import * as ep___i_authorizedApps from './endpoints/i/authorized-apps.js';
 import * as ep___i_claimAchievement from './endpoints/i/claim-achievement.js';
 import * as ep___i_changePassword from './endpoints/i/change-password.js';
-import * as ep___i_customerPortal from './endpoints/i/customer-portal.js';
 import * as ep___i_deleteAccount from './endpoints/i/delete-account.js';
 import * as ep___i_exportBlocking from './endpoints/i/export-blocking.js';
 import * as ep___i_exportFollowing from './endpoints/i/export-following.js';
@@ -411,6 +411,7 @@ const eps = [
 	['admin/accounts/create', ep___admin_accounts_create],
 	['admin/accounts/delete', ep___admin_accounts_delete],
 	['admin/accounts/find-by-email', ep___admin_accounts_findByEmail],
+	['admin/accounts/find-by-stripe-customer', ep___admin_accounts_findByStripeCustomer],
 	['admin/accounts/pending/list', ep___admin_accounts_pending_list],
 	['admin/accounts/pending/revoke', ep___admin_accounts_pending_revoke],
 	['admin/ad/create', ep___admin_ad_create],
@@ -625,7 +626,6 @@ const eps = [
 	['i/authorized-apps', ep___i_authorizedApps],
 	['i/claim-achievement', ep___i_claimAchievement],
 	['i/change-password', ep___i_changePassword],
-	['i/customer-portal', ep___i_customerPortal],
 	['i/delete-account', ep___i_deleteAccount],
 	['i/export-blocking', ep___i_exportBlocking],
 	['i/export-following', ep___i_exportFollowing],

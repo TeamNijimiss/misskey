@@ -57,6 +57,15 @@ export type paths = {
      */
     post: operations['admin___accounts___find-by-email'];
   };
+  '/admin/accounts/find-by-stripe-customer': {
+    /**
+     * admin/accounts/find-by-stripe-customer
+     * @description No description provided.
+     *
+     * **Credential required**: *Yes* / **Permission**: *read:admin:account*
+     */
+    post: operations['admin___accounts___find-by-stripe-customer'];
+  };
   '/admin/accounts/pending/list': {
     /**
      * admin/accounts/pending/list
@@ -2111,15 +2120,6 @@ export type paths = {
      * **Credential required**: *Yes*
      */
     post: operations['i___change-password'];
-  };
-  '/i/customer-portal': {
-    /**
-     * i/customer-portal
-     * @description No description provided.
-     *
-     * **Credential required**: *Yes* / **Permission**: *read:account*
-     */
-    post: operations['i___customer-portal'];
   };
   '/i/delete-account': {
     /**
@@ -5695,6 +5695,59 @@ export type operations = {
       content: {
         'application/json': {
           email: string;
+        };
+      };
+    };
+    responses: {
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['UserDetailed'];
+        };
+      };
+      /** @description Client error */
+      400: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Authentication error */
+      401: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Forbidden error */
+      403: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description I'm Ai */
+      418: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+    };
+  };
+  /**
+   * admin/accounts/find-by-stripe-customer
+   * @description No description provided.
+   *
+   * **Credential required**: *Yes* / **Permission**: *read:admin:account*
+   */
+  'admin___accounts___find-by-stripe-customer': {
+    requestBody: {
+      content: {
+        'application/json': {
+          customerId: string;
         };
       };
     };
@@ -19585,50 +19638,6 @@ export type operations = {
         };
       };
     };
-    responses: {
-      /** @description OK (without any results) */
-      204: {
-        content: never;
-      };
-      /** @description Client error */
-      400: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Authentication error */
-      401: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Forbidden error */
-      403: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description I'm Ai */
-      418: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-      /** @description Internal server error */
-      500: {
-        content: {
-          'application/json': components['schemas']['Error'];
-        };
-      };
-    };
-  };
-  /**
-   * i/customer-portal
-   * @description No description provided.
-   *
-   * **Credential required**: *Yes* / **Permission**: *read:account*
-   */
-  'i___customer-portal': {
     responses: {
       /** @description OK (without any results) */
       204: {

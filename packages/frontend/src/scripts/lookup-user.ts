@@ -63,3 +63,26 @@ export async function lookupUserByEmail() {
 		}
 	}
 }
+
+export async function lookupUserByCustomer() {
+	const { canceled, result } = await os.inputText({
+		title: 'Stripe Customer ID',
+		type: 'text',
+	});
+	if (canceled) return;
+
+	try {
+		const user = await os.apiWithDialog('admin/accounts/find-by-stripe-customer', { customerId: result });
+
+		os.pageWindow(`/admin/user/${user.id}`);
+	} catch (err) {
+		if (err.code === 'USER_NOT_FOUND') {
+			os.alert({
+				type: 'error',
+				text: i18n.ts.noSuchUser,
+			});
+		} else {
+			throw err;
+		}
+	}
+}

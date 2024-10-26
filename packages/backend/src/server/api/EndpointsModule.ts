@@ -11,6 +11,7 @@ import * as ep___admin_abuseUserReports from './endpoints/admin/abuse-user-repor
 import * as ep___admin_accounts_create from './endpoints/admin/accounts/create.js';
 import * as ep___admin_accounts_delete from './endpoints/admin/accounts/delete.js';
 import * as ep___admin_accounts_findByEmail from './endpoints/admin/accounts/find-by-email.js';
+import * as ep___admin_accounts_findByStripeCustomer from './endpoints/admin/accounts/find-by-stripe-customer.js';
 import * as ep___admin_accounts_pending_list from './endpoints/admin/accounts/pending/list.js';
 import * as ep___admin_accounts_pending_revoke from './endpoints/admin/accounts/pending/revoke.js';
 import * as ep___admin_ad_create from './endpoints/admin/ad/create.js';
@@ -225,7 +226,6 @@ import * as ep___i_apps from './endpoints/i/apps.js';
 import * as ep___i_authorizedApps from './endpoints/i/authorized-apps.js';
 import * as ep___i_claimAchievement from './endpoints/i/claim-achievement.js';
 import * as ep___i_changePassword from './endpoints/i/change-password.js';
-import * as ep___i_customerPortal from './endpoints/i/customer-portal.js';
 import * as ep___i_deleteAccount from './endpoints/i/delete-account.js';
 import * as ep___i_exportBlocking from './endpoints/i/export-blocking.js';
 import * as ep___i_exportFollowing from './endpoints/i/export-following.js';
@@ -413,6 +413,7 @@ const $admin_abuseUserReports: Provider = { provide: 'ep:admin/abuse-user-report
 const $admin_accounts_create: Provider = { provide: 'ep:admin/accounts/create', useClass: ep___admin_accounts_create.default };
 const $admin_accounts_delete: Provider = { provide: 'ep:admin/accounts/delete', useClass: ep___admin_accounts_delete.default };
 const $admin_accounts_findByEmail: Provider = { provide: 'ep:admin/accounts/find-by-email', useClass: ep___admin_accounts_findByEmail.default };
+const $admin_accounts_findByStripeCustomer: Provider = { provide: 'ep:admin/accounts/find-by-stripe-customer', useClass: ep___admin_accounts_findByStripeCustomer.default };
 const $admin_accounts_pending_list: Provider = { provide: 'ep:admin/accounts/pending/list', useClass: ep___admin_accounts_pending_list.default };
 const $admin_accounts_pending_revoke: Provider = { provide: 'ep:admin/accounts/pending/revoke', useClass: ep___admin_accounts_pending_revoke.default };
 const $admin_ad_create: Provider = { provide: 'ep:admin/ad/create', useClass: ep___admin_ad_create.default };
@@ -627,7 +628,6 @@ const $i_apps: Provider = { provide: 'ep:i/apps', useClass: ep___i_apps.default 
 const $i_authorizedApps: Provider = { provide: 'ep:i/authorized-apps', useClass: ep___i_authorizedApps.default };
 const $i_claimAchievement: Provider = { provide: 'ep:i/claim-achievement', useClass: ep___i_claimAchievement.default };
 const $i_changePassword: Provider = { provide: 'ep:i/change-password', useClass: ep___i_changePassword.default };
-const $i_customerPortal: Provider = { provide: 'ep:i/customer-portal', useClass: ep___i_customerPortal.default };
 const $i_deleteAccount: Provider = { provide: 'ep:i/delete-account', useClass: ep___i_deleteAccount.default };
 const $i_exportBlocking: Provider = { provide: 'ep:i/export-blocking', useClass: ep___i_exportBlocking.default };
 const $i_exportFollowing: Provider = { provide: 'ep:i/export-following', useClass: ep___i_exportFollowing.default };
@@ -819,6 +819,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$admin_accounts_create,
 		$admin_accounts_delete,
 		$admin_accounts_findByEmail,
+		$admin_accounts_findByStripeCustomer,
 		$admin_accounts_pending_list,
 		$admin_accounts_pending_revoke,
 		$admin_ad_create,
@@ -1033,7 +1034,6 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_authorizedApps,
 		$i_claimAchievement,
 		$i_changePassword,
-		$i_customerPortal,
 		$i_deleteAccount,
 		$i_exportBlocking,
 		$i_exportFollowing,
@@ -1219,6 +1219,7 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$admin_accounts_create,
 		$admin_accounts_delete,
 		$admin_accounts_findByEmail,
+		$admin_accounts_findByStripeCustomer,
 		$admin_accounts_pending_list,
 		$admin_accounts_pending_revoke,
 		$admin_ad_create,
@@ -1433,7 +1434,6 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_authorizedApps,
 		$i_claimAchievement,
 		$i_changePassword,
-		$i_customerPortal,
 		$i_deleteAccount,
 		$i_exportBlocking,
 		$i_exportFollowing,
