@@ -226,7 +226,6 @@ import * as ep___i_apps from './endpoints/i/apps.js';
 import * as ep___i_authorizedApps from './endpoints/i/authorized-apps.js';
 import * as ep___i_claimAchievement from './endpoints/i/claim-achievement.js';
 import * as ep___i_changePassword from './endpoints/i/change-password.js';
-import * as ep___i_customerPortal from './endpoints/i/customer-portal.js';
 import * as ep___i_deleteAccount from './endpoints/i/delete-account.js';
 import * as ep___i_exportBlocking from './endpoints/i/export-blocking.js';
 import * as ep___i_exportFollowing from './endpoints/i/export-following.js';
@@ -629,7 +628,6 @@ const $i_apps: Provider = { provide: 'ep:i/apps', useClass: ep___i_apps.default 
 const $i_authorizedApps: Provider = { provide: 'ep:i/authorized-apps', useClass: ep___i_authorizedApps.default };
 const $i_claimAchievement: Provider = { provide: 'ep:i/claim-achievement', useClass: ep___i_claimAchievement.default };
 const $i_changePassword: Provider = { provide: 'ep:i/change-password', useClass: ep___i_changePassword.default };
-const $i_customerPortal: Provider = { provide: 'ep:i/customer-portal', useClass: ep___i_customerPortal.default };
 const $i_deleteAccount: Provider = { provide: 'ep:i/delete-account', useClass: ep___i_deleteAccount.default };
 const $i_exportBlocking: Provider = { provide: 'ep:i/export-blocking', useClass: ep___i_exportBlocking.default };
 const $i_exportFollowing: Provider = { provide: 'ep:i/export-following', useClass: ep___i_exportFollowing.default };
@@ -1036,7 +1034,6 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_authorizedApps,
 		$i_claimAchievement,
 		$i_changePassword,
-		$i_customerPortal,
 		$i_deleteAccount,
 		$i_exportBlocking,
 		$i_exportFollowing,
@@ -1437,7 +1434,6 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$i_authorizedApps,
 		$i_claimAchievement,
 		$i_changePassword,
-		$i_customerPortal,
 		$i_deleteAccount,
 		$i_exportBlocking,
 		$i_exportFollowing,
