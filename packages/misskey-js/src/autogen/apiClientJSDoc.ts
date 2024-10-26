@@ -63,6 +63,17 @@ declare module '../api.js' {
      * 
      * **Credential required**: *Yes* / **Permission**: *read:admin:account*
      */
+    request<E extends 'admin/accounts/find-by-stripe-customer', P extends Endpoints[E]['req']>(
+      endpoint: E,
+      params: P,
+      credential?: string | null,
+    ): Promise<SwitchCaseResponseType<E, P>>;
+
+    /**
+     * No description provided.
+     * 
+     * **Credential required**: *Yes* / **Permission**: *read:admin:account*
+     */
     request<E extends 'admin/accounts/pending/list', P extends Endpoints[E]['req']>(
       endpoint: E,
       params: P,

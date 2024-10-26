@@ -71,6 +71,12 @@ type AdminAccountsFindByEmailRequest = operations['admin___accounts___find-by-em
 type AdminAccountsFindByEmailResponse = operations['admin___accounts___find-by-email']['responses']['200']['content']['application/json'];
 
 // @public (undocumented)
+type AdminAccountsFindByStripeCustomerRequest = operations['admin___accounts___find-by-stripe-customer']['requestBody']['content']['application/json'];
+
+// @public (undocumented)
+type AdminAccountsFindByStripeCustomerResponse = operations['admin___accounts___find-by-stripe-customer']['responses']['200']['content']['application/json'];
+
+// @public (undocumented)
 type AdminAccountsPendingListRequest = operations['admin___accounts___pending___list']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
@@ -1231,6 +1237,8 @@ declare namespace entities {
         AdminAccountsDeleteRequest,
         AdminAccountsFindByEmailRequest,
         AdminAccountsFindByEmailResponse,
+        AdminAccountsFindByStripeCustomerRequest,
+        AdminAccountsFindByStripeCustomerResponse,
         AdminAccountsPendingListRequest,
         AdminAccountsPendingListResponse,
         AdminAccountsPendingRevokeRequest,

@@ -9,6 +9,8 @@ import type {
 	AdminAccountsDeleteRequest,
 	AdminAccountsFindByEmailRequest,
 	AdminAccountsFindByEmailResponse,
+	AdminAccountsFindByStripeCustomerRequest,
+	AdminAccountsFindByStripeCustomerResponse,
 	AdminAccountsPendingListRequest,
 	AdminAccountsPendingListResponse,
 	AdminAccountsPendingRevokeRequest,
@@ -601,6 +603,7 @@ export type Endpoints = {
 	'admin/accounts/create': { req: AdminAccountsCreateRequest; res: AdminAccountsCreateResponse };
 	'admin/accounts/delete': { req: AdminAccountsDeleteRequest; res: EmptyResponse };
 	'admin/accounts/find-by-email': { req: AdminAccountsFindByEmailRequest; res: AdminAccountsFindByEmailResponse };
+	'admin/accounts/find-by-stripe-customer': { req: AdminAccountsFindByStripeCustomerRequest; res: AdminAccountsFindByStripeCustomerResponse };
 	'admin/accounts/pending/list': { req: AdminAccountsPendingListRequest; res: AdminAccountsPendingListResponse };
 	'admin/accounts/pending/revoke': { req: AdminAccountsPendingRevokeRequest; res: EmptyResponse };
 	'admin/ad/create': { req: AdminAdCreateRequest; res: AdminAdCreateResponse };

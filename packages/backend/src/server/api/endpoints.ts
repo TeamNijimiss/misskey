@@ -11,6 +11,7 @@ import * as ep___admin_abuseUserReports from './endpoints/admin/abuse-user-repor
 import * as ep___admin_accounts_create from './endpoints/admin/accounts/create.js';
 import * as ep___admin_accounts_delete from './endpoints/admin/accounts/delete.js';
 import * as ep___admin_accounts_findByEmail from './endpoints/admin/accounts/find-by-email.js';
+import * as ep___admin_accounts_findByStripeCustomer from './endpoints/admin/accounts/find-by-stripe-customer.js';
 import * as ep___admin_accounts_pending_list from './endpoints/admin/accounts/pending/list.js';
 import * as ep___admin_accounts_pending_revoke from './endpoints/admin/accounts/pending/revoke.js';
 import * as ep___admin_ad_create from './endpoints/admin/ad/create.js';
@@ -411,6 +412,7 @@ const eps = [
 	['admin/accounts/create', ep___admin_accounts_create],
 	['admin/accounts/delete', ep___admin_accounts_delete],
 	['admin/accounts/find-by-email', ep___admin_accounts_findByEmail],
+	['admin/accounts/find-by-stripe-customer', ep___admin_accounts_findByStripeCustomer],
 	['admin/accounts/pending/list', ep___admin_accounts_pending_list],
 	['admin/accounts/pending/revoke', ep___admin_accounts_pending_revoke],
 	['admin/ad/create', ep___admin_ad_create],
