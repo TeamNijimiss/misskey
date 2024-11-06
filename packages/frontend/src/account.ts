@@ -12,8 +12,10 @@ import { MenuButton } from '@/types/menu.js';
 import { del, get, set } from '@/scripts/idb-proxy.js';
 import { apiUrl } from '@/config.js';
 import { waiting, popup, popupMenu, success, alert } from '@/os.js';
-import { misskeyApi } from '@/scripts/misskey-api.js';
+import { generateClientTransactionId, misskeyApi } from '@/scripts/misskey-api.js';
 import { unisonReload, reloadChannel } from '@/scripts/unison-reload.js';
+import { set as gtagSet } from 'vue-gtag';
+import { instance } from '@/instance.js';
 
 // TODO: 他のタブと永続化されたstateを同期
 
@@ -59,6 +61,7 @@ export async function signout() {
 					}),
 					headers: {
 						'Content-Type': 'application/json',
+						'X-Client-Transaction-Id': generateClientTransactionId('misskey'),
 					},
 				});
 			}
@@ -109,6 +112,7 @@ function fetchAccount(token: string, id?: string, forceShowDialog?: boolean): Pr
 			}),
 			headers: {
 				'Content-Type': 'application/json',
+				'X-Client-Transaction-Id': generateClientTransactionId('misskey'),
 			},
 		})
 			.then(res => new Promise<Account | { error: Record<string, any> }>((done2, fail2) => {
@@ -171,6 +175,12 @@ export function updateAccount(accountData: Partial<Account>) {
 		$i[key] = value;
 	}
 	miLocalStorage.setItem('account', JSON.stringify($i));
+	if (instance.googleAnalyticsId) {
+		gtagSet({
+			'client_id': miLocalStorage.getItem('id'),
+			'user_id': $i.id,
+		});
+	}
 }
 
 export async function refreshAccount() {
@@ -221,24 +231,6 @@ export async function openAccountMenu(opts: {
 	onChoose?: (account: Misskey.entities.UserDetailed) => void;
 }, ev: MouseEvent) {
 	if (!$i) return;
-
-	function showSigninDialog() {
-		popup(defineAsyncComponent(() => import('@/components/MkSigninDialog.vue')), {}, {
-			done: res => {
-				addAccount(res.id, res.i);
-				success();
-			},
-		}, 'closed');
-	}
-
-	function createAccount() {
-		popup(defineAsyncComponent(() => import('@/components/MkSignupDialog.vue')), {}, {
-			done: res => {
-				addAccount(res.id, res.i);
-				switchAccountWithToken(res.i);
-			},
-		}, 'closed');
-	}
 
 	async function switchAccount(account: Misskey.entities.UserDetailed) {
 		const storedAccounts = await getAccounts();
@@ -296,10 +288,22 @@ export async function openAccountMenu(opts: {
 			text: i18n.ts.addAccount,
 			children: [{
 				text: i18n.ts.existingAccount,
-				action: () => { showSigninDialog(); },
+				action: () => {
+					getAccountWithSigninDialog().then(res => {
+						if (res != null) {
+							success();
+						}
+					});
+				},
 			}, {
 				text: i18n.ts.createAccount,
-				action: () => { createAccount(); },
+				action: () => {
+					getAccountWithSignupDialog().then(res => {
+						if (res != null) {
+							switchAccountWithToken(res.token);
+						}
+					});
+				},
 			}],
 		}, {
 			type: 'link' as const,
@@ -314,6 +318,40 @@ export async function openAccountMenu(opts: {
 			align: 'left',
 		});
 	}
+}
+
+export function getAccountWithSigninDialog(): Promise<{ id: string, token: string } | null> {
+	return new Promise((resolve) => {
+		const { dispose } = popup(defineAsyncComponent(() => import('@/components/MkSigninDialog.vue')), {}, {
+			done: async (res: Misskey.entities.SigninFlowResponse & { finished: true }) => {
+				await addAccount(res.id, res.i);
+				resolve({ id: res.id, token: res.i });
+			},
+			cancelled: () => {
+				resolve(null);
+			},
+			closed: () => {
+				dispose();
+			},
+		});
+	});
+}
+
+export function getAccountWithSignupDialog(): Promise<{ id: string, token: string } | null> {
+	return new Promise((resolve) => {
+		const { dispose } = popup(defineAsyncComponent(() => import('@/components/MkSignupDialog.vue')), {}, {
+			done: async (res: Misskey.entities.SignupResponse) => {
+				await addAccount(res.id, res.token);
+				resolve({ id: res.id, token: res.token });
+			},
+			cancelled: () => {
+				resolve(null);
+			},
+			closed: () => {
+				dispose();
+			},
+		});
+	});
 }
 
 if (_DEV_) {
