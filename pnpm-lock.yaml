@@ -412,8 +412,8 @@ importers:
         specifier: 2.1.0
         version: 2.1.0
       stripe:
-        specifier: 16.2.0
-        version: 16.2.0
+        specifier: 17.3.1
+        version: 17.3.1
       systeminformation:
         specifier: 5.23.5
         version: 5.23.5
@@ -8967,8 +8967,8 @@ packages:
     resolution: {integrity: sha512-A21Xsm1XzUkK0qK1ZrytDUvqsQWict2Cykhvi0fBQntGG5JSprESasEyV1EZ/4CiR5WB5KjzLTrP/bO37B0wPg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
 
-  stripe@16.2.0:
-    resolution: {integrity: sha512-kNHb5x6mlQJ8V92Afn+F+uyHG3U0+Mc1pOYxDkbEh/kI3oF63URnUt6dwTQthELYWBy04arerm2XjwgtzEPDEA==}
+  stripe@17.3.1:
+    resolution: {integrity: sha512-E9/u+GFBPkYnTmfFCoKX3+gP4R3SkZoGunHe4cw9J+sqkj5uxpLFf1LscuI9BuEyIQ0PFAgPTHavgQwRtOvnag==}
     engines: {node: '>=12.*'}
 
   strnum@1.0.5:
@@ -19351,7 +19351,7 @@ snapshots:
 
   strip-outer@2.0.0: {}
 
-  stripe@16.2.0:
+  stripe@17.3.1:
     dependencies:
       '@types/node': 22.9.0
       qs: 6.13.0
