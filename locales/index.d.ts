@@ -1581,6 +1581,14 @@ export interface Locale extends ILocale {
      */
     "featuredGameChannelsDescription": string;
     /**
+     * おすすめチャンネル
+     */
+    "recommendedChannels": string;
+    /**
+     * おすすめタイムラインに表示したいチャンネルを改行で区切って記述します。
+     */
+    "recommendedChannelsDescription": string;
+    /**
      * hCaptcha
      */
     "hcaptcha": string;
@@ -9399,6 +9407,10 @@ export interface Locale extends ILocale {
          * ホーム
          */
         "home": string;
+        /**
+         * おすすめ
+         */
+        "recommended": string;
         /**
          * ローカル
          */

@@ -1106,6 +1106,15 @@ export type paths = {
      */
     post: operations['channels___followed'];
   };
+  '/channels/list': {
+    /**
+     * channels/list
+     * @description No description provided.
+     *
+     * **Credential required**: *Yes* / **Permission**: *read:channels*
+     */
+    post: operations['channels___list'];
+  };
   '/channels/owned': {
     /**
      * channels/owned
@@ -1114,6 +1123,15 @@ export type paths = {
      * **Credential required**: *Yes* / **Permission**: *read:channels*
      */
     post: operations['channels___owned'];
+  };
+  '/channels/recommended': {
+    /**
+     * channels/recommended
+     * @description No description provided.
+     *
+     * **Credential required**: *No*
+     */
+    post: operations['channels___recommended'];
   };
   '/channels/show': {
     /**
@@ -5414,6 +5432,7 @@ export type operations = {
             wellKnownWebsites: string[];
             urlPreviewDenyList: string[];
             featuredGameChannels: string[];
+            recommendedChannels: string[];
             backgroundImageUrl: string | null;
             deeplAuthKey: string | null;
             deeplIsPro: boolean;
@@ -10277,6 +10296,7 @@ export type operations = {
           wellKnownWebsites?: string[] | null;
           urlPreviewDenyList?: string[] | null;
           featuredGameChannels?: string[] | null;
+          recommendedChannels?: string[] | null;
           /** @description [Deprecated] Use "urlPreviewSummaryProxyUrl" instead. */
           summalyProxy?: string | null;
           urlPreviewEnabled?: boolean;
@@ -12762,6 +12782,64 @@ export type operations = {
     };
   };
   /**
+   * channels/list
+   * @description No description provided.
+   *
+   * **Credential required**: *Yes* / **Permission**: *read:channels*
+   */
+  channels___list: {
+    requestBody: {
+      content: {
+        'application/json': {
+          /** Format: misskey:id */
+          sinceId?: string;
+          /** Format: misskey:id */
+          untilId?: string;
+          /** @default 5 */
+          limit?: number;
+        };
+      };
+    };
+    responses: {
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Channel'][];
+        };
+      };
+      /** @description Client error */
+      400: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Authentication error */
+      401: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Forbidden error */
+      403: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description I'm Ai */
+      418: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+    };
+  };
+  /**
    * channels/owned
    * @description No description provided.
    *
@@ -12780,6 +12858,52 @@ export type operations = {
         };
       };
     };
+    responses: {
+      /** @description OK (with results) */
+      200: {
+        content: {
+          'application/json': components['schemas']['Channel'][];
+        };
+      };
+      /** @description Client error */
+      400: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Authentication error */
+      401: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Forbidden error */
+      403: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description I'm Ai */
+      418: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+      /** @description Internal server error */
+      500: {
+        content: {
+          'application/json': components['schemas']['Error'];
+        };
+      };
+    };
+  };
+  /**
+   * channels/recommended
+   * @description No description provided.
+   *
+   * **Credential required**: *No*
+   */
+  channels___recommended: {
     responses: {
       /** @description OK (with results) */
       200: {

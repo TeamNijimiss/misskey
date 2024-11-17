@@ -127,7 +127,9 @@ import * as ep___channels_featured from './endpoints/channels/featured.js';
 import * as ep___channels_featured_games from './endpoints/channels/featured-games.js';
 import * as ep___channels_follow from './endpoints/channels/follow.js';
 import * as ep___channels_followed from './endpoints/channels/followed.js';
+import * as ep___channels_list from './endpoints/channels/list.js';
 import * as ep___channels_owned from './endpoints/channels/owned.js';
+import * as ep___channels_recommended from './endpoints/channels/recommended.js';
 import * as ep___channels_show from './endpoints/channels/show.js';
 import * as ep___channels_timeline from './endpoints/channels/timeline.js';
 import * as ep___channels_unfollow from './endpoints/channels/unfollow.js';
@@ -527,7 +529,9 @@ const eps = [
 	['channels/featured-games', ep___channels_featured_games],
 	['channels/follow', ep___channels_follow],
 	['channels/followed', ep___channels_followed],
+	['channels/list', ep___channels_list],
 	['channels/owned', ep___channels_owned],
+	['channels/recommended', ep___channels_recommended],
 	['channels/show', ep___channels_show],
 	['channels/timeline', ep___channels_timeline],
 	['channels/unfollow', ep___channels_unfollow],

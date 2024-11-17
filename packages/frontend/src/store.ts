@@ -185,7 +185,7 @@ export const defaultStore = markRaw(new Storage('base', {
 	tl: {
 		where: 'deviceAccount',
 		default: {
-			src: 'home' as 'home' | 'local' | 'social' | 'media' | 'global' | `list:${string}`,
+			src: 'home' as 'home' | 'local' | 'social' | 'media' | 'global' | `list:${string}` | 'recommended',
 			userList: null as Misskey.entities.UserList | null,
 			filter: {
 				withReplies: true,
@@ -195,6 +195,14 @@ export const defaultStore = markRaw(new Storage('base', {
 				onlyFiles: false,
 			},
 		},
+	},
+	selectedRecommendedTab: {
+		where: 'deviceAccount',
+		default: 'local' as 'local' | 'social' | `recommended:${string}`,
+	},
+	postFormTarget: {
+		where: 'deviceAccount',
+		default: null as null | Misskey.entities.Channel,
 	},
 	pinnedUserLists: {
 		where: 'deviceAccount',

@@ -352,6 +352,13 @@ export const meta = {
 					type: 'string',
 				},
 			},
+			recommendedChannels: {
+				type: 'array',
+				optional: false, nullable: false,
+				items: {
+					type: 'string',
+				},
+			},
 			backgroundImageUrl: {
 				type: 'string',
 				optional: false, nullable: true,
@@ -578,6 +585,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				commerceDisclosureUrl: instance.commerceDisclosureUrl,
 				urlPreviewDenyList: instance.urlPreviewDenyList,
 				featuredGameChannels: instance.featuredGameChannels,
+				recommendedChannels: instance.recommendedChannels,
 				summalyProxy: instance.urlPreviewSummaryProxyUrl,
 				urlPreviewEnabled: instance.urlPreviewEnabled,
 				urlPreviewTimeout: instance.urlPreviewTimeout,
