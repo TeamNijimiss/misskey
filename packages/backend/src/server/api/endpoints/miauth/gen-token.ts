@@ -10,6 +10,7 @@ import { IdService } from '@/core/IdService.js';
 import { secureRndstr } from '@/misc/secure-rndstr.js';
 import { DI } from '@/di-symbols.js';
 import { RoleService } from '@/core/RoleService.js';
+import { ApiError } from '../../error.js';
 
 export const meta = {
 	tags: ['auth'],
@@ -26,6 +27,14 @@ export const meta = {
 				type: 'string',
 				optional: false, nullable: false,
 			},
+		},
+	},
+
+	errors: {
+		tooManyAccessTokens: {
+			message: 'Too many access tokens',
+			code: 'TOO_MANY_ACCESS_TOKENS',
+			id: 'eb37e2f9-5475-46c3-805a-803805e81d3f',
 		},
 	},
 } as const;
@@ -56,7 +65,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		super(meta, paramDef, async (ps, me) => {
 			const currentCount = await accessTokensRepository.countBy({ userId: me.id });
 			if (currentCount >= (await this.roleService.getUserPolicies(me.id)).accessTokenLimit) {
-				throw new Error('Too many access tokens');
+				throw new ApiError(meta.errors.tooManyAccessTokens);
 			}
 
 			// Generate access token
