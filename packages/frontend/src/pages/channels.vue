@@ -30,6 +30,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 					<MkChannelPreview v-for="channel in items" :key="channel.id" class="_margin" :channel="channel"/>
 				</MkPagination>
 			</div>
+			<div v-else-if="tab === 'list'" key="list">
+				<MkPagination v-slot="{items}" :pagination="listPagination">
+					<MkChannelPreview v-for="channel in items" :key="channel.id" class="_margin" :channel="channel"/>
+				</MkPagination>
+			</div>
 			<div v-else-if="tab === 'favorites'" key="favorites">
 				<MkPagination v-slot="{items}" :pagination="favoritesPagination">
 					<MkChannelPreview v-for="channel in items" :key="channel.id" class="_margin" :channel="channel"/>
@@ -83,6 +88,10 @@ onMounted(() => {
 	searchType.value = props.type ?? 'nameAndDescription';
 });
 
+const listPagination = {
+	endpoint: 'channels/list' as const,
+	limit: 10,
+};
 const featuredPagination = {
 	endpoint: 'channels/featured' as const,
 	noPaging: true,
@@ -134,6 +143,10 @@ const headerTabs = computed(() => [{
 	key: 'search',
 	title: i18n.ts.search,
 	icon: 'ti ti-search',
+}, {
+	key: 'list',
+	title: i18n.ts.lists,
+	icon: 'ti ti-list',
 }, {
 	key: 'featured',
 	title: i18n.ts._channel.featured,

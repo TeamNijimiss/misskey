@@ -127,7 +127,9 @@ import * as ep___channels_featured from './endpoints/channels/featured.js';
 import * as ep___channels_featured_games from './endpoints/channels/featured-games.js';
 import * as ep___channels_follow from './endpoints/channels/follow.js';
 import * as ep___channels_followed from './endpoints/channels/followed.js';
+import * as ep___channels_list from './endpoints/channels/list.js';
 import * as ep___channels_owned from './endpoints/channels/owned.js';
+import * as ep___channels_recommended from './endpoints/channels/recommended.js';
 import * as ep___channels_show from './endpoints/channels/show.js';
 import * as ep___channels_timeline from './endpoints/channels/timeline.js';
 import * as ep___channels_unfollow from './endpoints/channels/unfollow.js';
@@ -529,7 +531,9 @@ const $channels_featured: Provider = { provide: 'ep:channels/featured', useClass
 const $channels_featured_games: Provider = { provide: 'ep:channels/featured-games', useClass: ep___channels_featured_games.default };
 const $channels_follow: Provider = { provide: 'ep:channels/follow', useClass: ep___channels_follow.default };
 const $channels_followed: Provider = { provide: 'ep:channels/followed', useClass: ep___channels_followed.default };
+const $channels_list: Provider = { provide: 'ep:channels/list', useClass: ep___channels_list.default };
 const $channels_owned: Provider = { provide: 'ep:channels/owned', useClass: ep___channels_owned.default };
+const $channels_recommended: Provider = { provide: 'ep:channels/recommended', useClass: ep___channels_recommended.default };
 const $channels_show: Provider = { provide: 'ep:channels/show', useClass: ep___channels_show.default };
 const $channels_timeline: Provider = { provide: 'ep:channels/timeline', useClass: ep___channels_timeline.default };
 const $channels_unfollow: Provider = { provide: 'ep:channels/unfollow', useClass: ep___channels_unfollow.default };
@@ -935,7 +939,9 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$channels_featured_games,
 		$channels_follow,
 		$channels_followed,
+		$channels_list,
 		$channels_owned,
+		$channels_recommended,
 		$channels_show,
 		$channels_timeline,
 		$channels_unfollow,
@@ -1335,7 +1341,9 @@ const $reversi_verify: Provider = { provide: 'ep:reversi/verify', useClass: ep__
 		$channels_featured_games,
 		$channels_follow,
 		$channels_followed,
+		$channels_list,
 		$channels_owned,
+		$channels_recommended,
 		$channels_show,
 		$channels_timeline,
 		$channels_unfollow,

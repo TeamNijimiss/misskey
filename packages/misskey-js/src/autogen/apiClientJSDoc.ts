@@ -1344,7 +1344,29 @@ declare module '../api.js' {
      * 
      * **Credential required**: *Yes* / **Permission**: *read:channels*
      */
+    request<E extends 'channels/list', P extends Endpoints[E]['req']>(
+      endpoint: E,
+      params: P,
+      credential?: string | null,
+    ): Promise<SwitchCaseResponseType<E, P>>;
+
+    /**
+     * No description provided.
+     * 
+     * **Credential required**: *Yes* / **Permission**: *read:channels*
+     */
     request<E extends 'channels/owned', P extends Endpoints[E]['req']>(
+      endpoint: E,
+      params: P,
+      credential?: string | null,
+    ): Promise<SwitchCaseResponseType<E, P>>;
+
+    /**
+     * No description provided.
+     * 
+     * **Credential required**: *No*
+     */
+    request<E extends 'channels/recommended', P extends Endpoints[E]['req']>(
       endpoint: E,
       params: P,
       credential?: string | null,
