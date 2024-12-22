@@ -187,8 +187,15 @@ definePageMetadata(() => ({
 			> img {
 				display: block;
 				max-width: 100%;
-				max-height: 500px;
 				margin: 0 auto;
+
+				@media (min-width: 501px) {
+					max-height: calc(100vh - 50px);
+				}
+
+				@media (max-width: 500px) {
+					max-height: calc(100dvh - 134.5px)
+				}
 			}
 
 			& + .file {
