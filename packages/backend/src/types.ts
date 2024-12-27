@@ -165,6 +165,7 @@ export type ModerationLogPayloads = {
 		roleId: string;
 		roleName: string;
 		expiresAt: string | null;
+		memo: string | null;
 	};
 	unassignRole: {
 		userId: string;
@@ -172,6 +173,7 @@ export type ModerationLogPayloads = {
 		userHost: string | null;
 		roleId: string;
 		roleName: string;
+		memo: string | null;
 	};
 	createRole: {
 		roleId: string;

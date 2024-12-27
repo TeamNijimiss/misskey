@@ -660,6 +660,7 @@ export type Channels = {
         params: {
             withRenotes?: boolean;
             withFiles?: boolean;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -671,6 +672,7 @@ export type Channels = {
             withRenotes?: boolean;
             withReplies?: boolean;
             withFiles?: boolean;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -682,6 +684,7 @@ export type Channels = {
             withRenotes?: boolean;
             withReplies?: boolean;
             withFiles?: boolean;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -692,6 +695,7 @@ export type Channels = {
         params: {
             withRenotes?: boolean;
             withFiles?: boolean;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -703,6 +707,7 @@ export type Channels = {
             listId: string;
             withFiles?: boolean;
             withRenotes?: boolean;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -721,6 +726,7 @@ export type Channels = {
     roleTimeline: {
         params: {
             roleId: string;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -730,6 +736,7 @@ export type Channels = {
     antenna: {
         params: {
             antennaId: string;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -739,6 +746,7 @@ export type Channels = {
     channel: {
         params: {
             channelId: string;
+            minimize?: boolean;
         };
         events: {
             note: (payload: Note) => void;
@@ -1804,6 +1812,8 @@ declare namespace entities {
         UsersSearchResponse,
         UsersShowRequest,
         UsersShowResponse,
+        UsersGetSecurityInfoRequest,
+        UsersGetSecurityInfoResponse,
         UsersStatsRequest,
         UsersStatsResponse,
         UsersAchievementsRequest,
@@ -3209,6 +3219,12 @@ type UsersGetFrequentlyRepliedUsersRequest = operations['users___get-frequently-
 
 // @public (undocumented)
 type UsersGetFrequentlyRepliedUsersResponse = operations['users___get-frequently-replied-users']['responses']['200']['content']['application/json'];
+
+// @public (undocumented)
+type UsersGetSecurityInfoRequest = operations['users___get-security-info']['requestBody']['content']['application/json'];
+
+// @public (undocumented)
+type UsersGetSecurityInfoResponse = operations['users___get-security-info']['responses']['200']['content']['application/json'];
 
 // @public (undocumented)
 type UsersGetSkebStatusRequest = operations['users___get-skeb-status']['requestBody']['content']['application/json'];

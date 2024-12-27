@@ -304,6 +304,12 @@ export class EmailService {
 				reason: 'mx',
 			};
 		}
+		if (json.mx_host?.some(host => this.utilityService.isBlockedHost(meta.bannedEmailDomains, host))) {
+			return {
+				valid: false,
+				reason: 'mx',
+			};
+		}
 
 		return {
 			valid: true,
@@ -324,6 +330,7 @@ export class EmailService {
 					Accept: 'application/json',
 					Authorization: truemailAuthKey,
 				},
+				isLocalAddressAllowed: true,
 			});
 
 			const json = (await res.json()) as {

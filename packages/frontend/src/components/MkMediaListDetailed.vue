@@ -1,6 +1,6 @@
 <template>
 	<div class="rhaxqjmh">
-		<XBanner v-for="media in mediaList.filter(media => !previewable(media))" :key="media.id" :media="media"/>
+		<XBanner v-for="media in mediaList.filter(media => !previewable(media))" :key="media.id" :media="media" :user="user"/>
 		<div v-if="mediaList.filter(media => previewable(media)).length > 0" :class="$style.container">
 			<div ref="gallery" :data-count="mediaList.filter(media => previewable(media)).length" :class="$style.medias">
 				<template v-for="media in mediaList.filter(media => previewable(media))">
@@ -21,17 +21,15 @@ import 'photoswipe/style.css';
 import XBanner from '@/components/MkMediaBanner.vue';
 import XImage from '@/components/MkMediaImage.vue';
 import XVideo from '@/components/MkMediaVideo.vue';
-import * as os from '@/os';
 import { FILE_TYPE_BROWSERSAFE } from '@/const';
-import { defaultStore } from '@/store';
 
 const props = defineProps<{
 	mediaList: Misskey.entities.DriveFile[];
+	user?: Misskey.entities.UserLite;
 	raw?: boolean;
 }>();
 
 const gallery = ref(null);
-const pswpZIndex = os.claimZIndex('middle');
 
 onMounted(() => {
 	const lightbox = new PhotoSwipeLightbox({

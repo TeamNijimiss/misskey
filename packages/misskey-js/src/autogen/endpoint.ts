@@ -572,6 +572,8 @@ import type {
 	UsersSearchResponse,
 	UsersShowRequest,
 	UsersShowResponse,
+	UsersGetSecurityInfoRequest,
+	UsersGetSecurityInfoResponse,
 	UsersStatsRequest,
 	UsersStatsResponse,
 	UsersAchievementsRequest,
@@ -982,6 +984,7 @@ export type Endpoints = {
 	'users/search-by-username-and-host': { req: UsersSearchByUsernameAndHostRequest; res: UsersSearchByUsernameAndHostResponse };
 	'users/search': { req: UsersSearchRequest; res: UsersSearchResponse };
 	'users/show': { req: UsersShowRequest; res: UsersShowResponse };
+	'users/get-security-info': { req: UsersGetSecurityInfoRequest; res: UsersGetSecurityInfoResponse };
 	'users/stats': { req: UsersStatsRequest; res: UsersStatsResponse };
 	'users/achievements': { req: UsersAchievementsRequest; res: UsersAchievementsResponse };
 	'users/update-memo': { req: UsersUpdateMemoRequest; res: EmptyResponse };
