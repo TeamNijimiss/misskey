@@ -146,7 +146,6 @@ export const defaultStore = markRaw(new Storage('base', {
 			'explore',
 			'search',
 			'-',
-			'support',
 			'ui',
 			'profile',
 		],
