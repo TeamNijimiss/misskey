@@ -11,8 +11,11 @@ import { openInstanceMenu, openToolsMenu } from '@/ui/_common_/common.js';
 import { lookup } from '@/scripts/lookup.js';
 import * as os from '@/os.js';
 import { i18n } from '@/i18n.js';
-import { ui } from '@/config.js';
+import { ui, host } from '@/config.js';
 import { unisonReload } from '@/scripts/unison-reload.js';
+import { instance } from '@/instance.js';
+
+const kawaiiMode = miLocalStorage.getItem('kawaii') === 'true';
 
 export const navbarItemDef = reactive({
 	notifications: {
@@ -176,6 +179,15 @@ export const navbarItemDef = reactive({
 		icon: 'ti ti-user',
 		show: computed(() => $i != null),
 		to: `/@${$i?.username}`,
+	},
+	kawaii: {
+		title: kawaiiMode ? 'no uwu plz' : 'uwu?',
+		icon: kawaiiMode ? 'ti ti-mood-smile' : 'ti ti-mood-wink',
+		action: (ev) => {
+			if (kawaiiMode) miLocalStorage.removeItem('kawaii');
+			else miLocalStorage.setItem('kawaii', 'true');
+			location.reload();
+		},
 	},
 	cacheClear: {
 		title: i18n.ts.clearCache,

@@ -80,7 +80,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 					</div>
 					<div v-if="appearNote.files && appearNote.files.length > 0">
 						<MkMediaListDetailed v-if="defaultStore.state.displayEntireImageOnTimeline" :mediaList="appearNote.files"/>
-						<MkMediaList v-else :mediaList="appearNote.files"/>
+						<MkMediaList v-else :mediaList="appearNote.files" :user="appearNote.user"/>
 					</div>
 					<MkPoll v-if="appearNote.poll" :noteId="appearNote.id" :poll="appearNote.poll" :class="$style.poll"/>
 					<div v-if="isEnabledUrlPreview">
@@ -298,7 +298,7 @@ const keymap = {
 	'down|j|tab': focusAfter,
 	'esc': blur,
 	'm|o': () => showMenu(true),
-	's': () => showContent.value !== showContent.value,
+	's': () => { showContent.value = !showContent.value; focus(); },
 };
 
 provide('react', (reaction: string) => {
