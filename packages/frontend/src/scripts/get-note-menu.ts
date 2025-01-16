@@ -553,6 +553,7 @@ export function getRenoteMenu(props: {
 					misskeyApi('notes/create', {
 						renoteId: appearNote.id,
 						channelId: appearNote.channelId,
+						noCreatedNote: true,
 					}).then(() => {
 						os.toast(i18n.ts.renoted);
 					});
@@ -599,6 +600,7 @@ export function getRenoteMenu(props: {
 						localOnly,
 						visibility,
 						renoteId: appearNote.id,
+						noCreatedNote: true,
 					}).then(() => {
 						os.toast(i18n.ts.renoted);
 					});
@@ -640,6 +642,7 @@ export function getRenoteMenu(props: {
 							misskeyApi('notes/create', {
 								renoteId: appearNote.id,
 								channelId: channel.id,
+								noCreatedNote: true,
 							}).then(() => {
 								os.toast(i18n.tsx.renotedToX({ name: channel.name }));
 							});
