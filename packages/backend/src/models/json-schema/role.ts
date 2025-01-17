@@ -184,6 +184,18 @@ export const packedRolePoliciesSchema = {
 			type: 'boolean',
 			optional: false, nullable: false,
 		},
+		canScheduleNote: {
+			type: 'boolean',
+			optional: false, nullable: false,
+		},
+		scheduleNoteLimit: {
+			type: 'integer',
+			optional: false, nullable: false,
+		},
+		scheduleNoteMaxDays: {
+			type: 'integer',
+			optional: false, nullable: false,
+		},
 		canInitiateConversation: {
 			type: 'boolean',
 			optional: false, nullable: false,

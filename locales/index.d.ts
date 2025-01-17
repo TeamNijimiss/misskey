@@ -5367,6 +5367,38 @@ export interface Locale extends ILocale {
      */
     "usernameLogin": string;
     /**
+     * 投稿フォームを開いたときに下書きを自動で読み込む
+     */
+    "autoloadDrafts": string;
+    /**
+     * 下書き
+     */
+    "drafts": string;
+    /**
+     * 未送信
+     */
+    "unsent": string;
+    /**
+     * 予約
+     */
+    "schedule": string;
+    /**
+     * 予約済み
+     */
+    "scheduled": string;
+    /**
+     * 予約を解除
+     */
+    "unschedule": string;
+    /**
+     * 予約日時を設定
+     */
+    "setScheduledTime": string;
+    /**
+     * {x}に投稿されます
+     */
+    "willBePostedAt": ParameterizedString<"x">;
+    /**
      * サブスクリプション
      */
     "subscription": string;
@@ -5576,11 +5608,11 @@ export interface Locale extends ILocale {
          */
         "violationRights_description": string;
         /**
-         * 権利侵害やなりすまし（第三者による通報）
+         * 権利侵害（第三者による通報）
          */
         "violationRightsOther": string;
         /**
-         * 他人の著作権、商標権、またはその他の権利を侵害する投稿及びなりすまし行為
+         * 他人の著作権、商標権、またはその他の権利を侵害する行為
          * 第三者による通報の場合、法律で定められた非親告罪の範囲外のケースには対応できないことがあります
          */
         "violationRightsOther_description": string;
@@ -7105,6 +7137,18 @@ export interface Locale extends ILocale {
              * パブリック投稿の許可
              */
             "canPublicNote": string;
+            /**
+             * 予約投稿の許可
+             */
+            "canScheduleNote": string;
+            /**
+             * 予約投稿の最大数
+             */
+            "scheduleNoteLimit": string;
+            /**
+             * 予約投稿の最大日数
+             */
+            "scheduleNoteMaxDays": string;
             /**
              * メンション、リプライ、引用の許可
              */
@@ -9162,9 +9206,13 @@ export interface Locale extends ILocale {
             "f": string;
         };
         /**
-         * [NSFWガイドライン]({nsfwGuideUrl})を必ずお読みになってからご利用ください。
+         * 予約できる日数の上限は{max}日です。
          */
-        "guidelineInfo": ParameterizedString<"nsfwGuideUrl">;
+        "policyScheduleNoteMaxDaysExceeded": ParameterizedString<"max">;
+        /**
+         * 投稿する前に、[利用規約]({tosUrl})と[NSFWガイドライン](https://nijimiss.org/post-guideline/)を必ずお読みください。
+         */
+        "tosAndGuidelinesInfo": ParameterizedString<"tosUrl">;
     };
     "_profile": {
         /**
@@ -9772,6 +9820,18 @@ export interface Locale extends ILocale {
          */
         "achievementEarned": string;
         /**
+         * ノートが予約されました
+         */
+        "noteScheduled": string;
+        /**
+         * 予約済みのノートが投稿されました
+         */
+        "scheduledNotePosted": string;
+        /**
+         * 予約済みのノートを投稿できませんでした
+         */
+        "scheduledNoteError": string;
+        /**
          * 通知テスト
          */
         "testNotification": string;
@@ -9860,6 +9920,18 @@ export interface Locale extends ILocale {
              * 実績の獲得
              */
             "achievementEarned": string;
+            /**
+             * ノートが予約された
+             */
+            "noteScheduled": string;
+            /**
+             * 予約済みのノートが投稿された
+             */
+            "scheduledNotePosted": string;
+            /**
+             * 予約済みのノートが投稿できなかった
+             */
+            "scheduledNoteError": string;
             /**
              * 連携アプリからの通知
              */

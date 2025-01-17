@@ -39,6 +39,7 @@ import {
 	MiModerationLog,
 	MiMuting,
 	MiNote,
+	MiScheduledNote,
 	MiNoteFavorite,
 	MiNoteReaction,
 	MiNoteThreadMuting,
@@ -115,6 +116,12 @@ const $appsRepository: Provider = {
 const $avatarDecorationsRepository: Provider = {
 	provide: DI.avatarDecorationsRepository,
 	useFactory: (db: DataSource) => db.getRepository(MiAvatarDecoration),
+	inject: [DI.db],
+};
+
+const $scheduledNotesRepository: Provider = {
+	provide: DI.scheduledNotesRepository,
+	useFactory: (db: DataSource) => db.getRepository(MiScheduledNote),
 	inject: [DI.db],
 };
 
@@ -524,6 +531,7 @@ const $subscriptionPlansRepository: Provider = {
 		$announcementReadsRepository,
 		$appsRepository,
 		$avatarDecorationsRepository,
+		$scheduledNotesRepository,
 		$noteFavoritesRepository,
 		$noteThreadMutingsRepository,
 		$noteReactionsRepository,
@@ -598,6 +606,7 @@ const $subscriptionPlansRepository: Provider = {
 		$announcementReadsRepository,
 		$appsRepository,
 		$avatarDecorationsRepository,
+		$scheduledNotesRepository,
 		$noteFavoritesRepository,
 		$noteThreadMutingsRepository,
 		$noteReactionsRepository,
