@@ -5161,6 +5161,8 @@ export type components = {
       ltlAvailable: boolean;
       canPublicNote: boolean;
       canScheduleNote: boolean;
+      scheduleNoteLimit: number;
+      scheduleNoteMaxDays: number;
       canInitiateConversation: boolean;
       canCreateContent: boolean;
       canUpdateContent: boolean;
