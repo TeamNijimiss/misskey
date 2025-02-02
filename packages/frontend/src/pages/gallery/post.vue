@@ -182,30 +182,30 @@ definePageMetadata(() => ({
 }
 
 .rkxwuolj {
-	> .files {
-		> .file {
-			> img {
-				display: block;
-				max-width: 100%;
-				margin: 0 auto;
-
-				@media (min-width: 501px) {
-					max-height: calc(100vh - 50px);
-				}
-
-				@media (max-width: 500px) {
-					max-height: calc(100dvh - 134.5px)
-				}
-			}
-
-			& + .file {
-				margin-top: 16px;
-			}
-		}
-	}
-
 	> .body {
 		padding: 32px;
+
+		> .files {
+			> .file {
+				> img {
+					display: block;
+					max-width: 100%;
+					margin: 0 auto;
+
+					@media (min-width: 501px) {
+						max-height: calc(100vh - 50px);
+					}
+
+					@media (max-width: 500px) {
+						max-height: calc(100dvh - 134.5px)
+					}
+				}
+
+				& + .file {
+					margin-top: 16px;
+				}
+			}
+		}
 
 		> .title {
 			font-weight: bold;
