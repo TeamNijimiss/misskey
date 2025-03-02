@@ -57,6 +57,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				throw new Error('cannot suspend moderator account');
 			}
 
+			if (!(user.subscriptionStatus === 'unpaid' || user.subscriptionStatus === 'canceled' || user.subscriptionStatus === 'none')) {
+				throw new Error('cannot suspend user due to active subscription.');
+			}
+
 			await this.usersRepository.update(user.id, {
 				isSuspended: true,
 			});
