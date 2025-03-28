@@ -5428,6 +5428,10 @@ export interface Locale extends ILocale {
          */
         "subscriptionPricingTable": string;
         /**
+         * このセッションはタイムアウトしました。ページを再読み込みしてください。
+         */
+        "priceTableTimeout": string;
+        /**
          * 現在のプラン
          */
         "current": string;

@@ -6,7 +6,7 @@
 			<template #key>{{ i18n.ts.subscriptionStatus }}</template>
 			<template #value>{{ i18n.t(`_subscription.${subscriptionStatus}`) }}</template>
 		</MkKeyValue>
-		<MkButton primary large @click="resyncSubscriptionStatus">{{ i18n.ts._subscription.resyncStatus }}</MkButton>
+		<MkButton primary large :disabled="subscriptionStatus === 'none' || subscriptionStatus === 'canceled'" @click="resyncSubscriptionStatus">{{ i18n.ts._subscription.resyncStatus }}</MkButton>
 	</div>
 	<XPricingTable v-if="clientSecret && (subscriptionStatus === 'none' || subscriptionStatus === 'canceled')" :clientSecret="clientSecret.client_secret"/>
 	<MkButton v-else primary large @click="manage">{{ i18n.ts._subscription.manage }}</MkButton>

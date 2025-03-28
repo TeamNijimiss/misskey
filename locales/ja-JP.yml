@@ -1352,6 +1352,7 @@ _subscription:
   linkAccount: "アカウントを接続"
   resyncStatus: "ステータスを再同期"
   subscriptionPricingTable: "サブスクリプション価格表"
+  priceTableTimeout: "このセッションはタイムアウトしました。ページを再読み込みしてください。"
   current: "現在のプラン"
   price: "価格"
   currency: "通貨"
