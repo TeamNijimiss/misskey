@@ -265,6 +265,7 @@ export const role = async (user: UserToken, role: Partial<misskey.entities.Role>
 		isAdministrator: false,
 		isModerator: false,
 		isPublic: false,
+		isForSubscriptions: true,
 		name: 'New Role',
 		target: 'manual',
 		policies: {
