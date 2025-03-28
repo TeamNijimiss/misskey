@@ -5448,7 +5448,7 @@ export interface Locale extends ILocale {
          */
         "subscribe": string;
         /**
-         * 管理
+         * サブスクリプションを管理
          */
         "manage": string;
         /**

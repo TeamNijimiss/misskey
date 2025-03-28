@@ -8,7 +8,8 @@
 		</MkKeyValue>
 		<MkButton primary large @click="resyncSubscriptionStatus">{{ i18n.ts._subscription.resyncStatus }}</MkButton>
 	</div>
-	<XPricingTable v-if="clientSecret" :clientSecret="clientSecret.client_secret"/>
+	<XPricingTable v-if="clientSecret && subscriptionStatus === 'none'" :clientSecret="clientSecret.client_secret"/>
+	<MkButton v-else primary large @click="manage">{{ i18n.ts._subscription.manage }}</MkButton>
 </div>
 </template>
 
@@ -45,6 +46,13 @@ function resyncSubscriptionStatus() {
 	os.apiWithDialog('i/stripe/resync-subscription-status').then(() => {
 		unisonReload();
 	});
+}
+
+async function manage() {
+	const redirect = await os.apiWithDialog('i/stripe/billing-dashboard');
+	if (redirect) {
+		location.href = redirect.redirect.destination;
+	}
 }
 
 const headerActions = computed(() => []);
