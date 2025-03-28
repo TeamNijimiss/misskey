@@ -12,10 +12,10 @@ import type { Config } from '@/config.js';
 import type { RolesRepository, UsersRepository } from '@/models/_.js';
 import { MetaService } from '@/core/MetaService.js';
 import { LoggerService } from '@/core/LoggerService.js';
+import { RoleService } from '@/core/RoleService.js';
+import { UserEntityService } from '@/core/entities/UserEntityService.js';
+import { GlobalEventService } from '@/core/GlobalEventService.js';
 import { ApiError } from '../../../error.js';
-import { RoleService } from "@/core/RoleService.js";
-import { UserEntityService } from "@/core/entities/UserEntityService.js";
-import { GlobalEventService } from "@/core/GlobalEventService.js";
 
 export const meta =	{
 	tags: ['stripe'],
