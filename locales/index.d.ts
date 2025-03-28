@@ -7061,11 +7061,11 @@ export interface Locale extends ILocale {
         /**
          * サブスクリプション用ロール
          */
-        "isForSubscription": string;
+        "isForSubscriptions": string;
         /**
          * サブスクリプション用のロールとしてマークします。
          */
-        "descriptionOfIsForSubscription": string;
+        "descriptionOfIsForSubscriptions": string;
         /**
          * オプション
          */

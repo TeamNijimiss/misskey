@@ -62,9 +62,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<template #caption>{{ i18n.ts._role.descriptionOfIsPublic }}</template>
 	</MkSwitch>
 
-	<MkSwitch v-model="role.isForSubscription" :readonly="readonly">
-		<template #label>{{ i18n.ts._role.isForSubscription }}</template>
-		<template #caption>{{ i18n.ts._role.descriptionOfIsForSubscription }}</template>
+	<MkSwitch v-model="role.isForSubscriptions" :readonly="readonly">
+		<template #label>{{ i18n.ts._role.isForSubscriptions }}</template>
+		<template #caption>{{ i18n.ts._role.descriptionOfIsForSubscriptions }}</template>
 	</MkSwitch>
 
 	<MkSwitch v-model="role.asBadge" :readonly="readonly">
@@ -1031,7 +1031,7 @@ const save = throttle(100, () => {
 		isAdministrator: role.value.isAdministrator,
 		isModerator: role.value.isModerator,
 		isPublic: role.value.isPublic,
-		isForSubscription: role.value.isForSubscription,
+		isForSubscriptions: role.value.isForSubscriptions,
 		isExplorable: role.value.isExplorable,
 		asBadge: role.value.asBadge,
 		badgeBehavior: role.value.badgeBehavior,

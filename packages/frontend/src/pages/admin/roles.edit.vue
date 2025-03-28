@@ -61,7 +61,7 @@ if (props.id) {
 		target: 'manual',
 		condFormula: { id: uuid(), type: 'isRemote' },
 		isPublic: false,
-		isForSubscription: false,
+		isForSubscriptions: false,
 		isExplorable: false,
 		asBadge: false,
 		badgeBehavior: null,
