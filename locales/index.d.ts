@@ -5416,6 +5416,18 @@ export interface Locale extends ILocale {
     "abuseAbortText": string;
     "_subscription": {
         /**
+         * アカウントを接続
+         */
+        "linkAccount": string;
+        /**
+         * ステータスを再同期
+         */
+        "resyncStatus": string;
+        /**
+         * サブスクリプション価格表
+         */
+        "subscriptionPricingTable": string;
+        /**
          * 現在のプラン
          */
         "current": string;
@@ -7046,6 +7058,14 @@ export interface Locale extends ILocale {
          * ユーザーのプロフィールでこのロールが表示されます。
          */
         "descriptionOfIsPublic": string;
+        /**
+         * サブスクリプション用ロール
+         */
+        "isForSubscription": string;
+        /**
+         * サブスクリプション用のロールとしてマークします。
+         */
+        "descriptionOfIsForSubscription": string;
         /**
          * オプション
          */
@@ -10383,18 +10403,6 @@ export interface Locale extends ILocale {
          * ユーザーのバナーを解除
          */
         "unsetUserBanner": string;
-        /**
-         * サブスクリプションプランを作成
-         */
-        "createSubscriptionPlan": string;
-        /**
-         * サブスクリプションプランを更新
-         */
-        "updateSubscriptionPlan": string;
-        /**
-         * サブスクリプションプランをアーカイブ
-         */
-        "archiveSubscriptionPlan": string;
     };
     "_fileViewer": {
         /**

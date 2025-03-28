@@ -4,8 +4,9 @@
  */
 
 import { Inject, Injectable } from '@nestjs/common';
+import { Brackets } from 'typeorm';
 import { Endpoint } from '@/server/api/endpoint-base.js';
-import type { RolesRepository, SubscriptionPlansRepository } from '@/models/_.js';
+import type { RoleAssignmentsRepository, RolesRepository } from '@/models/_.js';
 import { DI } from '@/di-symbols.js';
 import { ApiError } from '@/server/api/error.js';
 import { RoleService } from '@/core/RoleService.js';
@@ -47,8 +48,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 	constructor(
 		@Inject(DI.rolesRepository)
 		private rolesRepository: RolesRepository,
-		@Inject(DI.subscriptionPlansRepository)
-		private subscriptionPlansRepository: SubscriptionPlansRepository,
+		@Inject(DI.roleAssignmentsRepository)
+		private roleAssignmentsRepository: RoleAssignmentsRepository,
 
 		private roleService: RoleService,
 	) {
@@ -58,11 +59,16 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				throw new ApiError(meta.errors.noSuchRole);
 			}
 
-			if (await subscriptionPlansRepository.exists( {
-				where: {
-					roleId: ps.roleId,
-				},
-			})) {
+			const assignedCount = await this.roleAssignmentsRepository.createQueryBuilder('assign')
+				.where('assign.roleId = :roleId', { roleId: role.id })
+				.andWhere(new Brackets(qb => {
+					qb
+						.where('assign.expiresAt IS NULL')
+						.orWhere('assign.expiresAt > :now', { now: new Date() });
+				}))
+				.getCount();
+
+			if (role.isForSubscriptions && assignedCount > 0) {
 				throw new ApiError(meta.errors.inUseRole);
 			}
 

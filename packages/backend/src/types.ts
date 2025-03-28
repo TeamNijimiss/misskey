@@ -112,9 +112,6 @@ export const moderationLogTypes = [
 	'unsetUserAvatar',
 	'unsetUserBanner',
 	'unsetUserMutualLink',
-	'createSubscriptionPlan',
-	'updateSubscriptionPlan',
-	'archiveSubscriptionPlan',
 ] as const;
 
 export const subscriptionStatus = [
@@ -363,18 +360,6 @@ export type ModerationLogPayloads = {
 		userId: string;
 		userUsername: string;
 		userMutualLinkSections: { name: string | null; mutualLinks: { id: string; url: string; fileId: string; description: string | null; imgSrc: string; }[]; }[] | []
-	};
-	createSubscriptionPlan: {
-		subscriptionPlanId: string;
-		subscriptionPlan: any;
-	};
-	updateSubscriptionPlan: {
-		subscriptionPlanId: string;
-		before: any;
-		after: any;
-	};
-	archiveSubscriptionPlan: {
-		subscriptionPlanId: string;
 	};
 };
 

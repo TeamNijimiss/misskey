@@ -387,18 +387,6 @@ type AdminSsoListResponse = operations['admin___sso___list']['responses']['200']
 type AdminSsoUpdateRequest = operations['admin___sso___update']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
-type AdminSubscriptionPlansArchiveRequest = operations['admin___subscription-plans___archive']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type AdminSubscriptionPlansCreateRequest = operations['admin___subscription-plans___create']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type AdminSubscriptionPlansCreateResponse = operations['admin___subscription-plans___create']['responses']['200']['content']['application/json'];
-
-// @public (undocumented)
-type AdminSubscriptionPlansUpdateRequest = operations['admin___subscription-plans___update']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
 type AdminSuspendUserRequest = operations['admin___suspend-user']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
@@ -1367,10 +1355,6 @@ declare namespace entities {
         AdminSsoListRequest,
         AdminSsoListResponse,
         AdminSsoUpdateRequest,
-        AdminSubscriptionPlansCreateRequest,
-        AdminSubscriptionPlansCreateResponse,
-        AdminSubscriptionPlansUpdateRequest,
-        AdminSubscriptionPlansArchiveRequest,
         AnnouncementRequest,
         AnnouncementResponse,
         AnnouncementsRequest,
@@ -1614,6 +1598,7 @@ declare namespace entities {
         IRegistryScopesWithDomainResponse,
         IRegistrySetRequest,
         IRevokeTokenRequest,
+        IStripeGetClientSecretResponse,
         ISigninHistoryRequest,
         ISigninHistoryResponse,
         IUnpinRequest,
@@ -1745,10 +1730,6 @@ declare namespace entities {
         ResetPasswordRequest,
         ServerInfoResponse,
         StatsResponse,
-        SubscriptionCreateRequest,
-        SubscriptionPlansListResponse,
-        SubscriptionPlansShowRequest,
-        SubscriptionPlansShowResponse,
         SwShowRegistrationRequest,
         SwShowRegistrationResponse,
         SwUpdateRegistrationRequest,
@@ -1900,8 +1881,7 @@ declare namespace entities {
         MetaLite,
         MetaDetailedOnly,
         MetaDetailed,
-        AbuseUserReport,
-        SubscriptionPlan
+        AbuseUserReport
     }
 }
 export { entities }
@@ -2372,6 +2352,9 @@ type ISigninHistoryRequest = operations['i___signin-history']['requestBody']['co
 
 // @public (undocumented)
 type ISigninHistoryResponse = operations['i___signin-history']['responses']['200']['content']['application/json'];
+
+// @public (undocumented)
+type IStripeGetClientSecretResponse = operations['i___stripe___get-client-secret']['responses']['200']['content']['application/json'];
 
 // @public (undocumented)
 type IUnpinRequest = operations['i___unpin']['requestBody']['content']['application/json'];
@@ -3099,21 +3082,6 @@ export class Stream extends EventEmitter<StreamEvents> {
     // (undocumented)
     useChannel<C extends keyof Channels>(channel: C, params?: Channels[C]['params'], name?: string): ChannelConnection<Channels[C]>;
 }
-
-// @public (undocumented)
-type SubscriptionCreateRequest = operations['subscription___create']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type SubscriptionPlan = components['schemas']['SubscriptionPlan'];
-
-// @public (undocumented)
-type SubscriptionPlansListResponse = operations['subscription-plans___list']['responses']['200']['content']['application/json'];
-
-// @public (undocumented)
-type SubscriptionPlansShowRequest = operations['subscription-plans___show']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type SubscriptionPlansShowResponse = operations['subscription-plans___show']['responses']['200']['content']['application/json'];
 
 // Warning: (ae-forgotten-export) The symbol "SwitchCase" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "IsCaseMatched" needs to be exported by the entry point index.d.ts

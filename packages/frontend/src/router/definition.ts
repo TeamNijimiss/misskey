@@ -483,9 +483,9 @@ const routes: RouteDef[] = [{
 		name: 'invites',
 		component: page(() => import('@/pages/admin/invites.vue')),
 	}, {
-		path: '/subscription-plans',
-		name: 'subscription-plans',
-		component: iAmAdmin ? page(() => import('@/pages/admin/subscription-plans.vue')) : page(() => import('@/pages/not-found.vue')),
+		path: '/subscription',
+		name: 'subscription',
+		component: iAmAdmin ? page(() => import('@/pages/admin/subscription.vue')) : page(() => import('@/pages/not-found.vue')),
 	}, {
 		path: '/',
 		component: page(() => import('@/pages/_empty_.vue')),

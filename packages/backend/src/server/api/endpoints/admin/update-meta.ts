@@ -168,6 +168,7 @@ export const paramDef = {
 		urlPreviewUserAgent: { type: 'string', nullable: true },
 		urlPreviewSummaryProxyUrl: { type: 'string', nullable: true },
 		enableSubscriptions: { type: 'boolean' },
+		subscriptionPricingTable: { type: 'string', nullable: true },
 	},
 	required: [],
 } as const;
@@ -595,6 +596,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (ps.enableSubscriptions !== undefined) {
 				set.enableSubscriptions = ps.enableSubscriptions;
+			}
+
+			if (ps.subscriptionPricingTable !== undefined) {
+				set.subscriptionPricingTable = ps.subscriptionPricingTable;
 			}
 
 			const before = await this.metaService.fetch(true);

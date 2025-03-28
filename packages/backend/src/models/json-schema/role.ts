@@ -428,6 +428,11 @@ export const packedRoleSchema = {
 					optional: false, nullable: false,
 					example: false,
 				},
+				isForSubscriptions: {
+					type: 'boolean',
+					optional: false, nullable: false,
+					example: false,
+				},
 				asBadge: {
 					type: 'boolean',
 					optional: false, nullable: false,

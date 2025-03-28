@@ -93,8 +93,10 @@ type Source = {
 	};
 
 	stripe?: {
+		publishableKey: string;
 		secretKey: string;
 		webhookSecret: string;
+		customerPortalUrl: string;
 	};
 
 	skebStatus?: {
@@ -205,9 +207,10 @@ export type Config = {
 		}
 	} | undefined;
 	stripe: {
+		publishableKey: string;
 		secretKey: string;
-		webhookSecret?: string;
-		customerPortalUrl?: string;
+		webhookSecret: string;
+		customerPortalUrl: string;
 	} | undefined;
 	skebStatus: {
 		method: string;

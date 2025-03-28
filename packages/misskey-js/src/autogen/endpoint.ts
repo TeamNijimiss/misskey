@@ -127,10 +127,6 @@ import type {
 	AdminSsoListRequest,
 	AdminSsoListResponse,
 	AdminSsoUpdateRequest,
-	AdminSubscriptionPlansCreateRequest,
-	AdminSubscriptionPlansCreateResponse,
-	AdminSubscriptionPlansUpdateRequest,
-	AdminSubscriptionPlansArchiveRequest,
 	AnnouncementRequest,
 	AnnouncementResponse,
 	AnnouncementsRequest,
@@ -374,6 +370,7 @@ import type {
 	IRegistryScopesWithDomainResponse,
 	IRegistrySetRequest,
 	IRevokeTokenRequest,
+	IStripeGetClientSecretResponse,
 	ISigninHistoryRequest,
 	ISigninHistoryResponse,
 	IUnpinRequest,
@@ -505,10 +502,6 @@ import type {
 	ResetPasswordRequest,
 	ServerInfoResponse,
 	StatsResponse,
-	SubscriptionCreateRequest,
-	SubscriptionPlansListResponse,
-	SubscriptionPlansShowRequest,
-	SubscriptionPlansShowResponse,
 	SwShowRegistrationRequest,
 	SwShowRegistrationResponse,
 	SwUpdateRegistrationRequest,
@@ -698,9 +691,6 @@ export type Endpoints = {
 	'admin/sso/delete': { req: AdminSsoDeleteRequest; res: EmptyResponse };
 	'admin/sso/list': { req: AdminSsoListRequest; res: AdminSsoListResponse };
 	'admin/sso/update': { req: AdminSsoUpdateRequest; res: EmptyResponse };
-	'admin/subscription-plans/create': { req: AdminSubscriptionPlansCreateRequest; res: AdminSubscriptionPlansCreateResponse };
-	'admin/subscription-plans/update': { req: AdminSubscriptionPlansUpdateRequest; res: EmptyResponse };
-	'admin/subscription-plans/archive': { req: AdminSubscriptionPlansArchiveRequest; res: EmptyResponse };
 	'announcement': { req: AnnouncementRequest; res: AnnouncementResponse };
 	'announcements': { req: AnnouncementsRequest; res: AnnouncementsResponse };
 	'antennas/create': { req: AntennasCreateRequest; res: AntennasCreateResponse };
@@ -858,6 +848,10 @@ export type Endpoints = {
 	'i/registry/scopes-with-domain': { req: EmptyRequest; res: IRegistryScopesWithDomainResponse };
 	'i/registry/set': { req: IRegistrySetRequest; res: EmptyResponse };
 	'i/revoke-token': { req: IRevokeTokenRequest; res: EmptyResponse };
+	'i/stripe/billing-dashboard': { req: EmptyRequest; res: EmptyResponse };
+	'i/stripe/get-client-secret': { req: EmptyRequest; res: IStripeGetClientSecretResponse };
+	'i/stripe/link-account': { req: EmptyRequest; res: EmptyResponse };
+	'i/stripe/resync-subscription-status': { req: EmptyRequest; res: EmptyResponse };
 	'i/signin-history': { req: ISigninHistoryRequest; res: ISigninHistoryResponse };
 	'i/unpin': { req: IUnpinRequest; res: IUnpinResponse };
 	'i/update-email': { req: IUpdateEmailRequest; res: IUpdateEmailResponse };
@@ -948,10 +942,6 @@ export type Endpoints = {
 	'reset-password': { req: ResetPasswordRequest; res: EmptyResponse };
 	'server-info': { req: EmptyRequest; res: ServerInfoResponse };
 	'stats': { req: EmptyRequest; res: StatsResponse };
-	'subscription/create': { req: SubscriptionCreateRequest; res: EmptyResponse };
-	'subscription/manage': { req: EmptyRequest; res: EmptyResponse };
-	'subscription-plans/list': { req: EmptyRequest; res: SubscriptionPlansListResponse };
-	'subscription-plans/show': { req: SubscriptionPlansShowRequest; res: SubscriptionPlansShowResponse };
 	'sw/show-registration': { req: SwShowRegistrationRequest; res: SwShowRegistrationResponse };
 	'sw/update-registration': { req: SwUpdateRegistrationRequest; res: SwUpdateRegistrationResponse };
 	'sw/register': { req: SwRegisterRequest; res: SwRegisterResponse };

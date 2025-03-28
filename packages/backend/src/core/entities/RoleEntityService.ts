@@ -64,6 +64,7 @@ export class RoleEntityService {
 			target: role.target,
 			condFormula: role.condFormula,
 			isPublic: role.isPublic,
+			isForSubscriptions: role.isForSubscriptions,
 			isAdministrator: role.isAdministrator,
 			isModerator: role.isModerator,
 			isExplorable: role.isExplorable,

@@ -61,7 +61,6 @@ import {
 	packedMetaDetailedOnlySchema,
 	packedMetaDetailedSchema,
 } from '@/models/json-schema/meta.js';
-import { packedSubscriptionPlanSchema } from '@/models/json-schema/subscription-plan.js';
 
 export const refs = {
 	UserLite: packedUserLiteSchema,
@@ -126,8 +125,6 @@ export const refs = {
 	MetaDetailed: packedMetaDetailedSchema,
 	AbuseUserReport: packedAbuseUserReportSchema,
 	ModerationLog: packedModerationLogSchema,
-
-	SubscriptionPlan: packedSubscriptionPlanSchema,
 };
 
 export type Packed<x extends keyof typeof refs> = SchemaType<typeof refs[x]>;

@@ -1349,6 +1349,9 @@ abuseAbortTitle: "通報不可"
 abuseAbortText: "ロールにより通報が制限されているため、通報を行うことができません。"
 
 _subscription:
+  linkAccount: "アカウントを接続"
+  resyncStatus: "ステータスを再同期"
+  subscriptionPricingTable: "サブスクリプション価格表"
   current: "現在のプラン"
   price: "価格"
   currency: "通貨"
@@ -1815,6 +1818,8 @@ _role:
   isConditionalRole: "これはコンディショナルロールです。"
   isPublic: "公開ロール"
   descriptionOfIsPublic: "ユーザーのプロフィールでこのロールが表示されます。"
+  isForSubscription: "サブスクリプション用ロール"
+  descriptionOfIsForSubscription: "サブスクリプション用のロールとしてマークします。"
   options: "オプション"
   policies: "ポリシー"
   baseRole: "ベースロール"
@@ -2739,9 +2744,6 @@ _moderationLogTypes:
   deleteAvatarDecoration: "アイコンデコレーションを削除"
   unsetUserAvatar: "ユーザーのアイコンを解除"
   unsetUserBanner: "ユーザーのバナーを解除"
-  createSubscriptionPlan: "サブスクリプションプランを作成"
-  updateSubscriptionPlan: "サブスクリプションプランを更新"
-  archiveSubscriptionPlan: "サブスクリプションプランをアーカイブ"
 
 _fileViewer:
   title: "ファイルの詳細"

@@ -228,6 +228,14 @@ export const packedMetaLiteSchema = {
 			type: 'boolean',
 			optional: false, nullable: false,
 		},
+		subscriptionPricingTable: {
+			type: 'string',
+			optional: false, nullable: true,
+		},
+		stripePublishableKey: {
+			type: 'string',
+			optional: false, nullable: true,
+		},
 		backgroundImageUrl: {
 			type: 'string',
 			optional: false, nullable: true,

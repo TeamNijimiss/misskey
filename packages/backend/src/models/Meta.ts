@@ -565,6 +565,12 @@ export class MiMeta {
 	public enableSubscriptions: boolean;
 
 	@Column('varchar', {
+		length: 128,
+		nullable: true,
+	})
+	public subscriptionPricingTable: string | null;
+
+	@Column('varchar', {
 		length: 1024,
 		nullable: true,
 	})

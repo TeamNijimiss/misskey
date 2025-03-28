@@ -32,6 +32,7 @@ export const paramDef = {
 		target: { type: 'string', enum: ['manual', 'conditional'] },
 		condFormula: { type: 'object' },
 		isPublic: { type: 'boolean' },
+		isForSubscriptions: { type: 'boolean' },
 		isModerator: { type: 'boolean' },
 		isAdministrator: { type: 'boolean' },
 		isExplorable: { type: 'boolean', default: false }, // optional for backward compatibility
@@ -51,6 +52,7 @@ export const paramDef = {
 		'target',
 		'condFormula',
 		'isPublic',
+		'isForSubscriptions',
 		'isModerator',
 		'isAdministrator',
 		'asBadge',

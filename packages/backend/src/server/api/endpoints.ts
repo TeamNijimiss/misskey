@@ -52,7 +52,8 @@ import * as ep___admin_emoji_setCategoryBulk from './endpoints/admin/emoji/set-c
 import * as ep___admin_emoji_setLicenseBulk from './endpoints/admin/emoji/set-license-bulk.js';
 import * as ep___admin_emoji_update from './endpoints/admin/emoji/update.js';
 import * as ep___admin_federation_deleteAllFiles from './endpoints/admin/federation/delete-all-files.js';
-import * as ep___admin_federation_refreshRemoteInstanceMetadata from './endpoints/admin/federation/refresh-remote-instance-metadata.js';
+import * as ep___admin_federation_refreshRemoteInstanceMetadata
+	from './endpoints/admin/federation/refresh-remote-instance-metadata.js';
 import * as ep___admin_federation_removeAllFollowing from './endpoints/admin/federation/remove-all-following.js';
 import * as ep___admin_federation_updateInstance from './endpoints/admin/federation/update-instance.js';
 import * as ep___admin_indieAuth_create from './endpoints/admin/indie-auth/create.js';
@@ -100,9 +101,6 @@ import * as ep___admin_sso_create from './endpoints/admin/sso/create.js';
 import * as ep___admin_sso_delete from './endpoints/admin/sso/delete.js';
 import * as ep___admin_sso_list from './endpoints/admin/sso/list.js';
 import * as ep___admin_sso_update from './endpoints/admin/sso/update.js';
-import * as ep___admin_subscriptionPlans_create from './endpoints/admin/subscription-plans/create.js';
-import * as ep___admin_subscriptionPlans_update from './endpoints/admin/subscription-plans/update.js';
-import * as ep___admin_subscriptionPlans_archive from './endpoints/admin/subscription-plans/archive.js';
 import * as ep___announcement from './endpoints/announcement.js';
 import * as ep___announcements from './endpoints/announcements.js';
 import * as ep___antennas_create from './endpoints/antennas/create.js';
@@ -260,6 +258,10 @@ import * as ep___i_registry_remove from './endpoints/i/registry/remove.js';
 import * as ep___i_registry_scopesWithDomain from './endpoints/i/registry/scopes-with-domain.js';
 import * as ep___i_registry_set from './endpoints/i/registry/set.js';
 import * as ep___i_revokeToken from './endpoints/i/revoke-token.js';
+import * as ep___i_stripe_getClientSecret from './endpoints/i/stripe/get-client-secret.js';
+import * as ep___i_stripe_linkAccount from './endpoints/i/stripe/link-account.js';
+import * as ep___i_stripe_resyncSubscriptionStatus from './endpoints/i/stripe/resync-subscription-status.js';
+import * as ep___i_stripe_billingDashboard from './endpoints/i/stripe/billing-dashboard.js';
 import * as ep___i_signinHistory from './endpoints/i/signin-history.js';
 import * as ep___i_unpin from './endpoints/i/unpin.js';
 import * as ep___i_updateEmail from './endpoints/i/update-email.js';
@@ -350,10 +352,6 @@ import * as ep___resetDb from './endpoints/reset-db.js';
 import * as ep___resetPassword from './endpoints/reset-password.js';
 import * as ep___serverInfo from './endpoints/server-info.js';
 import * as ep___stats from './endpoints/stats.js';
-import * as ep___subscription_create from './endpoints/subscription/create.js';
-import * as ep___subscription_manage from './endpoints/subscription/manage.js';
-import * as ep___subscription_plans_list from './endpoints/subscription-plans/list.js';
-import * as ep___subscription_plans_show from './endpoints/subscription-plans/show.js';
 import * as ep___sw_show_registration from './endpoints/sw/show-registration.js';
 import * as ep___sw_update_registration from './endpoints/sw/update-registration.js';
 import * as ep___sw_register from './endpoints/sw/register.js';
@@ -503,9 +501,6 @@ const eps = [
 	['admin/sso/delete', ep___admin_sso_delete],
 	['admin/sso/list', ep___admin_sso_list],
 	['admin/sso/update', ep___admin_sso_update],
-	['admin/subscription-plans/create', ep___admin_subscriptionPlans_create],
-	['admin/subscription-plans/update', ep___admin_subscriptionPlans_update],
-	['admin/subscription-plans/archive', ep___admin_subscriptionPlans_archive],
 	['announcement', ep___announcement],
 	['announcements', ep___announcements],
 	['antennas/create', ep___antennas_create],
@@ -663,6 +658,10 @@ const eps = [
 	['i/registry/scopes-with-domain', ep___i_registry_scopesWithDomain],
 	['i/registry/set', ep___i_registry_set],
 	['i/revoke-token', ep___i_revokeToken],
+	['i/stripe/billing-dashboard', ep___i_stripe_billingDashboard],
+	['i/stripe/get-client-secret', ep___i_stripe_getClientSecret],
+	['i/stripe/link-account', ep___i_stripe_linkAccount],
+	['i/stripe/resync-subscription-status', ep___i_stripe_resyncSubscriptionStatus],
 	['i/signin-history', ep___i_signinHistory],
 	['i/unpin', ep___i_unpin],
 	['i/update-email', ep___i_updateEmail],
@@ -753,10 +752,6 @@ const eps = [
 	['reset-password', ep___resetPassword],
 	['server-info', ep___serverInfo],
 	['stats', ep___stats],
-	['subscription/create', ep___subscription_create],
-	['subscription/manage', ep___subscription_manage],
-	['subscription-plans/list', ep___subscription_plans_list],
-	['subscription-plans/show', ep___subscription_plans_show],
 	['sw/show-registration', ep___sw_show_registration],
 	['sw/update-registration', ep___sw_update_registration],
 	['sw/register', ep___sw_register],

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Stripe } from 'stripe';
 import { DI } from '@/di-symbols.js';
 import type { Config } from '@/config.js';
-import type { UsersRepository, UserProfilesRepository, SubscriptionPlansRepository } from '@/models/_.js';
+import type { RolesRepository, UserProfilesRepository, UsersRepository } from '@/models/_.js';
 import { RoleService } from '@/core/RoleService.js';
 import { MetaService } from '@/core/MetaService.js';
 import { bindThis } from '@/decorators.js';
@@ -23,8 +23,8 @@ export class StripeWebhookServerService {
 		private usersRepository: UsersRepository,
 		@Inject(DI.userProfilesRepository)
 		private userProfilesRepository: UserProfilesRepository,
-		@Inject(DI.subscriptionPlansRepository)
-		private subscriptionPlansRepository: SubscriptionPlansRepository,
+		@Inject(DI.rolesRepository)
+		private rolesRepository: RolesRepository,
 		private roleService: RoleService,
 		private metaService: MetaService,
 		private userEntityService: UserEntityService,
@@ -89,8 +89,7 @@ export class StripeWebhookServerService {
 				const userProfile = await this.userProfilesRepository.findOneBy({ stripeCustomerId: customer });
 
 				if (!userProfile) {
-					this.logger.warn(`CustomerId: "${customer}" has no user profile found.`);
-					throw new Error();
+					throw new Error(`CustomerId: "${customer}" has no user profile found.`);
 				}
 
 				return { userProfile, subscription: eventData };
@@ -101,8 +100,38 @@ export class StripeWebhookServerService {
 
 			// Handle the event.
 			switch (event.type) {
+				/*
+				case 'customer.created': {
+					const customerId = event.data.object.id;
+					const customerEmail = event.data.object.email;
+					const userId = event.data.object.metadata.MISSKEY_USER;
+
+					if (!customerEmail && !userId) {
+						throw new Error(`CustomerId: "${customerId}" has no email or user ID found.`);
+					}
+
+					let userProfile;
+					if (!userId) {
+						userProfile = await this.userProfilesRepository.findOneBy({ email: customerEmail });
+					} else {
+						userProfile = await this.userProfilesRepository.findOneBy({ userId });
+					}
+
+					if (!userProfile) {
+						throw new Error(`CustomerId: "${customerId}" has no user profile found.`);
+					}
+
+					await this.userProfilesRepository.update({ userId: userProfile.userId }, {
+						stripeCustomerId: customerId,
+					});
+					this.logger.info(`CustomerId: "${customerId}" has been linked to user ID ${userProfile.userId}.`);
+
+					return;
+				}
+				*/
+
 				case 'customer.subscription.created': { // サブスクリプションが新規に作成された場合
-					const subscriptionPlan = await this.subscriptionPlansRepository.findOneByOrFail({ stripePriceId: subscription.items.data[0].plan.id });
+					const subscriptionPlanRoleId = subscription.items.data[0].plan.metadata.MISSKEY_ROLE;
 					const user = await this.usersRepository.findOneByOrFail({ id: userProfile.userId });
 
 					if (user.stripeSubscriptionId != null) {
@@ -113,16 +142,16 @@ export class StripeWebhookServerService {
 					if (subscription.status === 'active') {
 						await this.roleService.getUserRoles(userProfile.userId).then(async (roles) => {
 							// ユーザーにロールが割り当てられていない場合、ロールを割り当てる
-							if (!roles.some((role) => role.id === subscriptionPlan.roleId)) {
-								await this.roleService.assign(userProfile.userId, subscriptionPlan.roleId);
-								this.logger.info(`${userProfile.userId} has been assigned the role "${subscriptionPlan.roleId}" by the subscription creation event.`);
+							if (!roles.some((role) => role.id === subscriptionPlanRoleId)) {
+								await this.roleService.assign(userProfile.userId, subscriptionPlanRoleId);
+								this.logger.info(`${userProfile.userId} has been assigned the role "${subscriptionPlanRoleId}" by the subscription creation event.`);
 							}
 						});
 					}
 
 					await this.usersRepository.update({ id: userProfile.userId }, {
 						subscriptionStatus: subscription.status,
-						subscriptionPlanId: subscriptionPlan.id,
+						subscriptionPlanId: subscription.items.data[0].plan.id,
 						stripeSubscriptionId: subscription.id,
 					});
 
@@ -138,50 +167,51 @@ export class StripeWebhookServerService {
 				case 'customer.subscription.updated': { // Update the subscription.
 					const previousData = event.data.previous_attributes;
 					const user = await this.usersRepository.findOneByOrFail({ id: userProfile.userId });
-					const subscriptionPlan = await this.subscriptionPlansRepository.findOneByOrFail({ stripePriceId: subscription.items.data[0].plan.id });
+					const subscriptionPlanRoleId = subscription.items.data[0].plan.metadata.MISSKEY_ROLE;
 
 					if (user.stripeSubscriptionId && user.stripeSubscriptionId !== subscription.id) { // 既存のサブスクリプションIDとイベントのサブスクリプションIDが一致しない場合は何もしない
 						return;
 					}
 
-					if (subscription.status === 'active') {
+					if (subscription.status === 'active') { // todo ここ整理する
 						if (!user.subscriptionPlanId) { // サブスクリプションプランが新規に設定された場合
-							const roleIds = (await this.subscriptionPlansRepository.find()).map(x => x.roleId);
+							const subscriptionRoles = await this.rolesRepository.findBy({ isForSubscriptions: true });
 							await this.roleService.getUserRoles(user.id).then(async (roles) => {
 								for (const role of roles) {
-									if (roleIds.includes(role.id) && role.id !== subscriptionPlan.roleId) {
+									if (subscriptionRoles.includes(role) && role.id !== subscriptionPlanRoleId) {
 										await this.roleService.unassign(user.id, role.id); // 他のサブスクリプションプランのロールが割り当てられている場合、ロールを解除する
 										this.logger.info(`${user.id} has been unassigned the role "${role.id}" by the subscription update event.`);
 									}
 								}
 
 								// ユーザーにロールが割り当てられていない場合、ロールを割り当てる
-								if (!roles.some((role) => role.id === subscriptionPlan.roleId)) {
-									await this.roleService.assign(user.id, subscriptionPlan.roleId);
-									this.logger.info(`${user.id} has been assigned the role "${subscriptionPlan.roleId}" by the subscription update event.`);
+								if (!roles.some((role) => role.id === subscriptionPlanRoleId)) {
+									await this.roleService.assign(user.id, subscriptionPlanRoleId);
+									this.logger.info(`${user.id} has been assigned the role "${subscriptionPlanRoleId}" by the subscription update event.`);
 								}
 							});
-						} else if (subscriptionPlan.id !== user.subscriptionPlanId) { // サブスクリプションプランが変更された場合
-							const oldSubscriptionPlan = await this.subscriptionPlansRepository.findOneByOrFail({ id: user.subscriptionPlanId ?? undefined });
+						} else if (subscription.items.data[0].plan.id !== user.subscriptionPlanId) { // サブスクリプションプランが変更された場合
+							const oldSubscriptionPlan = await stripe.prices.retrieve(user.subscriptionPlanId);
+							const oldSubscriptionPlanRoleId = oldSubscriptionPlan.metadata.MISSKEY_ROLE;
 							await this.roleService.getUserRoles(user.id).then(async (roles) => {
 								// 旧サブスクリプションプランのロールが割り当てられている場合、ロールを解除する
-								if (roles.some((role) => role.id === oldSubscriptionPlan.roleId)) {
-									await this.roleService.unassign(user.id, oldSubscriptionPlan.roleId);
-									this.logger.info(`${user.id} has been unassigned the role "${oldSubscriptionPlan.roleId}" by the subscription update event.`);
+								if (roles.some((role) => role.id === oldSubscriptionPlanRoleId)) {
+									await this.roleService.unassign(user.id, oldSubscriptionPlanRoleId);
+									this.logger.info(`${user.id} has been unassigned the role "${oldSubscriptionPlanRoleId}" by the subscription update event.`);
 								}
 
 								// 新しいサブスクリプションプランのロールが割り当てられていない場合、ロールを割り当てる
-								if (!roles.some((role) => role.id === subscriptionPlan.roleId)) {
-									await this.roleService.assign(user.id, subscriptionPlan.roleId);
-									this.logger.info(`${user.id} has been assigned the role "${subscriptionPlan.roleId}" by the subscription update event.`);
+								if (!roles.some((role) => role.id === subscriptionPlanRoleId)) {
+									await this.roleService.assign(user.id, subscriptionPlanRoleId);
+									this.logger.info(`${user.id} has been assigned the role "${subscriptionPlanRoleId}" by the subscription update event.`);
 								}
 							});
 						} else if (previousData && previousData.status) { // サブスクリプションステータスが変更された場合
 							await this.roleService.getUserRoles(user.id).then(async (roles) => {
 								// ユーザーにロールが割り当てられていない場合、ロールを割り当てる
-								if (!roles.some((role) => role.id === subscriptionPlan.roleId)) {
-									await this.roleService.assign(user.id, subscriptionPlan.roleId);
-									this.logger.info(`${user.id} has been assigned the role "${subscriptionPlan.roleId}" by the subscription update event.`);
+								if (!roles.some((role) => role.id === subscriptionPlanRoleId)) {
+									await this.roleService.assign(user.id, subscriptionPlanRoleId);
+									this.logger.info(`${user.id} has been assigned the role "${subscriptionPlanRoleId}" by the subscription update event.`);
 								}
 							});
 						}
@@ -192,7 +222,7 @@ export class StripeWebhookServerService {
 					// ユーザーのサブスクリプションステータスとサブスクリプションプランを更新する
 					await this.usersRepository.update({ id: user.id }, {
 						subscriptionStatus: subscription.status,
-						subscriptionPlanId: subscription.status !== 'incomplete_expired' ? subscriptionPlan.id : null,
+						subscriptionPlanId: subscription.status !== 'incomplete_expired' ? subscription.items.data[0].plan.id : null,
 						stripeSubscriptionId: subscription.status !== 'incomplete_expired' ? user.stripeSubscriptionId ? undefined : subscription.id : null,
 					});
 
@@ -206,7 +236,7 @@ export class StripeWebhookServerService {
 				}
 
 				case 'customer.subscription.deleted': { // Delete the subscription.
-					const subscriptionPlan = await this.subscriptionPlansRepository.findOneByOrFail({ stripePriceId: subscription.items.data[0].plan.id });
+					const subscriptionPlanRoleId = subscription.items.data[0].plan.metadata.MISSKEY_ROLE;
 					const user = await this.usersRepository.findOneByOrFail({ id: userProfile.userId });
 
 					if (user.stripeSubscriptionId && user.stripeSubscriptionId !== subscription.id) { // 既存のサブスクリプションIDとイベントのサブスクリプションIDが一致しない場合は何もしない
@@ -215,9 +245,9 @@ export class StripeWebhookServerService {
 
 					// サブスクリプションプランのロールが割り当てられている場合、ロールを解除する
 					await this.roleService.getUserRoles(userProfile.userId).then(async (roles) => {
-						if (roles.some((role) => role.id === subscriptionPlan.roleId)) {
-							await this.roleService.unassign(userProfile.userId, subscriptionPlan.roleId);
-							this.logger.info(`${userProfile.userId} has been unassigned the role "${subscriptionPlan.roleId}" by the subscription deletion event.`);
+						if (roles.some((role) => role.id === subscriptionPlanRoleId)) {
+							await this.roleService.unassign(userProfile.userId, subscriptionPlanRoleId);
+							this.logger.info(`${userProfile.userId} has been unassigned the role "${subscriptionPlanRoleId}" by the subscription deletion event.`);
 						}
 					});
 

@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: syuilo and misskey-project
+ * SPDX-License-Identifier: AGPL-3.0-only
+ */
+
 import { Stripe } from 'stripe';
 import { Inject, Injectable } from '@nestjs/common';
 import { Endpoint } from '@/server/api/endpoint-base.js';
@@ -5,10 +10,10 @@ import { DI } from '@/di-symbols.js';
 import type { Config } from '@/config.js';
 import type { UsersRepository, UserProfilesRepository } from '@/models/_.js';
 import { MetaService } from '@/core/MetaService.js';
-import { ApiError } from '../../error.js';
+import { ApiError } from '../../../error.js';
 
 export const meta = {
-	tags: ['subscription'],
+	tags: ['stripe'],
 
 	requireCredential: true,
 	kind: 'read:account',

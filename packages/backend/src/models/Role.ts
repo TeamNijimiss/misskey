@@ -234,6 +234,11 @@ export class MiRole {
 	})
 	public isPublic: boolean;
 
+	@Column('boolean', {
+		default: false,
+	})
+	public isForSubscriptions: boolean;
+
 	// trueの場合ユーザー名の横にバッジとして表示
 	@Column('boolean', {
 		default: false,
