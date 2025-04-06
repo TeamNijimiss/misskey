@@ -19024,6 +19024,10 @@ export type operations = {
            * @enum {string}
            */
           origin?: 'combined' | 'local' | 'remote';
+          /** Format: misskey:id */
+          sinceId?: string;
+          /** Format: misskey:id */
+          untilId?: string;
         };
       };
     };
