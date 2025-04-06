@@ -28,6 +28,8 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<i v-else-if="note.visibility === 'followers'" class="ti ti-lock"></i>
 			<i v-else-if="note.visibility === 'specified'" ref="specified" class="ti ti-mail"></i>
 		</span>
+		<span v-if="hasSensitive" style="margin-left: 0.5em;" :title="i18n.ts.sensitive"><i class="ti ti-eye-exclamation"></i></span>
+		<span v-if="hasAiGenerated" style="margin-left: 0.5em;" :title="i18n.ts.aiGenerated"><i class="ti ti-robot"></i></span>
 		<span v-if="note.localOnly" style="margin-left: 0.5em;" :title="i18n.ts._visibility['disableFederation']"><i class="ti ti-rocket-off"></i></span>
 		<span v-if="note.channel" style="margin-left: 0.5em;" :title="note.channel.name"><i class="ti ti-device-tv"></i></span>
 	</div>
@@ -35,16 +37,22 @@ SPDX-License-Identifier: AGPL-3.0-only
 </template>
 
 <script lang="ts" setup>
-import { inject } from 'vue';
+import { computed, inject, ref } from 'vue';
 import * as Misskey from 'misskey-js';
 import { i18n } from '@/i18n.js';
 import { notePage } from '@/filters/note.js';
 import { userPage } from '@/filters/user.js';
 import MkRoleBadgeIcon from '@/components/MkRoleBadgeIcon.vue';
+import { deepClone } from '@/scripts/clone';
 
-defineProps<{
+const props = defineProps<{
 	note: Misskey.entities.Note;
 }>();
+
+const note = ref(deepClone(props.note));
+
+const hasSensitive = computed(() => note.value.files.some(f => f.isSensitive));
+const hasAiGenerated = computed(() => note.value.files.some(f => f.isAiGenerated));
 
 const mock = inject<boolean>('mock', false);
 </script>

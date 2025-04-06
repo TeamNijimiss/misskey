@@ -5403,6 +5403,22 @@ export interface Locale extends ILocale {
      */
     "willBePostedAt": ParameterizedString<"x">;
     /**
+     * 管理者によって、ドライブのファイルがセンシティブとして設定されました。
+     */
+    "sensitiveByModerator": string;
+    /**
+     * この情報は他のユーザーには公開されません。
+     */
+    "thisInfoIsNotVisibleOtherUser": string;
+    /**
+     * 水に流す
+     */
+    "flushItAway": string;
+    /**
+     * 削除をしても全てが水に流れるわけではありませんが…
+     */
+    "deleteNotWash": string;
+    /**
      * サブスクリプション
      */
     "subscription": string;
@@ -9883,6 +9899,10 @@ export interface Locale extends ILocale {
          * 通知の履歴をリセットする
          */
         "flushNotification": string;
+        /**
+         * ファイルがセンシティブとして設定されました
+         */
+        "sensitiveFlagAssigned": string;
         "_types": {
             /**
              * すべて
