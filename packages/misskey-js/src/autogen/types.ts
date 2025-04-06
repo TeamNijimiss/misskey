@@ -4600,6 +4600,14 @@ export type components = {
       /** Format: date-time */
       createdAt: string;
       /** @enum {string} */
+      type: 'sensitiveFlagAssigned';
+      fileId: unknown;
+    } | {
+      /** Format: id */
+      id: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** @enum {string} */
       type: 'app';
       body: string;
       header: string;
@@ -4653,6 +4661,7 @@ export type components = {
       /** @example 51469 */
       size: number;
       isSensitive: boolean;
+      isSensitiveByModerator?: boolean | null;
       isAiGenerated: boolean;
       blurhash: string | null;
       properties: {
@@ -19015,6 +19024,10 @@ export type operations = {
            * @enum {string}
            */
           origin?: 'combined' | 'local' | 'remote';
+          /** Format: misskey:id */
+          sinceId?: string;
+          /** Format: misskey:id */
+          untilId?: string;
         };
       };
     };
@@ -20783,8 +20796,8 @@ export type operations = {
           untilId?: string;
           /** @default true */
           markAsRead?: boolean;
-          includeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'app' | 'test' | 'pollVote' | 'groupInvited')[];
-          excludeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'app' | 'test' | 'pollVote' | 'groupInvited')[];
+          includeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'sensitiveFlagAssigned' | 'app' | 'test' | 'pollVote' | 'groupInvited')[];
+          excludeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'sensitiveFlagAssigned' | 'app' | 'test' | 'pollVote' | 'groupInvited')[];
         };
       };
     };
@@ -20851,8 +20864,8 @@ export type operations = {
           untilId?: string;
           /** @default true */
           markAsRead?: boolean;
-          includeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'app' | 'test' | 'reaction:grouped' | 'renote:grouped' | 'pollVote' | 'groupInvited')[];
-          excludeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'app' | 'test' | 'reaction:grouped' | 'renote:grouped' | 'pollVote' | 'groupInvited')[];
+          includeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'sensitiveFlagAssigned' | 'app' | 'test' | 'reaction:grouped' | 'renote:grouped' | 'pollVote' | 'groupInvited')[];
+          excludeTypes?: ('note' | 'follow' | 'mention' | 'reply' | 'renote' | 'quote' | 'reaction' | 'pollEnded' | 'receiveFollowRequest' | 'followRequestAccepted' | 'roleAssigned' | 'achievementEarned' | 'noteScheduled' | 'scheduledNotePosted' | 'scheduledNoteError' | 'sensitiveFlagAssigned' | 'app' | 'test' | 'reaction:grouped' | 'renote:grouped' | 'pollVote' | 'groupInvited')[];
         };
       };
     };

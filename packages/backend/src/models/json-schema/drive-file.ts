@@ -42,6 +42,10 @@ export const packedDriveFileSchema = {
 			type: 'boolean',
 			optional: false, nullable: false,
 		},
+		isSensitiveByModerator: {
+			type: 'boolean',
+			optional: true, nullable: true,
+		},
 		isAiGenerated: {
 			type: 'boolean',
 			optional: false, nullable: false,
