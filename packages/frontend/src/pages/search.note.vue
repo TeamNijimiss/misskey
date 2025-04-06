@@ -13,6 +13,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			<template #label>{{ i18n.ts.options }}</template>
 
 			<div class="_gaps_m">
+				<MkSwitch v-model="isAdvanced" :disabled="!$i.policies.canUseAdvancesSearch">{{ i18n.ts.advancedSearch }}</MkSwitch>
 				<MkSwitch v-model="isLocalOnly">{{ i18n.ts.localOnly }}</MkSwitch>
 
 				<MkFolder :defaultOpen="true">
@@ -53,6 +54,7 @@ import { misskeyApi } from '@/scripts/misskey-api.js';
 import MkFoldableSection from '@/components/MkFoldableSection.vue';
 import MkFolder from '@/components/MkFolder.vue';
 import { useRouter } from '@/router/supplier.js';
+import { $i } from '@/account';
 
 const router = useRouter();
 
@@ -61,6 +63,7 @@ const searchQuery = ref('');
 const searchOrigin = ref('combined');
 const notePagination = ref();
 const user = ref<any>(null);
+const isAdvanced = ref($i?.policies.canUseAdvancesSearch ?? false);
 const isLocalOnly = ref(false);
 
 function selectUser() {
@@ -98,6 +101,7 @@ async function search() {
 		params: {
 			query: searchQuery.value,
 			userId: user.value ? user.value.id : null,
+			advanced: isAdvanced.value,
 		},
 	};
 

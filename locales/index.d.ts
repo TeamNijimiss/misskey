@@ -37,6 +37,10 @@ export interface Locale extends ILocale {
      */
     "search": string;
     /**
+     * 高度な検索
+     */
+    "advancedSearch": string;
+    /**
      * 通知
      */
     "notifications": string;
@@ -7297,6 +7301,10 @@ export interface Locale extends ILocale {
              * ノート検索の利用
              */
             "canSearchNotes": string;
+            /**
+             * 高度な検索の利用
+             */
+            "canUseAdvancesSearch": string;
             /**
              * 翻訳機能の利用
              */
