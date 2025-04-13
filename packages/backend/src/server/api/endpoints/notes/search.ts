@@ -87,6 +87,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				userId: ps.userId,
 				channelId: ps.channelId,
 				host: ps.host,
+				advanced: ps.advanced,
 			}, {
 				untilId: ps.untilId,
 				sinceId: ps.sinceId,
