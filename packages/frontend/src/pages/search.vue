@@ -57,7 +57,7 @@ const headerTabs = computed(() => [{
 }, {
 	key: 'note-global',
 	title: i18n.ts.searchGlobal,
-	icon: 'ti ti-users',
+	icon: 'ti ti-pencil',
 }, {
 	key: 'user',
 	title: i18n.ts.users,
