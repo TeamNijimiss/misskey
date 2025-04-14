@@ -8,9 +8,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<template #header><MkPageHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
 
 	<MkHorizontalSwipe v-model:tab="tab" :tabs="headerTabs">
-		<MkSpacer v-if="tab === 'note'" key="note" :contentMax="800">
+		<MkSpacer v-if="tab === 'note-local' || tab === 'note-global'" key="note" :contentMax="800">
 			<div v-if="notesSearchAvailable">
-				<XNote/>
+				<XNote :localOnly="tab === 'note-local'"/>
 			</div>
 			<div v-else>
 				<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
@@ -43,9 +43,13 @@ const notesSearchAvailable = (($i == null && instance.policies.canSearchNotes) |
 const headerActions = computed(() => []);
 
 const headerTabs = computed(() => [{
-	key: 'note',
-	title: i18n.ts.notes,
+	key: 'note-local',
+	title: i18n.ts.searchLocal,
 	icon: 'ti ti-pencil',
+}, {
+	key: 'note-global',
+	title: i18n.ts.searchGlobal,
+	icon: 'ti ti-users',
 }, {
 	key: 'user',
 	title: i18n.ts.users,

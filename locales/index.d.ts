@@ -37,6 +37,14 @@ export interface Locale extends ILocale {
      */
     "search": string;
     /**
+     * 検索（ローカル）
+     */
+    "searchLocal": string;
+    /**
+     * 検索（グローバル）
+     */
+    "searchGlobal": string;
+    /**
      * 通知
      */
     "notifications": string;

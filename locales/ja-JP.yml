@@ -5,6 +5,8 @@ introMisskey: "ようこそ！Misskeyは、オープンソースの分散型マ�
 poweredByMisskeyDescription: "{name}は、オープンソースのプラットフォーム<b>Misskey</b>のサーバーのひとつです。"
 monthAndDay: "{month}月 {day}日"
 search: "検索"
+searchLocal: "検索（ローカル）"
+searchGlobal: "検索（グローバル）"
 notifications: "通知"
 username: "ユーザー名"
 password: "パスワード"
