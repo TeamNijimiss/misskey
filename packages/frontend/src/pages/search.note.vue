@@ -94,9 +94,10 @@ async function search() {
 		params: {
 			query: searchQuery.value,
 			userId: user.value ? user.value.id : null,
-			host: props.localOnly ? '.' : null,
 		},
 	};
+
+	if (props.localOnly) notePagination.value.params.host = '.';
 
 	key.value++;
 }
