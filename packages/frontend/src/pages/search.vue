@@ -44,7 +44,7 @@ import MkHorizontalSwipe from '@/components/MkHorizontalSwipe.vue';
 const XNote = defineAsyncComponent(() => import('./search.note.vue'));
 const XUser = defineAsyncComponent(() => import('./search.user.vue'));
 
-const tab = ref('note');
+const tab = ref('note-local');
 
 const notesSearchAvailable = (($i == null && instance.policies.canSearchNotes) || ($i != null && $i.policies.canSearchNotes));
 
