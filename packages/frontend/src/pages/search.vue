@@ -8,9 +8,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<template #header><MkPageHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
 
 	<MkHorizontalSwipe v-model:tab="tab" :tabs="headerTabs">
-		<MkSpacer v-if="tab === 'note-local' || tab === 'note-global'" key="note" :contentMax="800">
+		<MkSpacer v-if="tab === 'note-local'" key="note-local" :contentMax="800">
 			<div v-if="notesSearchAvailable">
-				<XNote :localOnly="tab === 'note-local'"/>
+				<XNote :localOnly="true"/>
+			</div>
+			<div v-else>
+				<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
+			</div>
+		</MkSpacer>
+		<MkSpacer v-if="tab === 'note-global'" key="note-global" :contentMax="800">
+			<div v-if="notesSearchAvailable">
+				<XNote :localOnly="false"/>
 			</div>
 			<div v-else>
 				<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
