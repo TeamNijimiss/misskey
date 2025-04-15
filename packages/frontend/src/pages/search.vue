@@ -8,9 +8,17 @@ SPDX-License-Identifier: AGPL-3.0-only
 	<template #header><MkPageHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs"/></template>
 
 	<MkHorizontalSwipe v-model:tab="tab" :tabs="headerTabs">
-		<MkSpacer v-if="tab === 'note'" key="note" :contentMax="800">
+		<MkSpacer v-if="tab === 'note-local'" key="note-local" :contentMax="800">
 			<div v-if="notesSearchAvailable">
-				<XNote/>
+				<XNote :localOnly="true"/>
+			</div>
+			<div v-else>
+				<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
+			</div>
+		</MkSpacer>
+		<MkSpacer v-if="tab === 'note-global'" key="note-global" :contentMax="800">
+			<div v-if="notesSearchAvailable">
+				<XNote :localOnly="false"/>
 			</div>
 			<div v-else>
 				<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
@@ -36,15 +44,19 @@ import MkHorizontalSwipe from '@/components/MkHorizontalSwipe.vue';
 const XNote = defineAsyncComponent(() => import('./search.note.vue'));
 const XUser = defineAsyncComponent(() => import('./search.user.vue'));
 
-const tab = ref('note');
+const tab = ref('note-local');
 
 const notesSearchAvailable = (($i == null && instance.policies.canSearchNotes) || ($i != null && $i.policies.canSearchNotes));
 
 const headerActions = computed(() => []);
 
 const headerTabs = computed(() => [{
-	key: 'note',
-	title: i18n.ts.notes,
+	key: 'note-local',
+	title: i18n.ts.searchLocal,
+	icon: 'ti ti-pencil',
+}, {
+	key: 'note-global',
+	title: i18n.ts.searchGlobal,
 	icon: 'ti ti-pencil',
 }, {
 	key: 'user',

@@ -250,13 +250,12 @@ export class SearchService {
 		userId?: MiNote['userId'] | null;
 		channelId?: MiNote['channelId'] | null;
 		host?: string | null;
-		advanced?: boolean;
 	}, pagination: {
 		untilId?: MiNote['id'];
 		sinceId?: MiNote['id'];
 		limit?: number;
 	}): Promise<MiNote[]> {
-		if (opts.advanced && (this.meilisearch ?? this.elasticsearch)) {
+		if (opts.host === '.' && (this.meilisearch ?? this.elasticsearch)) {
 			if (this.meilisearch) {
 				const filter: Q = {
 					op: 'and',
@@ -274,13 +273,8 @@ export class SearchService {
 				});
 				if (opts.userId) filter.qs.push({ op: '=', k: 'userId', v: opts.userId });
 				if (opts.channelId) filter.qs.push({ op: '=', k: 'channelId', v: opts.channelId });
-				if (opts.host) {
-					if (opts.host === '.') {
-						filter.qs.push({ op: 'is null', k: 'userHost' });
-					} else {
-						filter.qs.push({ op: '=', k: 'userHost', v: opts.host });
-					}
-				}
+				filter.qs.push({ op: 'is null', k: 'userHost' });
+
 				const res = await this.meilisearchNoteIndex!.search(q, {
 					sort: ['createdAt:desc'],
 					matchingStrategy: 'all',
@@ -315,13 +309,7 @@ export class SearchService {
 				if (pagination.sinceId) esFilter.bool.must.push({ range: { createdAt: { gt: this.idService.parse(pagination.sinceId).date.getTime() } } });
 				if (opts.userId) esFilter.bool.must.push({ term: { userId: opts.userId } });
 				if (opts.channelId) esFilter.bool.must.push({ term: { channelId: opts.channelId } });
-				if (opts.host) {
-					if (opts.host === '.') {
-						esFilter.bool.must.push({ term: { userHost: this.config.host } });
-					} else {
-						esFilter.bool.must.push({ term: { userHost: opts.host } });
-					}
-				}
+				esFilter.bool.must.push({ term: { userHost: this.config.host } });
 
 				if (q !== '') {
 					esFilter.bool.must.push({
@@ -377,14 +365,16 @@ export class SearchService {
 			}
 
 			query
-				.andWhere('note.text ILIKE :q', { q: `%${sqlLikeEscape(q)}%` })
+				.andWhere('note.text ILIKE :q', { q: `%${ sqlLikeEscape(q) }%` })
 				.innerJoinAndSelect('note.user', 'user')
 				.leftJoinAndSelect('note.reply', 'reply')
 				.leftJoinAndSelect('note.renote', 'renote')
 				.leftJoinAndSelect('reply.user', 'replyUser')
 				.leftJoinAndSelect('renote.user', 'renoteUser');
 
-			if (opts.host) {
+			if (!opts.host || (this.meilisearch ?? this.elasticsearch)) {
+				query.andWhere('user.host IS NOT NULL');
+			} else {
 				if (opts.host === '.') {
 					query.andWhere('user.host IS NULL');
 				} else {

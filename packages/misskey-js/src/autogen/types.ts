@@ -5187,7 +5187,6 @@ export type components = {
       canManageCustomEmojis: boolean;
       canManageAvatarDecorations: boolean;
       canSearchNotes: boolean;
-      canUseAdvancesSearch: boolean;
       canUseTranslator: boolean;
       canUseDriveFileInSoundSettings: boolean;
       canUseReaction: boolean;
@@ -25035,8 +25034,6 @@ export type operations = {
       content: {
         'application/json': {
           query: string;
-          /** @default false */
-          advanced?: boolean;
           /** Format: misskey:id */
           sinceId?: string;
           /** Format: misskey:id */

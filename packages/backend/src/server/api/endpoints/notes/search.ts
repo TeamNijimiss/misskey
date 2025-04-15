@@ -40,7 +40,6 @@ export const paramDef = {
 	type: 'object',
 	properties: {
 		query: { type: 'string' },
-		advanced: { type: 'boolean', default: false },
 		sinceId: { type: 'string', format: 'misskey:id' },
 		untilId: { type: 'string', format: 'misskey:id' },
 		limit: { type: 'integer', minimum: 1, maximum: 100, default: 10 },
@@ -79,15 +78,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				this.cacheService.userBlockedCache.fetch(me.id),
 			]) : [new Set<string>(), new Set<string>()];
 
-			if (ps.advanced && !policies.canUseAdvancesSearch) {
-				throw new ApiError(meta.errors.unavailable);
-			}
-
 			const notes = (await this.searchService.searchNote(ps.query, me, {
 				userId: ps.userId,
 				channelId: ps.channelId,
 				host: ps.host,
-				advanced: ps.advanced,
 			}, {
 				untilId: ps.untilId,
 				sinceId: ps.sinceId,
