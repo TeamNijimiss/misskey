@@ -9,26 +9,20 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<MkInput v-model="searchQuery" :large="true" :autofocus="true" type="text" @enter="search">
 			<template #prefix><i class="ti ti-search"></i></template>
 		</MkInput>
-		<MkFolder>
-			<template #label>{{ i18n.ts.options }}</template>
+		<div class="_gaps_m">
+			<MkFolder :defaultOpen="true">
+				<template #label>{{ i18n.ts.specifyUser }}</template>
+				<template v-if="user" #suffix>@{{ user.username }}</template>
 
-			<div class="_gaps_m">
-				<MkSwitch v-model="isLocalOnly">{{ i18n.ts.localOnly }}</MkSwitch>
-
-				<MkFolder :defaultOpen="true">
-					<template #label>{{ i18n.ts.specifyUser }}</template>
-					<template v-if="user" #suffix>@{{ user.username }}</template>
-
-					<div style="text-align: center;" class="_gaps">
-						<div v-if="user">@{{ user.username }}</div>
-						<div>
-							<MkButton v-if="user == null" primary rounded inline @click="selectUser">{{ i18n.ts.selectUser }}</MkButton>
-							<MkButton v-else danger rounded inline @click="user = null">{{ i18n.ts.remove }}</MkButton>
-						</div>
+				<div style="text-align: center;" class="_gaps">
+					<div v-if="user">@{{ user.username }}</div>
+					<div>
+						<MkButton v-if="user == null" primary rounded inline @click="selectUser">{{ i18n.ts.selectUser }}</MkButton>
+						<MkButton v-else danger rounded inline @click="user = null">{{ i18n.ts.remove }}</MkButton>
 					</div>
-				</MkFolder>
-			</div>
-		</MkFolder>
+				</div>
+			</MkFolder>
+		</div>
 		<div>
 			<MkButton large primary gradate rounded style="margin: 0 auto;" @click="search">{{ i18n.ts.search }}</MkButton>
 		</div>
@@ -46,13 +40,16 @@ import { ref } from 'vue';
 import MkNotes from '@/components/MkNotes.vue';
 import MkInput from '@/components/MkInput.vue';
 import MkButton from '@/components/MkButton.vue';
-import MkSwitch from '@/components/MkSwitch.vue';
 import { i18n } from '@/i18n.js';
 import * as os from '@/os.js';
 import { misskeyApi } from '@/scripts/misskey-api.js';
 import MkFoldableSection from '@/components/MkFoldableSection.vue';
 import MkFolder from '@/components/MkFolder.vue';
 import { useRouter } from '@/router/supplier.js';
+
+const props = defineProps<{
+	localOnly?: boolean;
+}>();
 
 const router = useRouter();
 
@@ -61,7 +58,6 @@ const searchQuery = ref('');
 const searchOrigin = ref('combined');
 const notePagination = ref();
 const user = ref<any>(null);
-const isLocalOnly = ref(false);
 
 function selectUser() {
 	os.selectUser({ includeSelf: true }).then(_user => {
@@ -101,7 +97,7 @@ async function search() {
 		},
 	};
 
-	if (isLocalOnly.value) notePagination.value.params.host = '.';
+	if (props.localOnly) notePagination.value.params.host = '.';
 
 	key.value++;
 }

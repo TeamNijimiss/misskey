@@ -68,7 +68,8 @@ function compileQuery(q: Q): string {
 export class SearchService {
 	private readonly meilisearchIndexScope: 'local' | 'global' | string[] = 'local';
 	private meilisearchNoteIndex: Index | null = null;
-	private elasticsearchNoteIndex: string | null = null;
+	private readonly elasticsearchNoteIndex: string;
+	private readonly elasticsearchIdField: string;
 	private logger: Logger;
 
 	constructor(
@@ -119,7 +120,9 @@ export class SearchService {
 				},
 			});*/
 		} else if (this.elasticsearch) {
-			this.elasticsearchNoteIndex = `${config.elasticsearch!.index}---notes`;
+			this.elasticsearchNoteIndex = `${config.elasticsearch!.index}`;
+			this.elasticsearchIdField = `${config.host}_id`;
+			/* 外部からindexさせるのでこの処理は不要
 			this.elasticsearch.indices.exists({
 				index: this.elasticsearchNoteIndex,
 			}).then((indexExists) => {
@@ -164,6 +167,7 @@ export class SearchService {
 			}).catch((error) => {
 				this.logger.error('Error while checking if index exists', error);
 			});
+			*/
 		}
 	}
 
@@ -202,6 +206,7 @@ export class SearchService {
 				primaryKey: 'id',
 			});
 		}	else if (this.elasticsearch) {
+			/* 外部からindexさせるのでこの処理は不要
 			const body = {
 				createdAt: createdAt.getTime(),
 				userId: note.userId,
@@ -218,6 +223,7 @@ export class SearchService {
 			}).catch((error) => {
 				this.logger.error(error);
 			});
+			*/
 		}
 	}
 
@@ -228,12 +234,14 @@ export class SearchService {
 		if (this.meilisearch) {
 			this.meilisearchNoteIndex!.deleteDocument(note.id);
 		} else if (this.elasticsearch) {
+			/* 外部からindexさせるのでこの処理は不要
 			await this.elasticsearch.delete({
 				index: `${this.elasticsearchNoteIndex}-${this.idService.parse(note.id).date.toISOString().slice(0, 7).replace(/-/g, '')}`,
 				id: note.id,
 			}).catch((error) => {
 				this.logger.error(error);
 			});
+			*/
 		}
 	}
 
@@ -247,106 +255,106 @@ export class SearchService {
 		sinceId?: MiNote['id'];
 		limit?: number;
 	}): Promise<MiNote[]> {
-		if (this.meilisearch) {
-			const filter: Q = {
-				op: 'and',
-				qs: [],
-			};
-			if (pagination.untilId) filter.qs.push({ op: '<', k: 'createdAt', v: this.idService.parse(pagination.untilId).date.getTime() });
-			if (pagination.sinceId) filter.qs.push({ op: '>', k: 'createdAt', v: this.idService.parse(pagination.sinceId).date.getTime() });
-			if (opts.userId) filter.qs.push({ op: '=', k: 'userId', v: opts.userId });
-			if (opts.channelId) filter.qs.push({ op: '=', k: 'channelId', v: opts.channelId });
-			if (opts.host) {
-				if (opts.host === '.') {
-					filter.qs.push({ op: 'is null', k: 'userHost' });
-				} else {
-					filter.qs.push({ op: '=', k: 'userHost', v: opts.host });
-				}
-			}
-			const res = await this.meilisearchNoteIndex!.search(q, {
-				sort: ['createdAt:desc'],
-				matchingStrategy: 'all',
-				attributesToRetrieve: ['id', 'createdAt'],
-				filter: compileQuery(filter),
-				limit: pagination.limit,
-			});
-			if (res.hits.length === 0) return [];
-			const [
-				userIdsWhoMeMuting,
-				userIdsWhoBlockingMe,
-			] = me ? await Promise.all([
-				this.cacheService.userMutingsCache.fetch(me.id),
-				this.cacheService.userBlockedCache.fetch(me.id),
-			]) : [new Set<string>(), new Set<string>()];
-			const notes = (await this.notesRepository.findBy({
-				id: In(res.hits.map(x => x.id)),
-			})).filter(note => {
-				if (me && isUserRelated(note, userIdsWhoBlockingMe)) return false;
-				if (me && isUserRelated(note, userIdsWhoMeMuting)) return false;
-				return true;
-			});
-			return notes.sort((a, b) => a.id > b.id ? -1 : 1);
-		} else if (this.elasticsearch) {
-			const esFilter: any = {
-				bool: {
-					must: [],
-				},
-			};
-
-			if (pagination.untilId) esFilter.bool.must.push({ range: { createdAt: { lt: this.idService.parse(pagination.untilId).date.getTime() } } });
-			if (pagination.sinceId) esFilter.bool.must.push({ range: { createdAt: { gt: this.idService.parse(pagination.sinceId).date.getTime() } } });
-			if (opts.userId) esFilter.bool.must.push({ term: { userId: opts.userId } });
-			if (opts.channelId) esFilter.bool.must.push({ term: { channelId: opts.channelId } });
-			if (opts.host) {
-				if (opts.host === '.') {
-					esFilter.bool.must.push({ bool: { must_not: [{ exists: { field: 'userHost' } }] } });
-				} else {
-					esFilter.bool.must.push({ term: { userHost: opts.host } });
-				}
-			}
-
-			if (q !== '') {
-				esFilter.bool.must.push({
-					bool: {
-						should: [
-							{ wildcard: { 'text': { value: q } } },
-							{ simple_query_string: { fields: ['text'], 'query': q, default_operator: 'and' } },
-							{ wildcard: { 'cw': { value: q } } },
-							{ simple_query_string: { fields: ['cw'], 'query': q, default_operator: 'and' } },
-						],
-						minimum_should_match: 1,
-					},
+		if (opts.host === '.' && (this.meilisearch ?? this.elasticsearch)) {
+			if (this.meilisearch) {
+				const filter: Q = {
+					op: 'and',
+					qs: [],
+				};
+				if (pagination.untilId) filter.qs.push({
+					op: '<',
+					k: 'createdAt',
+					v: this.idService.parse(pagination.untilId).date.getTime(),
 				});
-			}
+				if (pagination.sinceId) filter.qs.push({
+					op: '>',
+					k: 'createdAt',
+					v: this.idService.parse(pagination.sinceId).date.getTime(),
+				});
+				if (opts.userId) filter.qs.push({ op: '=', k: 'userId', v: opts.userId });
+				if (opts.channelId) filter.qs.push({ op: '=', k: 'channelId', v: opts.channelId });
+				filter.qs.push({ op: 'is null', k: 'userHost' });
 
-			const res = await (this.elasticsearch.search)({
-				index: this.elasticsearchNoteIndex + '*' as string,
-				body: {
+				const res = await this.meilisearchNoteIndex!.search(q, {
+					sort: ['createdAt:desc'],
+					matchingStrategy: 'all',
+					attributesToRetrieve: ['id', 'createdAt'],
+					filter: compileQuery(filter),
+					limit: pagination.limit,
+				});
+				if (res.hits.length === 0) return [];
+				const [
+					userIdsWhoMeMuting,
+					userIdsWhoBlockingMe,
+				] = me ? await Promise.all([
+					this.cacheService.userMutingsCache.fetch(me.id),
+					this.cacheService.userBlockedCache.fetch(me.id),
+				]) : [new Set<string>(), new Set<string>()];
+				const notes = (await this.notesRepository.findBy({
+					id: In(res.hits.map(x => x.id)),
+				})).filter(note => {
+					if (me && isUserRelated(note, userIdsWhoBlockingMe)) return false;
+					if (me && isUserRelated(note, userIdsWhoMeMuting)) return false;
+					return true;
+				});
+				return notes.sort((a, b) => a.id > b.id ? -1 : 1);
+			} else if (this.elasticsearch) {
+				const esFilter: any = {
+					bool: {
+						must: [],
+					},
+				};
+
+				if (pagination.untilId) esFilter.bool.must.push({ range: { createdAt: { lt: this.idService.parse(pagination.untilId).date.getTime() } } });
+				if (pagination.sinceId) esFilter.bool.must.push({ range: { createdAt: { gt: this.idService.parse(pagination.sinceId).date.getTime() } } });
+				if (opts.userId) esFilter.bool.must.push({ term: { userId: opts.userId } });
+				if (opts.channelId) esFilter.bool.must.push({ term: { channelId: opts.channelId } });
+				esFilter.bool.must.push({ term: { userHost: this.config.host } });
+
+				if (q !== '') {
+					esFilter.bool.must.push({
+						bool: {
+							should: [
+								{ wildcard: { 'text': { value: q } } },
+								{ simple_query_string: { fields: ['text'], 'query': q, default_operator: 'and' } },
+							],
+							minimum_should_match: 1,
+						},
+					});
+				}
+
+				const res = await (this.elasticsearch.search)({
+					index: this.elasticsearchNoteIndex + '*' as string,
 					query: esFilter,
 					sort: [{ createdAt: { order: 'desc' } }],
-				},
-				_source: ['id', 'createdAt'],
-				size: pagination.limit,
-			});
+					_source: ['id', 'createdAt', this.elasticsearchIdField],
+					size: pagination.limit,
+				});
 
-			const noteIds = res.hits.hits.map((hit: any) => hit._id);
-			if (noteIds.length === 0) return [];
-			const [
-				userIdsWhoMeMuting,
-				userIdsWhoBlockingMe,
-			] = me ? await Promise.all([
-				this.cacheService.userMutingsCache.fetch(me.id),
-				this.cacheService.userBlockedCache.fetch(me.id),
-			]) : [new Set<string>(), new Set<string>()];
-			const notes = (await this.notesRepository.findBy({
-				id: In(noteIds),
-			})).filter(note => {
-				if (me && isUserRelated(note, userIdsWhoBlockingMe)) return false;
-				if (me && isUserRelated(note, userIdsWhoMeMuting)) return false;
-				return true;
-			});
+				const noteIds = res.hits.hits.map((hit) => {
+					const source = hit._source as Record<string, unknown>;
+					return (source[this.elasticsearchIdField] as string) || null;
+				}).filter((id): id is string => id !== null);
+				if (noteIds.length === 0) return [];
+				const [
+					userIdsWhoMeMuting,
+					userIdsWhoBlockingMe,
+				] = me ? await Promise.all([
+					this.cacheService.userMutingsCache.fetch(me.id),
+					this.cacheService.userBlockedCache.fetch(me.id),
+				]) : [new Set<string>(), new Set<string>()];
+				const notes = (await this.notesRepository.findBy({
+					id: In(noteIds),
+				})).filter(note => {
+					if (me && isUserRelated(note, userIdsWhoBlockingMe)) return false;
+					if (me && isUserRelated(note, userIdsWhoMeMuting)) return false;
+					return true;
+				});
 
-			return notes.sort((a, b) => a.id > b.id ? -1 : 1);
+				return notes.sort((a, b) => a.id > b.id ? -1 : 1);
+			}
+
+			return [];
 		} else {
 			const query = this.queryService.makePaginationQuery(this.notesRepository.createQueryBuilder('note'), pagination.sinceId, pagination.untilId);
 
@@ -364,7 +372,9 @@ export class SearchService {
 				.leftJoinAndSelect('reply.user', 'replyUser')
 				.leftJoinAndSelect('renote.user', 'renoteUser');
 
-			if (opts.host) {
+			if (!opts.host || (this.meilisearch ?? this.elasticsearch)) {
+				query.andWhere('user.host IS NOT NULL');
+			} else {
 				if (opts.host === '.') {
 					query.andWhere('user.host IS NULL');
 				} else {
