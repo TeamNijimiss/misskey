@@ -72,12 +72,6 @@ type AdminAccountsFindByEmailRequest = operations['admin___accounts___find-by-em
 type AdminAccountsFindByEmailResponse = operations['admin___accounts___find-by-email']['responses']['200']['content']['application/json'];
 
 // @public (undocumented)
-type AdminAccountsFindByStripeCustomerRequest = operations['admin___accounts___find-by-stripe-customer']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type AdminAccountsFindByStripeCustomerResponse = operations['admin___accounts___find-by-stripe-customer']['responses']['200']['content']['application/json'];
-
-// @public (undocumented)
 type AdminAccountsPendingListRequest = operations['admin___accounts___pending___list']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
@@ -385,18 +379,6 @@ type AdminSsoListResponse = operations['admin___sso___list']['responses']['200']
 
 // @public (undocumented)
 type AdminSsoUpdateRequest = operations['admin___sso___update']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type AdminSubscriptionPlansArchiveRequest = operations['admin___subscription-plans___archive']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type AdminSubscriptionPlansCreateRequest = operations['admin___subscription-plans___create']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type AdminSubscriptionPlansCreateResponse = operations['admin___subscription-plans___create']['responses']['200']['content']['application/json'];
-
-// @public (undocumented)
-type AdminSubscriptionPlansUpdateRequest = operations['admin___subscription-plans___update']['requestBody']['content']['application/json'];
 
 // @public (undocumented)
 type AdminSuspendUserRequest = operations['admin___suspend-user']['requestBody']['content']['application/json'];
@@ -1249,8 +1231,6 @@ declare namespace entities {
         AdminAccountsDeleteRequest,
         AdminAccountsFindByEmailRequest,
         AdminAccountsFindByEmailResponse,
-        AdminAccountsFindByStripeCustomerRequest,
-        AdminAccountsFindByStripeCustomerResponse,
         AdminAccountsPendingListRequest,
         AdminAccountsPendingListResponse,
         AdminAccountsPendingRevokeRequest,
@@ -1367,10 +1347,6 @@ declare namespace entities {
         AdminSsoListRequest,
         AdminSsoListResponse,
         AdminSsoUpdateRequest,
-        AdminSubscriptionPlansCreateRequest,
-        AdminSubscriptionPlansCreateResponse,
-        AdminSubscriptionPlansUpdateRequest,
-        AdminSubscriptionPlansArchiveRequest,
         AnnouncementRequest,
         AnnouncementResponse,
         AnnouncementsRequest,
@@ -1745,10 +1721,6 @@ declare namespace entities {
         ResetPasswordRequest,
         ServerInfoResponse,
         StatsResponse,
-        SubscriptionCreateRequest,
-        SubscriptionPlansListResponse,
-        SubscriptionPlansShowRequest,
-        SubscriptionPlansShowResponse,
         SwShowRegistrationRequest,
         SwShowRegistrationResponse,
         SwUpdateRegistrationRequest,
@@ -1900,8 +1872,7 @@ declare namespace entities {
         MetaLite,
         MetaDetailedOnly,
         MetaDetailed,
-        AbuseUserReport,
-        SubscriptionPlan
+        AbuseUserReport
     }
 }
 export { entities }
@@ -3099,21 +3070,6 @@ export class Stream extends EventEmitter<StreamEvents> {
     // (undocumented)
     useChannel<C extends keyof Channels>(channel: C, params?: Channels[C]['params'], name?: string): ChannelConnection<Channels[C]>;
 }
-
-// @public (undocumented)
-type SubscriptionCreateRequest = operations['subscription___create']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type SubscriptionPlan = components['schemas']['SubscriptionPlan'];
-
-// @public (undocumented)
-type SubscriptionPlansListResponse = operations['subscription-plans___list']['responses']['200']['content']['application/json'];
-
-// @public (undocumented)
-type SubscriptionPlansShowRequest = operations['subscription-plans___show']['requestBody']['content']['application/json'];
-
-// @public (undocumented)
-type SubscriptionPlansShowResponse = operations['subscription-plans___show']['responses']['200']['content']['application/json'];
 
 // Warning: (ae-forgotten-export) The symbol "SwitchCase" needs to be exported by the entry point index.d.ts
 // Warning: (ae-forgotten-export) The symbol "IsCaseMatched" needs to be exported by the entry point index.d.ts

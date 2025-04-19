@@ -559,11 +559,6 @@ export class MiMeta {
 	})
 	public urlPreviewUserAgent: string | null;
 
-	@Column('boolean', {
-		default: false,
-	})
-	public enableSubscriptions: boolean;
-
 	@Column('varchar', {
 		length: 1024,
 		nullable: true,

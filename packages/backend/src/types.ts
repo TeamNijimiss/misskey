@@ -119,18 +119,6 @@ export const moderationLogTypes = [
 	'archiveSubscriptionPlan',
 ] as const;
 
-export const subscriptionStatus = [
-	'incomplete',
-	'incomplete_expired',
-	'trialing',
-	'active',
-	'past_due',
-	'paused',
-	'canceled',
-	'unpaid',
-	'none',
-] as const;
-
 export type ModerationLogPayloads = {
 	updateServerSettings: {
 		before: any | null;

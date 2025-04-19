@@ -500,8 +500,6 @@ export class UserEntityService implements OnModuleInit {
 			emojis: this.customEmojiService.populateEmojis(user.emojis, user.host),
 			onlineStatus: this.getOnlineStatus(user),
 			badgeRoles: this.roleService.getUserBadgeRoles(user.id, !iAmModerator),
-			subscriptionStatus: user.subscriptionStatus,
-			subscriptionPlanId: user.subscriptionPlanId,
 
 			...(isDetailed ? {
 				url: profile!.url,
@@ -619,8 +617,6 @@ export class UserEntityService implements OnModuleInit {
 						},
 					})
 					: [],
-				stripeCustomerId: profile?.stripeCustomerId,
-				stripeSubscriptionId: user.stripeSubscriptionId,
 			} : {}),
 
 			...(relation ? {

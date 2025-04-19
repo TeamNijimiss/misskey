@@ -146,13 +146,6 @@ redis:
 #    forcePathStyle: false
 #    useProxy: false
 
-#   ┌──────────────────────────────┐
-#───┘ Stripe payment configuration └─────────────────────────────
-#stripe:
-#  secretKey: sk_test_...
-#  webhookSecret: whsec_...
-#  customerPortalUrl: https://billing.stripe.com/p/login/...
-
 #   ┌───────────────┐
 #───┘ ID generation └───────────────────────────────────────────
 

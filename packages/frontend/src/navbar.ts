@@ -160,6 +160,11 @@ export const navbarItemDef = reactive({
 			openInstanceMenu(ev);
 		},
 	},
+	subscription: {
+		icon: 'ti ti-credit-card',
+		title: 'Subscription',
+		to: 'https://subscription.nijimiss.app/',
+	},
 	tools: {
 		title: i18n.ts.tools,
 		icon: 'ti ti-tool',

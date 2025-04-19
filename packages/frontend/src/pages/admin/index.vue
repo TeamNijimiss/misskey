@@ -35,7 +35,7 @@ import MkInfo from '@/components/MkInfo.vue';
 import { instance } from '@/instance.js';
 import * as os from '@/os.js';
 import { misskeyApi } from '@/scripts/misskey-api.js';
-import { lookupUser, lookupUserByCustomer, lookupUserByEmail } from '@/scripts/lookup-user.js';
+import { lookupUser, lookupUserByEmail } from '@/scripts/lookup-user.js';
 import { PageMetadata, definePageMetadata, provideMetadataReceiver, provideReactiveMetadata } from '@/scripts/page-metadata.js';
 import { useRouter } from '@/router/supplier.js';
 
@@ -111,11 +111,6 @@ const menuDef = computed(() => [{
 		text: i18n.ts.roles,
 		to: '/admin/roles',
 		active: currentPage.value?.route.name === 'roles',
-	}, {
-		icon: 'ti ti-credit-card',
-		text: i18n.ts.subscription,
-		to: '/admin/subscription-plans',
-		active: currentPage.value?.route.name === 'subscription-plans',
 	}, {
 		icon: 'ti ti-icons',
 		text: i18n.ts.customEmojis,
@@ -299,12 +294,6 @@ function lookup(ev: MouseEvent) {
 		icon: 'ti ti-user',
 		action: () => {
 			lookupUserByEmail();
-		},
-	}, {
-		text: `${i18n.ts.user} (CustomerID)`,
-		icon: 'ti ti-user',
-		action: () => {
-			lookupUserByCustomer();
 		},
 	}, {
 		text: i18n.ts.note,
