@@ -3910,6 +3910,19 @@ export type components = {
       roles: components['schemas']['RoleLite'][];
       memo: string | null;
       moderationNote?: string;
+      mutualLinkSections: ({
+          name: string | null;
+          mutualLinks: ({
+              /** Format: misskey:id */
+              id: string;
+              /** Format: url */
+              url: string;
+              /** Format: misskey:id */
+              fileId: string;
+              description: string | null;
+              imgSrc: string;
+            })[];
+        })[];
       isFollowing?: boolean;
       isFollowed?: boolean;
       hasPendingFollowRequestFromYou?: boolean;
