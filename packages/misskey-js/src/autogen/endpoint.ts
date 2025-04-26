@@ -9,8 +9,6 @@ import type {
 	AdminAccountsDeleteRequest,
 	AdminAccountsFindByEmailRequest,
 	AdminAccountsFindByEmailResponse,
-	AdminAccountsFindByStripeCustomerRequest,
-	AdminAccountsFindByStripeCustomerResponse,
 	AdminAccountsPendingListRequest,
 	AdminAccountsPendingListResponse,
 	AdminAccountsPendingRevokeRequest,
@@ -127,10 +125,6 @@ import type {
 	AdminSsoListRequest,
 	AdminSsoListResponse,
 	AdminSsoUpdateRequest,
-	AdminSubscriptionPlansCreateRequest,
-	AdminSubscriptionPlansCreateResponse,
-	AdminSubscriptionPlansUpdateRequest,
-	AdminSubscriptionPlansArchiveRequest,
 	AnnouncementRequest,
 	AnnouncementResponse,
 	AnnouncementsRequest,
@@ -505,10 +499,6 @@ import type {
 	ResetPasswordRequest,
 	ServerInfoResponse,
 	StatsResponse,
-	SubscriptionCreateRequest,
-	SubscriptionPlansListResponse,
-	SubscriptionPlansShowRequest,
-	SubscriptionPlansShowResponse,
 	SwShowRegistrationRequest,
 	SwShowRegistrationResponse,
 	SwUpdateRegistrationRequest,
@@ -609,7 +599,6 @@ export type Endpoints = {
 	'admin/accounts/create': { req: AdminAccountsCreateRequest; res: AdminAccountsCreateResponse };
 	'admin/accounts/delete': { req: AdminAccountsDeleteRequest; res: EmptyResponse };
 	'admin/accounts/find-by-email': { req: AdminAccountsFindByEmailRequest; res: AdminAccountsFindByEmailResponse };
-	'admin/accounts/find-by-stripe-customer': { req: AdminAccountsFindByStripeCustomerRequest; res: AdminAccountsFindByStripeCustomerResponse };
 	'admin/accounts/pending/list': { req: AdminAccountsPendingListRequest; res: AdminAccountsPendingListResponse };
 	'admin/accounts/pending/revoke': { req: AdminAccountsPendingRevokeRequest; res: EmptyResponse };
 	'admin/ad/create': { req: AdminAdCreateRequest; res: AdminAdCreateResponse };
@@ -698,9 +687,6 @@ export type Endpoints = {
 	'admin/sso/delete': { req: AdminSsoDeleteRequest; res: EmptyResponse };
 	'admin/sso/list': { req: AdminSsoListRequest; res: AdminSsoListResponse };
 	'admin/sso/update': { req: AdminSsoUpdateRequest; res: EmptyResponse };
-	'admin/subscription-plans/create': { req: AdminSubscriptionPlansCreateRequest; res: AdminSubscriptionPlansCreateResponse };
-	'admin/subscription-plans/update': { req: AdminSubscriptionPlansUpdateRequest; res: EmptyResponse };
-	'admin/subscription-plans/archive': { req: AdminSubscriptionPlansArchiveRequest; res: EmptyResponse };
 	'announcement': { req: AnnouncementRequest; res: AnnouncementResponse };
 	'announcements': { req: AnnouncementsRequest; res: AnnouncementsResponse };
 	'antennas/create': { req: AntennasCreateRequest; res: AntennasCreateResponse };
@@ -948,10 +934,6 @@ export type Endpoints = {
 	'reset-password': { req: ResetPasswordRequest; res: EmptyResponse };
 	'server-info': { req: EmptyRequest; res: ServerInfoResponse };
 	'stats': { req: EmptyRequest; res: StatsResponse };
-	'subscription/create': { req: SubscriptionCreateRequest; res: EmptyResponse };
-	'subscription/manage': { req: EmptyRequest; res: EmptyResponse };
-	'subscription-plans/list': { req: EmptyRequest; res: SubscriptionPlansListResponse };
-	'subscription-plans/show': { req: SubscriptionPlansShowRequest; res: SubscriptionPlansShowResponse };
 	'sw/show-registration': { req: SwShowRegistrationRequest; res: SwShowRegistrationResponse };
 	'sw/update-registration': { req: SwUpdateRegistrationRequest; res: SwUpdateRegistrationResponse };
 	'sw/register': { req: SwRegisterRequest; res: SwRegisterResponse };

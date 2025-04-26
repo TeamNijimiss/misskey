@@ -61,7 +61,6 @@ import { MiRegistryItem } from '@/models/RegistryItem.js';
 import { MiRelay } from '@/models/Relay.js';
 import { MiSignin } from '@/models/Signin.js';
 import { MiSingleSignOnServiceProvider } from '@/models/SingleSignOnServiceProvider.js';
-import { MiSubscriptionPlan } from '@/models/SubscriptionPlan.js';
 import { MiSwSubscription } from '@/models/SwSubscription.js';
 import { MiUsedUsername } from '@/models/UsedUsername.js';
 import { MiUser } from '@/models/User.js';
@@ -185,7 +184,6 @@ export const entities = [
 	MiRegistrationTicket,
 	MiSignin,
 	MiSingleSignOnServiceProvider,
-	MiSubscriptionPlan,
 	MiModerationLog,
 	MiClip,
 	MiClipNote,

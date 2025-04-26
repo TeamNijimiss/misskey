@@ -92,11 +92,6 @@ type Source = {
 		index: string;
 	};
 
-	stripe?: {
-		secretKey: string;
-		webhookSecret: string;
-	};
-
 	skebStatus?: {
 		method: string;
 		endpoint: string;
@@ -203,11 +198,6 @@ export type Config = {
 			forcePathStyle?: boolean;
 			useProxy?: boolean;
 		}
-	} | undefined;
-	stripe: {
-		secretKey: string;
-		webhookSecret?: string;
-		customerPortalUrl?: string;
 	} | undefined;
 	skebStatus: {
 		method: string;
@@ -334,7 +324,6 @@ export function loadConfig(): Config {
 		meilisearch: config.meilisearch,
 		elasticsearch: config.elasticsearch,
 		s3: config.s3,
-		stripe: config.stripe,
 		redis,
 		redisForPubsub: config.redisForPubsub ? convertRedisOptions(config.redisForPubsub, host) : redis,
 		redisForSystemQueue: config.redisForSystemQueue ? convertRedisOptions(config.redisForSystemQueue, host) : redisForJobQueue,

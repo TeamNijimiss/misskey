@@ -11,7 +11,6 @@ import * as ep___admin_abuseUserReports from './endpoints/admin/abuse-user-repor
 import * as ep___admin_accounts_create from './endpoints/admin/accounts/create.js';
 import * as ep___admin_accounts_delete from './endpoints/admin/accounts/delete.js';
 import * as ep___admin_accounts_findByEmail from './endpoints/admin/accounts/find-by-email.js';
-import * as ep___admin_accounts_findByStripeCustomer from './endpoints/admin/accounts/find-by-stripe-customer.js';
 import * as ep___admin_accounts_pending_list from './endpoints/admin/accounts/pending/list.js';
 import * as ep___admin_accounts_pending_revoke from './endpoints/admin/accounts/pending/revoke.js';
 import * as ep___admin_ad_create from './endpoints/admin/ad/create.js';
@@ -100,9 +99,6 @@ import * as ep___admin_sso_create from './endpoints/admin/sso/create.js';
 import * as ep___admin_sso_delete from './endpoints/admin/sso/delete.js';
 import * as ep___admin_sso_list from './endpoints/admin/sso/list.js';
 import * as ep___admin_sso_update from './endpoints/admin/sso/update.js';
-import * as ep___admin_subscriptionPlans_create from './endpoints/admin/subscription-plans/create.js';
-import * as ep___admin_subscriptionPlans_update from './endpoints/admin/subscription-plans/update.js';
-import * as ep___admin_subscriptionPlans_archive from './endpoints/admin/subscription-plans/archive.js';
 import * as ep___announcement from './endpoints/announcement.js';
 import * as ep___announcements from './endpoints/announcements.js';
 import * as ep___antennas_create from './endpoints/antennas/create.js';
@@ -350,10 +346,6 @@ import * as ep___resetDb from './endpoints/reset-db.js';
 import * as ep___resetPassword from './endpoints/reset-password.js';
 import * as ep___serverInfo from './endpoints/server-info.js';
 import * as ep___stats from './endpoints/stats.js';
-import * as ep___subscription_create from './endpoints/subscription/create.js';
-import * as ep___subscription_manage from './endpoints/subscription/manage.js';
-import * as ep___subscription_plans_list from './endpoints/subscription-plans/list.js';
-import * as ep___subscription_plans_show from './endpoints/subscription-plans/show.js';
 import * as ep___sw_show_registration from './endpoints/sw/show-registration.js';
 import * as ep___sw_update_registration from './endpoints/sw/update-registration.js';
 import * as ep___sw_register from './endpoints/sw/register.js';
@@ -414,7 +406,6 @@ const eps = [
 	['admin/accounts/create', ep___admin_accounts_create],
 	['admin/accounts/delete', ep___admin_accounts_delete],
 	['admin/accounts/find-by-email', ep___admin_accounts_findByEmail],
-	['admin/accounts/find-by-stripe-customer', ep___admin_accounts_findByStripeCustomer],
 	['admin/accounts/pending/list', ep___admin_accounts_pending_list],
 	['admin/accounts/pending/revoke', ep___admin_accounts_pending_revoke],
 	['admin/ad/create', ep___admin_ad_create],
@@ -503,9 +494,6 @@ const eps = [
 	['admin/sso/delete', ep___admin_sso_delete],
 	['admin/sso/list', ep___admin_sso_list],
 	['admin/sso/update', ep___admin_sso_update],
-	['admin/subscription-plans/create', ep___admin_subscriptionPlans_create],
-	['admin/subscription-plans/update', ep___admin_subscriptionPlans_update],
-	['admin/subscription-plans/archive', ep___admin_subscriptionPlans_archive],
 	['announcement', ep___announcement],
 	['announcements', ep___announcements],
 	['antennas/create', ep___antennas_create],
@@ -753,10 +741,6 @@ const eps = [
 	['reset-password', ep___resetPassword],
 	['server-info', ep___serverInfo],
 	['stats', ep___stats],
-	['subscription/create', ep___subscription_create],
-	['subscription/manage', ep___subscription_manage],
-	['subscription-plans/list', ep___subscription_plans_list],
-	['subscription-plans/show', ep___subscription_plans_show],
 	['sw/show-registration', ep___sw_show_registration],
 	['sw/update-registration', ep___sw_update_registration],
 	['sw/register', ep___sw_register],
