@@ -2877,6 +2877,10 @@ export interface Locale extends ILocale {
      */
     "fillAbuseReportDescription": string;
     /**
+     * 通報する前に、[通報ガイドライン](https://nijimiss.org/report-guideline/)を必ずお読みください。
+     */
+    "reportGuidelineInfo": string;
+    /**
      * 内容が送信されました。ご報告ありがとうございました。
      */
     "abuseReported": string;
