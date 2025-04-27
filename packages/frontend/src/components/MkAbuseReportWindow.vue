@@ -15,6 +15,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 	</template>
 	<MkSpacer :marginMin="20" :marginMax="28">
 		<div class="_gaps_m" :class="$style.root">
+			<MkInfo warn style="margin-top: 8px;">
+				<Mfm :text="i18n.ts.reportGuidelineInfo"/>
+			</MkInfo>
 			<MkSelect v-model="category" :required="true">
 				<template #label>{{ i18n.ts.abuseReportCategory }}</template>
 				<template v-if="category" #caption><Mfm :text="i18n.ts._abuseReportCategory[`${category}_description`]"/></template>
@@ -69,6 +72,7 @@ import MkButton from '@/components/MkButton.vue';
 import * as os from '@/os.js';
 import { i18n } from '@/i18n.js';
 import { misskeyApi } from '@/scripts/misskey-api.js';
+import MkInfo from "@/components/MkInfo.vue";
 
 const props = defineProps<{
 	user: Misskey.entities.UserDetailed;
