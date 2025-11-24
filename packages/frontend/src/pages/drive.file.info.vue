@@ -188,7 +188,7 @@ function toggleAiGenerated() {
 		fileId: file.value.id,
 		isAiGenerated: !file.value.isAiGenerated,
 	}).then(async () => {
-		await fetch();
+		await fetchInfo();
 	}).catch(err => {
 		os.alert({
 			type: 'error',

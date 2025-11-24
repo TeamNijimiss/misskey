@@ -137,7 +137,7 @@ export function openInstanceMenu(ev: MouseEvent) {
 			icon: 'ti ti-shopping-cart',
 			href: instance.commerceDisclosureUrl,
 			target: '_blank',
-		})
+		});
 	}
 
 	if (instance.impressumUrl != null || instance.tosUrl != null || instance.privacyPolicyUrl != null) {
