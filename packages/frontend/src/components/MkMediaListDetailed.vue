@@ -13,15 +13,17 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, onUnmounted, useTemplateRef } from 'vue';
 import * as Misskey from 'misskey-js';
 import PhotoSwipeLightbox from 'photoswipe/lightbox';
 import PhotoSwipe from 'photoswipe';
 import 'photoswipe/style.css';
+import { FILE_TYPE_BROWSERSAFE } from '@@/js/const.js';
 import XBanner from '@/components/MkMediaBanner.vue';
 import XImage from '@/components/MkMediaImage.vue';
 import XVideo from '@/components/MkMediaVideo.vue';
-import { FILE_TYPE_BROWSERSAFE } from '@/const';
+import * as os from '@/os.js';
+import { focusParent } from '@/utility/focus.js';
 
 const props = defineProps<{
 	mediaList: Misskey.entities.DriveFile[];
@@ -29,10 +31,22 @@ const props = defineProps<{
 	raw?: boolean;
 }>();
 
-const gallery = ref(null);
+const gallery = useTemplateRef('gallery');
+const pswpZIndex = os.claimZIndex('middle');
+window.document.documentElement.style.setProperty('--mk-pswp-root-z-index', pswpZIndex.toString());
+const count = computed(() => props.mediaList.filter(media => previewable(media)).length);
+let lightbox: PhotoSwipeLightbox | null = null;
+
+let activeEl: HTMLElement | null = null;
+
+const popstateHandler = (): void => {
+	if (lightbox?.pswp && lightbox.pswp.isOpen === true) {
+		lightbox.pswp.close();
+	}
+};
 
 onMounted(() => {
-	const lightbox = new PhotoSwipeLightbox({
+	lightbox = new PhotoSwipeLightbox({
 		dataSource: props.mediaList
 			.filter(media => {
 				if (media.type === 'image/svg+xml') return true; // svgのwebpublicはpngなのでtrue
@@ -43,8 +57,8 @@ onMounted(() => {
 					src: media.url,
 					w: media.properties.width,
 					h: media.properties.height,
-					alt: media.comment || media.name,
-					comment: media.comment || media.name,
+					alt: media.comment ?? media.name,
+					comment: media.comment ?? media.name,
 				};
 				if (media.properties.orientation != null && media.properties.orientation >= 5) {
 					[item.w, item.h] = [item.h, item.w];
@@ -52,34 +66,37 @@ onMounted(() => {
 				return item;
 			}),
 		gallery: gallery.value,
+		mainClass: 'pswp',
 		children: '.image',
 		thumbSelector: '.image',
 		loop: false,
 		padding: window.innerWidth > 500 ? {
 			top: 32,
-			bottom: 32,
+			bottom: 90,
 			left: 32,
 			right: 32,
 		} : {
 			top: 0,
-			bottom: 0,
+			bottom: 78,
 			left: 0,
 			right: 0,
 		},
 		imageClickAction: 'close',
-		tapAction: 'toggle-controls',
+		tapAction: 'close',
 		bgOpacity: 1,
+		showAnimationDuration: 100,
+		hideAnimationDuration: 100,
+		returnFocus: false,
 		pswpModule: PhotoSwipe,
 	});
 
-	lightbox.on('itemData', (ev) => {
-		const { itemData } = ev;
-
+	lightbox.addFilter('itemData', (itemData) => {
 		// element is children
 		const { element } = itemData;
 
-		const id = element.dataset.id;
+		const id = element?.dataset.id;
 		const file = props.mediaList.find(media => media.id === id);
+		if (!file) return itemData;
 
 		itemData.src = file.url;
 		itemData.w = Number(file.properties.width);
@@ -87,30 +104,58 @@ onMounted(() => {
 		if (file.properties.orientation != null && file.properties.orientation >= 5) {
 			[itemData.w, itemData.h] = [itemData.h, itemData.w];
 		}
-		itemData.msrc = file.thumbnailUrl;
-		itemData.alt = file.comment || file.name;
-		itemData.comment = file.comment || file.name;
+		itemData.msrc = file.thumbnailUrl ?? undefined;
+		itemData.alt = file.comment ?? file.name;
+		itemData.comment = file.comment ?? file.name;
 		itemData.thumbCropped = true;
+
+		return itemData;
 	});
 
 	lightbox.on('uiRegister', () => {
-		lightbox.pswp.ui.registerElement({
+		lightbox?.pswp?.ui?.registerElement({
 			name: 'altText',
-			className: 'pwsp__alt-text-container',
+			className: 'pswp__alt-text-container',
 			appendTo: 'wrapper',
-			onInit: (el, pwsp) => {
-				let textBox = document.createElement('p');
-				textBox.className = 'pwsp__alt-text _acrylic';
+			onInit: (el, pswp) => {
+				const textBox = window.document.createElement('p');
+				textBox.className = 'pswp__alt-text _acrylic';
 				el.appendChild(textBox);
 
-				pwsp.on('change', (a) => {
-					textBox.textContent = pwsp.currSlide.data.comment;
+				pswp.on('change', () => {
+					textBox.textContent = pswp.currSlide?.data.comment;
 				});
 			},
 		});
 	});
 
+	lightbox.on('afterInit', () => {
+		activeEl = window.document.activeElement instanceof HTMLElement ? window.document.activeElement : null;
+		focusParent(activeEl, true, true);
+		lightbox?.pswp?.element?.focus({
+			preventScroll: true,
+		});
+		window.history.pushState(null, '', '#pswp');
+	});
+
+	lightbox.on('destroy', () => {
+		focusParent(activeEl, true, false);
+		activeEl = null;
+		if (window.location.hash === '#pswp') {
+			window.history.back();
+		}
+	});
+
+	window.addEventListener('popstate', popstateHandler);
+
 	lightbox.init();
+});
+
+onUnmounted(() => {
+	window.removeEventListener('popstate', popstateHandler);
+	lightbox?.destroy();
+	lightbox = null;
+	activeEl = null;
 });
 
 const previewable = (file: Misskey.entities.DriveFile): boolean => {
@@ -118,24 +163,95 @@ const previewable = (file: Misskey.entities.DriveFile): boolean => {
 	// FILE_TYPE_BROWSERSAFEに適合しないものはブラウザで表示するのに不適切
 	return (file.type.startsWith('video') || file.type.startsWith('image')) && FILE_TYPE_BROWSERSAFE.includes(file.type);
 };
+
+const openGallery = () => {
+	if (props.mediaList.filter(media => previewable(media)).length > 0) {
+		lightbox?.loadAndOpen(0);
+	}
+};
+
+defineExpose({
+	openGallery,
+});
 </script>
 
 <style lang="scss" module>
 .container {
 	position: relative;
 	width: 100%;
-	margin-top: 4px;
 }
 
 .medias {
-	position: relative;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
 	display: grid;
-	grid-template-columns: 1fr;
 	grid-gap: 8px;
+
+	height: 100%;
+	width: 100%;
+
+	&.n1 {
+		grid-template-rows: 1fr;
+
+		// default but fallback (expand)
+		min-height: 64px;
+		max-height: clamp(
+			64px,
+			50cqh,
+			min(360px, 50vh)
+		);
+
+		&.n116_9 {
+			min-height: initial;
+			max-height: initial;
+			aspect-ratio: 16 / 9; // fallback
+		}
+
+		&.n11_1{
+			min-height: initial;
+			max-height: initial;
+			aspect-ratio: 1 / 1; // fallback
+		}
+
+		&.n12_3 {
+			min-height: initial;
+			max-height: initial;
+			aspect-ratio: 2 / 3; // fallback
+		}
+	}
+
+	&.n2 {
+		aspect-ratio: 16/9;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr;
+	}
+
+	&.n3 {
+		aspect-ratio: 16/9;
+		grid-template-columns: 1fr 0.5fr;
+		grid-template-rows: 1fr 1fr;
+
+		> .media:nth-child(1) {
+			grid-row: 1 / 3;
+		}
+
+		> .media:nth-child(3) {
+			grid-column: 2 / 3;
+			grid-row: 2 / 3;
+		}
+	}
+
+	&.n4 {
+		aspect-ratio: 16/9;
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr 1fr;
+	}
+
+	&.nMany {
+		grid-template-columns: 1fr 1fr;
+
+		> .media {
+			aspect-ratio: 16/9;
+		}
+	}
 }
 
 .media {
@@ -145,30 +261,23 @@ const previewable = (file: Misskey.entities.DriveFile): boolean => {
 
 :global(.pswp) {
 	--pswp-root-z-index: var(--mk-pswp-root-z-index, 2000700) !important;
-	--pswp-bg: var(--modalBg) !important;
+	--pswp-bg: var(--MI_THEME-modalBg) !important;
 }
 </style>
 
 <style lang="scss">
-.pswp {
-	// なぜか機能しない
-	//z-index: v-bind(pswpZIndex);
-	z-index: 2000000;
-	--pswp-bg: var(--modalBg);
-}
-
 .pswp__bg {
-	background: var(--modalBg);
-	backdrop-filter: var(--modalBgFilter);
+	background: var(--MI_THEME-modalBg);
+	backdrop-filter: var(--MI-modalBgFilter);
 }
 
-.pwsp__alt-text-container {
+.pswp__alt-text-container {
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 
 	position: absolute;
-	bottom: 30px;
+	bottom: 20px;
 	left: 50%;
 	transform: translateX(-50%);
 
@@ -176,14 +285,15 @@ const previewable = (file: Misskey.entities.DriveFile): boolean => {
 	max-width: 800px;
 }
 
-.pwsp__alt-text {
-	color: var(--fg);
+.pswp__alt-text {
+	color: var(--MI_THEME-fg);
 	margin: 0 auto;
 	text-align: center;
-	padding: var(--margin);
-	border-radius: var(--radius);
+	padding: var(--MI-margin);
+	border-radius: var(--MI-radius);
 	max-height: 8em;
 	overflow-y: auto;
-	text-shadow: var(--bg) 0 0 10px, var(--bg) 0 0 3px, var(--bg) 0 0 3px;
+	text-shadow: var(--MI_THEME-bg) 0 0 10px, var(--MI_THEME-bg) 0 0 3px, var(--MI_THEME-bg) 0 0 3px;
+	white-space: pre-line;
 }
 </style>
