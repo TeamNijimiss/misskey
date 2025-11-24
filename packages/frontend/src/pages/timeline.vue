@@ -31,6 +31,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 			:withRenotes="withRenotes"
 			:withReplies="withReplies"
 			:withSensitive="withSensitive"
+			:withAiGenerated="withAiGenerated"
 			:onlyFiles="onlyFiles"
 			:sound="true"
 			@queue="queueUpdated"
@@ -127,7 +128,7 @@ const withSensitive = computed<boolean>({
 });
 
 const withAiGenerated = computed<boolean>({
-	get: () => defaultStore.reactiveState.tl.value.filter.withAiGenerated,
+	get: () => store.r.tl.value.filter.withAiGenerated,
 	set: (x) => saveTlFilter('withAiGenerated', x),
 });
 

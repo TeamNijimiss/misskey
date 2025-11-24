@@ -59,6 +59,7 @@ export type Column = {
 	withRenotes?: boolean;
 	withReplies?: boolean;
 	withSensitive?: boolean;
+	withAiGenerated?: boolean;
 	onlyFiles?: boolean;
 	soundSetting?: SoundStore;
 };

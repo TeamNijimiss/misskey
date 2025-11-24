@@ -25,6 +25,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		:withRenotes="withRenotes"
 		:withReplies="withReplies"
 		:withSensitive="withSensitive"
+		:withAiGenerated="withAiGenerated"
 		:onlyFiles="onlyFiles"
 		@note="onNote"
 	/>
@@ -56,6 +57,7 @@ const soundSetting = ref<SoundStore>(props.column.soundSetting ?? { type: null, 
 const withRenotes = ref(props.column.withRenotes ?? true);
 const withReplies = ref(props.column.withReplies ?? false);
 const withSensitive = ref(props.column.withSensitive ?? true);
+const withAiGenerated = ref(props.column.withAiGenerated ?? true);
 const onlyFiles = ref(props.column.onlyFiles ?? false);
 
 watch(withRenotes, v => {
@@ -158,6 +160,10 @@ const menu = computed<MenuItem[]>(() => {
 		type: 'switch',
 		text: i18n.ts.withSensitive,
 		ref: withSensitive,
+	}, {
+		type: 'switch',
+		text: i18n.ts.withAiGenerated,
+		ref: withAiGenerated,
 	});
 
 	return menuItems;
