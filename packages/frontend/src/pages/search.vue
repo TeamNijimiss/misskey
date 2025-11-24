@@ -4,20 +4,20 @@ SPDX-License-Identifier: AGPL-3.0-only
 -->
 
 <template>
-<PageWithHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs" :swipable="true">
-	<div v-if="tab === 'note'" class="_spacer" style="--MI_SPACER-w: 800px;">
-		<div v-if="notesSearchAvailable || ignoreNotesSearchAvailable">
-			<XNote v-bind="props"/>
+	<PageWithHeader v-model:tab="tab" :actions="headerActions" :tabs="headerTabs" :swipable="true">
+		<div v-if="tab === 'note'" class="_spacer" style="--MI_SPACER-w: 800px;">
+			<div v-if="notesSearchAvailable || ignoreNotesSearchAvailable">
+				<XNote v-bind="props"/>
+			</div>
+			<div v-else>
+				<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
+			</div>
 		</div>
-		<div v-else>
-			<MkInfo warn>{{ i18n.ts.notesSearchNotAvailable }}</MkInfo>
-		</div>
-	</div>
 
-	<div v-else-if="tab === 'user'" class="_spacer" style="--MI_SPACER-w: 800px;">
-		<XUser v-bind="props"/>
-	</div>
-</PageWithHeader>
+		<div v-else-if="tab === 'user'" class="_spacer" style="--MI_SPACER-w: 800px;">
+			<XUser v-bind="props"/>
+		</div>
+	</PageWithHeader>
 </template>
 
 <script lang="ts" setup>
@@ -54,12 +54,8 @@ const tab = ref(toRef(props, 'type').value);
 const headerActions = computed(() => []);
 
 const headerTabs = computed(() => [{
-	key: 'note-local',
-	title: i18n.ts.searchLocal,
-	icon: 'ti ti-pencil',
-}, {
-	key: 'note-global',
-	title: i18n.ts.searchGlobal,
+	key: 'note',
+	title: i18n.ts.notes,
 	icon: 'ti ti-pencil',
 }, {
 	key: 'user',
