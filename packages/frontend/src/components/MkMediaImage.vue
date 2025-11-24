@@ -126,7 +126,7 @@ function showMenu(ev: MouseEvent) {
 			action: () => toggleSensitive(props.image),
 		});
 
-		menu.push({
+		menuItems.push({
 			text: props.image.isAiGenerated ? i18n.ts.unmarkAsAiGenerated : i18n.ts.markAsAiGenerated,
 			icon: props.image.isAiGenerated ? 'ti ti-robot' : 'ti ti-robot',
 			danger: true,
