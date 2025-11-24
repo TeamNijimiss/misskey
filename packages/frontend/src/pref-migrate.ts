@@ -82,6 +82,7 @@ export function migrateOldSettings() {
 		prefer.commit('advancedMfm', store.s.advancedMfm);
 		prefer.commit('showReactionsCount', store.s.showReactionsCount);
 		prefer.commit('enableQuickAddMfmFunction', store.s.enableQuickAddMfmFunction);
+		prefer.commit('displayEntireImageOnTimeline', store.s.displayEntireImageOnTimeline);
 		prefer.commit('loadRawImages', store.s.loadRawImages);
 		prefer.commit('imageNewTab', store.s.imageNewTab);
 		prefer.commit('disableShowingAnimatedImages', store.s.disableShowingAnimatedImages);

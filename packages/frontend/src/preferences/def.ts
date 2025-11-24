@@ -184,6 +184,9 @@ export const PREF_DEF = {
 	enableQuickAddMfmFunction: {
 		default: false,
 	},
+	displayEntireImageOnTimeline: {
+		default: false,
+	},
 	loadRawImages: {
 		default: false,
 	},

@@ -85,7 +85,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 						</div>
 					</div>
 					<div v-if="appearNote.files && appearNote.files.length > 0">
-						<MkMediaListDetailed v-if="defaultStore.state.displayEntireImageOnTimeline" ref="galleryEl" :mediaList="appearNote.files" :user="appearNote.user"/>
+						<MkMediaListDetailed v-if="displayEntireImageOnTimeline" ref="galleryEl" :mediaList="appearNote.files" :user="appearNote.user"/>
 						<MkMediaList v-else ref="galleryEl" :mediaList="appearNote.files" :user="appearNote.user"/>
 					</div>
 					<MkPoll v-if="appearNote.poll" :noteId="appearNote.id" :poll="appearNote.poll" :author="appearNote.user" :emojiUrls="appearNote.emojis" :class="$style.poll"/>
@@ -309,6 +309,7 @@ const renoteCollapsed = ref(
 	),
 );
 const hideMutedNotes = $i ? store.s.hideMutedNotes : true;
+const displayEntireImageOnTimeline = $i ? store.s.displayEntireImageOnTimeline : false;
 
 const pleaseLoginContext = computed<OpenOnRemoteOptions>(() => ({
 	type: 'lookup',

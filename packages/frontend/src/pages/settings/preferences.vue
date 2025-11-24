@@ -228,6 +228,14 @@ SPDX-License-Identifier: AGPL-3.0-only
 									</MkPreferenceContainer>
 								</SearchMarker>
 
+								<SearchMarker :keywords="['image', 'photo', 'picture', 'media', 'thumbnail', 'entire', 'timeline', 'attachment']">
+									<MkPreferenceContainer k="displayEntireImageOnTimeline">
+										<MkSwitch v-model="displayEntireImageOnTimeline">
+											<template #label><SearchLabel>{{ i18n.ts.displayEntireImageOnTimeline }}</SearchLabel></template>
+										</MkSwitch>
+									</MkPreferenceContainer>
+								</SearchMarker>
+
 								<SearchMarker :keywords="['image', 'photo', 'picture', 'media', 'thumbnail', 'quality', 'raw', 'attachment']">
 									<MkPreferenceContainer k="loadRawImages">
 										<MkSwitch v-model="loadRawImages">
@@ -780,6 +788,7 @@ const showRenotesCount = prefer.model('showRenotesCount');
 const showReactionsCount = prefer.model('showReactionsCount');
 const enableQuickAddMfmFunction = prefer.model('enableQuickAddMfmFunction');
 const forceShowAds = prefer.model('forceShowAds');
+const displayEntireImageOnTimeline = prefer.model('displayEntireImageOnTimeline');
 const loadRawImages = prefer.model('loadRawImages');
 const imageNewTab = prefer.model('imageNewTab');
 const showFixedPostForm = prefer.model('showFixedPostForm');
