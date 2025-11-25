@@ -81,7 +81,6 @@ export const paramDef = {
 		sensitiveMediaDetectionSensitivity: { type: 'string', enum: ['medium', 'low', 'high', 'veryLow', 'veryHigh'] },
 		setSensitiveFlagAutomatically: { type: 'boolean' },
 		enableSensitiveMediaDetectionForVideos: { type: 'boolean' },
-		proxyAccountId: { type: 'string', format: 'misskey:id', nullable: true },
 		maintainerName: { type: 'string', nullable: true },
 		maintainerEmail: { type: 'string', nullable: true },
 		langs: {
@@ -166,6 +165,21 @@ export const paramDef = {
 		urlPreviewRequireContentLength: { type: 'boolean' },
 		urlPreviewUserAgent: { type: 'string', nullable: true },
 		urlPreviewSummaryProxyUrl: { type: 'string', nullable: true },
+		prohibitedWordsForNameOfUser: {
+			type: 'array', nullable: true, items: {
+				type: 'string',
+			},
+		},
+		federation: {
+			type: 'string',
+			enum: ['all', 'none', 'specified'],
+		},
+		federationHosts: {
+			type: 'array',
+			items: {
+				type: 'string',
+			},
+		},
 	},
 	required: [],
 } as const;
@@ -371,10 +385,6 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (ps.enableSensitiveMediaDetectionForVideos !== undefined) {
 				set.enableSensitiveMediaDetectionForVideos = ps.enableSensitiveMediaDetectionForVideos;
-			}
-
-			if (ps.proxyAccountId !== undefined) {
-				set.proxyAccountId = ps.proxyAccountId;
 			}
 
 			if (ps.maintainerName !== undefined) {
@@ -589,6 +599,18 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			if (ps.summalyProxy !== undefined || ps.urlPreviewSummaryProxyUrl !== undefined) {
 				const value = ((ps.urlPreviewSummaryProxyUrl ?? ps.summalyProxy) ?? '').trim();
 				set.urlPreviewSummaryProxyUrl = value === '' ? null : value;
+			}
+
+			if (Array.isArray(ps.prohibitedWordsForNameOfUser)) {
+				set.prohibitedWordsForNameOfUser = ps.prohibitedWordsForNameOfUser.filter(Boolean);
+			}
+
+			if (ps.federation !== undefined) {
+				set.federation = ps.federation;
+			}
+
+			if (Array.isArray(ps.federationHosts)) {
+				set.federationHosts = ps.federationHosts.filter(Boolean).map(x => x.toLowerCase());
 			}
 
 			const before = await this.metaService.fetch(true);

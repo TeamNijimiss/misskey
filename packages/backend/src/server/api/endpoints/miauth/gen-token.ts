@@ -7,6 +7,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { Endpoint } from '@/server/api/endpoint-base.js';
 import type { AccessTokensRepository } from '@/models/_.js';
 import { IdService } from '@/core/IdService.js';
+import { NotificationService } from '@/core/NotificationService.js';
 import { secureRndstr } from '@/misc/secure-rndstr.js';
 import { DI } from '@/di-symbols.js';
 import { RoleService } from '@/core/RoleService.js';
@@ -61,6 +62,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 		private roleService: RoleService,
 		private idService: IdService,
+		private notificationService: NotificationService,
 	) {
 		super(meta, paramDef, async (ps, me) => {
 			const currentCount = await accessTokensRepository.countBy({ userId: me.id });
@@ -86,6 +88,9 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				iconUrl: ps.iconUrl,
 				permission: ps.permission,
 			});
+
+			// アクセストークンが生成されたことを通知
+			this.notificationService.createNotification(me.id, 'createToken', {});
 
 			return {
 				token: accessToken,

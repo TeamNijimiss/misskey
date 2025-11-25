@@ -10,11 +10,12 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 	; echo 'Binary::apt::APT::Keep-Downloaded-Packages "true";' > /etc/apt/apt.conf.d/keep-cache \
 	&& apt-get update \
 	&& apt-get install -yqq --no-install-recommends \
-	build-essential
+	build-essential libpq-dev
 
 WORKDIR /misskey
 
 COPY --link pnpm-lock.yaml ./
+COPY --link patches ./patches
 RUN npm install -g pnpm@10
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
 	pnpm fetch --ignore-scripts
@@ -22,7 +23,9 @@ RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
 COPY --link ["pnpm-workspace.yaml", "package.json", "./"]
 COPY --link ["scripts", "./scripts"]
 COPY --link ["packages/backend/package.json", "./packages/backend/"]
+COPY --link ["packages/frontend-shared/package.json", "./packages/frontend-shared/"]
 COPY --link ["packages/frontend/package.json", "./packages/frontend/"]
+COPY --link ["packages/frontend-embed/package.json", "./packages/frontend-embed/"]
 COPY --link ["packages/sw/package.json", "./packages/sw/"]
 COPY --link ["packages/misskey-js/package.json", "./packages/misskey-js/"]
 COPY --link ["packages/misskey-reversi/package.json", "./packages/misskey-reversi/"]
@@ -41,11 +44,12 @@ FROM --platform=$TARGETPLATFORM node:22 AS target-builder
 
 RUN apt-get update \
 	&& apt-get install -yqq --no-install-recommends \
-	build-essential
+	build-essential libpq-dev
 
 WORKDIR /misskey
 
 COPY --link pnpm-lock.yaml ./
+COPY --link patches ./patches
 RUN npm install -g pnpm@10 && mkdir -p /root/.local/share/pnpm/.tools
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store,sharing=locked \
 	pnpm fetch --ignore-scripts
@@ -79,6 +83,7 @@ RUN apt-get update \
 WORKDIR /misskey
 
 COPY --chown=misskey:misskey pnpm-lock.yaml ./
+COPY --chown=misskey:misskey patches ./patches
 RUN npm install -g pnpm@10
 
 COPY --chown=misskey:misskey --from=target-builder /root/.local/share/pnpm/.tools ./.local/share/pnpm/.tools
