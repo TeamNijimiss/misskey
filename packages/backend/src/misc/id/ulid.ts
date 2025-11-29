@@ -25,7 +25,7 @@ export function parseUlid(id: string): { date: Date; } {
 
 export function parseUlidFull(id: string): { date: number; additional: bigint; } {
 	return {
-		date: parseBase32(id.slice(0, 10)),
+		date: Number(parseBase32(id.slice(0, 10))),
 		additional: parseBigIntCrockfordBase32(id.slice(10, 26)),
 	};
 }
