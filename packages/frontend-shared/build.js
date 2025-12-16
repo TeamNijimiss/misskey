@@ -20,7 +20,8 @@ const options = {
 	target: 'es2022',
 	platform: 'browser',
 	format: 'esm',
-	sourcemap: 'linked',
+	sourcemap: true,
+	sourceRoot: '/',
 };
 
 const args = process.argv.slice(2).map(arg => arg.toLowerCase());
