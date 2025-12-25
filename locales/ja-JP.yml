@@ -2019,6 +2019,10 @@ _achievements:
     _tutorialCompleted:
       title: "Misskey初心者講座 修了証"
       description: "チュートリアルを完了した"
+    _sensitiveContentConsentResponded:
+      title: "あなたは18歳以上ですか？"
+      description: "年齢確認に応答した"
+      flavor: "年齢確認のタッチをお願いしまーす"
     _bubbleGameExplodingHead:
       title: "🤯"
       description: "バブルゲームで最も大きいモノを出した"
