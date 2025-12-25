@@ -9718,8 +9718,10 @@ export type components = {
             ratio: number;
             url: string;
             imageUrl: string;
+            imageBlurhash: string | null;
             memo: string;
             dayOfWeek: number;
+            isSensitive: boolean;
         };
         Announcement: {
             /**
@@ -10041,7 +10043,7 @@ export type components = {
             /** @enum {string} */
             type: 'achievementEarned';
             /** @enum {string} */
-            achievement: 'notes1' | 'notes10' | 'notes100' | 'notes500' | 'notes1000' | 'notes5000' | 'notes10000' | 'notes20000' | 'notes30000' | 'notes40000' | 'notes50000' | 'notes60000' | 'notes70000' | 'notes80000' | 'notes90000' | 'notes100000' | 'login3' | 'login7' | 'login15' | 'login30' | 'login60' | 'login100' | 'login200' | 'login300' | 'login400' | 'login500' | 'login600' | 'login700' | 'login800' | 'login900' | 'login1000' | 'passedSinceAccountCreated1' | 'passedSinceAccountCreated2' | 'passedSinceAccountCreated3' | 'loggedInOnBirthday' | 'loggedInOnNewYearsDay' | 'noteClipped1' | 'noteFavorited1' | 'myNoteFavorited1' | 'profileFilled' | 'markedAsCat' | 'following1' | 'following10' | 'following50' | 'following100' | 'following300' | 'followers1' | 'followers10' | 'followers50' | 'followers100' | 'followers300' | 'followers500' | 'followers1000' | 'collectAchievements30' | 'viewAchievements3min' | 'iLoveMisskey' | 'foundTreasure' | 'client30min' | 'client60min' | 'noteDeletedWithin1min' | 'postedAtLateNight' | 'postedAt0min0sec' | 'selfQuote' | 'htl20npm' | 'viewInstanceChart' | 'outputHelloWorldOnScratchpad' | 'open3windows' | 'driveFolderCircularReference' | 'reactWithoutRead' | 'clickedClickHere' | 'justPlainLucky' | 'setNameToSyuilo' | 'cookieClicked' | 'brainDiver' | 'smashTestNotificationButton' | 'tutorialCompleted' | 'bubbleGameExplodingHead' | 'bubbleGameDoubleExplodingHead';
+            achievement: 'notes1' | 'notes10' | 'notes100' | 'notes500' | 'notes1000' | 'notes5000' | 'notes10000' | 'notes20000' | 'notes30000' | 'notes40000' | 'notes50000' | 'notes60000' | 'notes70000' | 'notes80000' | 'notes90000' | 'notes100000' | 'login3' | 'login7' | 'login15' | 'login30' | 'login60' | 'login100' | 'login200' | 'login300' | 'login400' | 'login500' | 'login600' | 'login700' | 'login800' | 'login900' | 'login1000' | 'passedSinceAccountCreated1' | 'passedSinceAccountCreated2' | 'passedSinceAccountCreated3' | 'loggedInOnBirthday' | 'loggedInOnNewYearsDay' | 'noteClipped1' | 'noteFavorited1' | 'myNoteFavorited1' | 'profileFilled' | 'markedAsCat' | 'following1' | 'following10' | 'following50' | 'following100' | 'following300' | 'followers1' | 'followers10' | 'followers50' | 'followers100' | 'followers300' | 'followers500' | 'followers1000' | 'collectAchievements30' | 'viewAchievements3min' | 'iLoveMisskey' | 'foundTreasure' | 'client30min' | 'client60min' | 'noteDeletedWithin1min' | 'postedAtLateNight' | 'postedAt0min0sec' | 'selfQuote' | 'htl20npm' | 'viewInstanceChart' | 'outputHelloWorldOnScratchpad' | 'open3windows' | 'driveFolderCircularReference' | 'reactWithoutRead' | 'clickedClickHere' | 'justPlainLucky' | 'setNameToSyuilo' | 'cookieClicked' | 'brainDiver' | 'smashTestNotificationButton' | 'tutorialCompleted' | 'sensitiveContentConsentResponded' | 'bubbleGameExplodingHead' | 'bubbleGameDoubleExplodingHead';
         } | {
             /** Format: id */
             id: string;
@@ -10872,7 +10874,9 @@ export type components = {
                 ratio: number;
                 /** Format: url */
                 imageUrl: string;
+                imageBlurhash: string | null;
                 dayOfWeek: number;
+                isSensitive: boolean;
             }[];
             wellKnownWebsites: string[];
             /** @default 0 */
@@ -12317,6 +12321,8 @@ export interface operations {
                     startsAt: number;
                     imageUrl: string;
                     dayOfWeek: number;
+                    /** @default false */
+                    isSensitive?: boolean;
                 };
             };
         };
@@ -12546,6 +12552,7 @@ export interface operations {
                     expiresAt?: number;
                     startsAt?: number;
                     dayOfWeek?: number;
+                    isSensitive?: boolean;
                 };
             };
         };
@@ -32452,7 +32459,7 @@ export interface operations {
             content: {
                 'application/json': {
                     /** @enum {string} */
-                    name: 'notes1' | 'notes10' | 'notes100' | 'notes500' | 'notes1000' | 'notes5000' | 'notes10000' | 'notes20000' | 'notes30000' | 'notes40000' | 'notes50000' | 'notes60000' | 'notes70000' | 'notes80000' | 'notes90000' | 'notes100000' | 'login3' | 'login7' | 'login15' | 'login30' | 'login60' | 'login100' | 'login200' | 'login300' | 'login400' | 'login500' | 'login600' | 'login700' | 'login800' | 'login900' | 'login1000' | 'passedSinceAccountCreated1' | 'passedSinceAccountCreated2' | 'passedSinceAccountCreated3' | 'loggedInOnBirthday' | 'loggedInOnNewYearsDay' | 'noteClipped1' | 'noteFavorited1' | 'myNoteFavorited1' | 'profileFilled' | 'markedAsCat' | 'following1' | 'following10' | 'following50' | 'following100' | 'following300' | 'followers1' | 'followers10' | 'followers50' | 'followers100' | 'followers300' | 'followers500' | 'followers1000' | 'collectAchievements30' | 'viewAchievements3min' | 'iLoveMisskey' | 'foundTreasure' | 'client30min' | 'client60min' | 'noteDeletedWithin1min' | 'postedAtLateNight' | 'postedAt0min0sec' | 'selfQuote' | 'htl20npm' | 'viewInstanceChart' | 'outputHelloWorldOnScratchpad' | 'open3windows' | 'driveFolderCircularReference' | 'reactWithoutRead' | 'clickedClickHere' | 'justPlainLucky' | 'setNameToSyuilo' | 'cookieClicked' | 'brainDiver' | 'smashTestNotificationButton' | 'tutorialCompleted' | 'bubbleGameExplodingHead' | 'bubbleGameDoubleExplodingHead';
+                    name: 'notes1' | 'notes10' | 'notes100' | 'notes500' | 'notes1000' | 'notes5000' | 'notes10000' | 'notes20000' | 'notes30000' | 'notes40000' | 'notes50000' | 'notes60000' | 'notes70000' | 'notes80000' | 'notes90000' | 'notes100000' | 'login3' | 'login7' | 'login15' | 'login30' | 'login60' | 'login100' | 'login200' | 'login300' | 'login400' | 'login500' | 'login600' | 'login700' | 'login800' | 'login900' | 'login1000' | 'passedSinceAccountCreated1' | 'passedSinceAccountCreated2' | 'passedSinceAccountCreated3' | 'loggedInOnBirthday' | 'loggedInOnNewYearsDay' | 'noteClipped1' | 'noteFavorited1' | 'myNoteFavorited1' | 'profileFilled' | 'markedAsCat' | 'following1' | 'following10' | 'following50' | 'following100' | 'following300' | 'followers1' | 'followers10' | 'followers50' | 'followers100' | 'followers300' | 'followers500' | 'followers1000' | 'collectAchievements30' | 'viewAchievements3min' | 'iLoveMisskey' | 'foundTreasure' | 'client30min' | 'client60min' | 'noteDeletedWithin1min' | 'postedAtLateNight' | 'postedAt0min0sec' | 'selfQuote' | 'htl20npm' | 'viewInstanceChart' | 'outputHelloWorldOnScratchpad' | 'open3windows' | 'driveFolderCircularReference' | 'reactWithoutRead' | 'clickedClickHere' | 'justPlainLucky' | 'setNameToSyuilo' | 'cookieClicked' | 'brainDiver' | 'smashTestNotificationButton' | 'tutorialCompleted' | 'sensitiveContentConsentResponded' | 'bubbleGameExplodingHead' | 'bubbleGameDoubleExplodingHead';
                 };
             };
         };
@@ -45888,4 +45895,3 @@ export interface operations {
         };
     };
 }
-

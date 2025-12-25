@@ -130,6 +130,20 @@ you: "あなた"
 clickToShow: "クリックして表示"
 sensitive: "センシティブ"
 aiGenerated: "AI生成"
+sensitiveContentConsentTitle: "成人向けの可能性があるコンテンツ"
+sensitiveContentConsentAreYouOver18: "このコンテンツは成人向けのコンテンツである可能性があります。\n\n<center>$[x2 あなたは18歳以上ですか？]</center>"
+displayedContentSettings: "表示するコンテンツ設定"
+displayOfSensitiveContentConsent: "成人向けの可能性があるコンテンツ"
+_displayOfSensitiveContentConsent:
+  show: "表示する"
+  hide: "隠す"
+  notSet: "未設定"
+displayOfSensitiveAds: "成人向けの広告の表示"
+_displayOfSensitiveAds:
+  hidden: "隠す（クリックで表示）"
+  always: "常に表示する"
+  filtered: "表示しない"
+sensitiveAd: "成人向けの広告"
 add: "追加"
 reaction: "リアクション"
 reactions: "リアクション"
@@ -2005,6 +2019,10 @@ _achievements:
     _tutorialCompleted:
       title: "Misskey初心者講座 修了証"
       description: "チュートリアルを完了した"
+    _sensitiveContentConsentResponded:
+      title: "あなたは18歳以上ですか？"
+      description: "年齢確認に応答した"
+      flavor: "年齢確認のタッチをお願いしまーす"
     _bubbleGameExplodingHead:
       title: "🤯"
       description: "バブルゲームで最も大きいモノを出した"
