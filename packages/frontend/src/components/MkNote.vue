@@ -326,7 +326,7 @@ function checkMute(noteToCheck: Misskey.entities.Note, mutedWords: Array<string 
 	if (inTimeline && tl_withSensitive.value === false && noteToCheck.files?.some((v) => v.isSensitive)) {
 		return 'sensitiveMute';
 	}
-	if (inTimeline && tl_withAiGenerated.value === true && noteToCheck.files?.some((v) => v.aiGenerated)) {
+	if (inTimeline && tl_withAiGenerated.value === true && noteToCheck.files?.some((v) => v.isAiGenerated)) {
 		return 'aiMute';
 	}
 	return false;
