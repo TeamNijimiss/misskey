@@ -308,7 +308,7 @@ const renoteCollapsed = ref(
 		(appearNote.value.myReaction != null)
 	),
 );
-const hideMutedNotes = $i ? store.s.hideMutedNotes : true;
+const hideMutedNotes = prefer.s.hideMutedNotes;
 const displayEntireImageOnTimeline = prefer.s.displayEntireImageOnTimeline;
 
 const pleaseLoginContext = computed<OpenOnRemoteOptions>(() => ({
@@ -316,19 +316,24 @@ const pleaseLoginContext = computed<OpenOnRemoteOptions>(() => ({
 	url: `https://${host}/notes/${appearNote.value.id}`,
 }));
 
-function checkMute(noteToCheck: Misskey.entities.Note, mutedWords: Array<string | string[]>): boolean | 'sensitiveMute' | 'aiMute' {
+function checkMute(noteToCheck: Misskey.entities.Note, mutedWords: Array<string | string[]> | undefined | null, checkOnly = false): Array<string | string[]> | false | 'sensitiveMute' {
 	if (mutedWords == null) return false;
 
-	if (checkWordMute(noteToCheck, $i, mutedWords)) return true;
-	if (noteToCheck.reply && checkWordMute(noteToCheck.reply, $i, mutedWords)) return true;
-	if (noteToCheck.renote && checkWordMute(noteToCheck.renote, $i, mutedWords)) return true;
+	const result = checkWordMute(noteToCheck, $i, mutedWords);
+	if (Array.isArray(result)) return result;
+
+	const replyResult = noteToCheck.reply && checkWordMute(noteToCheck.reply, $i, mutedWords);
+	if (Array.isArray(replyResult)) return replyResult;
+
+	const renoteResult = noteToCheck.renote && checkWordMute(noteToCheck.renote, $i, mutedWords);
+	if (Array.isArray(renoteResult)) return renoteResult;
+
+	if (checkOnly) return false;
 
 	if (inTimeline && tl_withSensitive.value === false && noteToCheck.files?.some((v) => v.isSensitive)) {
 		return 'sensitiveMute';
 	}
-	if (inTimeline && tl_withAiGenerated.value === true && noteToCheck.files?.some((v) => v.isAiGenerated)) {
-		return 'aiMute';
-	}
+
 	return false;
 }
 

@@ -333,6 +333,9 @@ export const PREF_DEF = {
 	skipNoteRender: {
 		default: true,
 	},
+	hideMutedNotes: {
+		default: false,
+	},
 	showSoftWordMutedWord: {
 		default: false,
 	},
