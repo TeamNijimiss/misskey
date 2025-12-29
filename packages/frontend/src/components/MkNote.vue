@@ -309,7 +309,7 @@ const renoteCollapsed = ref(
 	),
 );
 const hideMutedNotes = $i ? store.s.hideMutedNotes : true;
-const displayEntireImageOnTimeline = $i ? store.s.displayEntireImageOnTimeline : false;
+const displayEntireImageOnTimeline = prefer.s.displayEntireImageOnTimeline;
 
 const pleaseLoginContext = computed<OpenOnRemoteOptions>(() => ({
 	type: 'lookup',
