@@ -51,7 +51,7 @@ jobs:
           ref_type="${{ github.ref_type }}"
           ref_name="$(echo ${{ github.ref_name }} | sed -e 's/\//-/g')"
 
-          branch_name="main"
+          branch_name="nijimiss"
           case "${ref_type}" in
             branch)
               branch_name="${ref_name}"
