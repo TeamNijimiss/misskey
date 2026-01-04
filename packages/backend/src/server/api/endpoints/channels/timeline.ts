@@ -14,6 +14,7 @@ import { IdService } from '@/core/IdService.js';
 import { FanoutTimelineEndpointService } from '@/core/FanoutTimelineEndpointService.js';
 import { MiLocalUser } from '@/models/User.js';
 import { ApiError } from '../../error.js';
+import { normalizeDimension } from '@/misc/dimension.js';
 
 export const meta = {
 	tags: ['notes', 'channels'],
@@ -49,6 +50,7 @@ export const paramDef = {
 		sinceDate: { type: 'integer' },
 		untilDate: { type: 'integer' },
 		allowPartial: { type: 'boolean', default: false }, // true is recommended but for compatibility false by default
+		dimension: { type: 'integer', minimum: 0, nullable: true },
 	},
 	required: ['channelId'],
 } as const;
@@ -74,7 +76,9 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		super(meta, paramDef, async (ps, me) => {
 			const untilId = ps.untilId ?? (ps.untilDate ? this.idService.gen(ps.untilDate!) : null);
 			const sinceId = ps.sinceId ?? (ps.sinceDate ? this.idService.gen(ps.sinceDate!) : null);
-
+			const viewerDimension = typeof ps.dimension === 'number'
+				? normalizeDimension(ps.dimension, this.serverSettings.dimensions ?? 1)
+				: null;
 			const channel = await this.channelsRepository.findOneBy({
 				id: ps.channelId,
 			});
@@ -86,7 +90,11 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			if (me) this.activeUsersChart.read(me);
 
 			if (!this.serverSettings.enableFanoutTimeline) {
-				return await this.noteEntityService.packMany(await this.getFromDb({ untilId, sinceId, limit: ps.limit, channelId: channel.id }, me), me);
+				return await this.noteEntityService.packMany(
+					await this.getFromDb({ untilId, sinceId, limit: ps.limit, channelId: channel.id }, me),
+					me,
+					{ viewerDimension },
+				);
 			}
 
 			return await this.fanoutTimelineEndpointService.timeline({
@@ -95,6 +103,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				limit: ps.limit,
 				allowPartial: ps.allowPartial,
 				me,
+				viewerDimension,
 				useDbFallback: true,
 				redisTimelines: [`channelTimeline:${channel.id}`],
 				excludePureRenotes: false,

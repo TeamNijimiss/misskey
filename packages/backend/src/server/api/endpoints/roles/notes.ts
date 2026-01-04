@@ -6,13 +6,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 import * as Redis from 'ioredis';
 import { Endpoint } from '@/server/api/endpoint-base.js';
-import type { NotesRepository, RolesRepository } from '@/models/_.js';
+import type { MiMeta, NotesRepository, RolesRepository } from '@/models/_.js';
 import { QueryService } from '@/core/QueryService.js';
 import { DI } from '@/di-symbols.js';
 import { NoteEntityService } from '@/core/entities/NoteEntityService.js';
 import { IdService } from '@/core/IdService.js';
 import { FanoutTimelineService } from '@/core/FanoutTimelineService.js';
 import { ApiError } from '../../error.js';
+import { normalizeDimension } from '@/misc/dimension.js';
 
 export const meta = {
 	tags: ['role', 'notes'],
@@ -48,6 +49,7 @@ export const paramDef = {
 		untilId: { type: 'string', format: 'misskey:id' },
 		sinceDate: { type: 'integer' },
 		untilDate: { type: 'integer' },
+		dimension: { type: 'integer', minimum: 0, nullable: true },
 	},
 	required: ['roleId'],
 } as const;
@@ -57,6 +59,9 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 	constructor(
 		@Inject(DI.redisForTimelines)
 		private redisForTimelines: Redis.Redis,
+
+		@Inject(DI.meta)
+		private instanceMeta: MiMeta,
 
 		@Inject(DI.notesRepository)
 		private notesRepository: NotesRepository,
@@ -72,6 +77,9 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		super(meta, paramDef, async (ps, me) => {
 			const untilId = ps.untilId ?? (ps.untilDate ? this.idService.gen(ps.untilDate!) : null);
 			const sinceId = ps.sinceId ?? (ps.sinceDate ? this.idService.gen(ps.sinceDate!) : null);
+			const viewerDimension = typeof ps.dimension === 'number'
+				? normalizeDimension(ps.dimension, this.instanceMeta.dimensions ?? 1)
+				: null;
 
 			const role = await this.rolesRepository.findOneBy({
 				id: ps.roleId,
@@ -85,7 +93,9 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				return [];
 			}
 
-			let noteIds = await this.fanoutTimelineService.get(`roleTimeline:${role.id}`, untilId, sinceId);
+			let noteIds = viewerDimension == null
+				? await this.fanoutTimelineService.get(`roleTimeline:${role.id}`, untilId, sinceId)
+				: await this.fanoutTimelineService.getDimension(`roleTimeline:${role.id}`, viewerDimension, untilId, sinceId);
 			noteIds = noteIds.slice(0, ps.limit);
 
 			if (noteIds.length === 0) {
@@ -109,7 +119,11 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			const notes = await query.getMany();
 			notes.sort((a, b) => a.id > b.id ? -1 : 1);
 
-			return await this.noteEntityService.packMany(notes, me);
+			return await this.noteEntityService.packMany(
+				notes,
+				me,
+				{ viewerDimension },
+			);
 		});
 	}
 }

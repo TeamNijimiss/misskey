@@ -28,11 +28,14 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<header v-if="title" :class="$style.title" class="_selectable"><Mfm :text="title"/></header>
 		<div v-if="text" :class="$style.text" class="_selectable"><Mfm :text="text"/></div>
 		<template v-if="input">
-			<MkInput v-if="input.type !== 'textarea'" v-model="inputValue" autofocus :type="input.type || 'text'" :placeholder="input.placeholder || undefined" :autocomplete="input.autocomplete" @keydown="onInputKeydown">
+			<MkInput v-if="input.type !== 'textarea'" ref="inputComponent" v-model="inputValue" autofocus :type="input.type || 'text'" :placeholder="input.placeholder || undefined" :autocomplete="input.autocomplete" :min="input.min" :max="input.max" :step="input.step" @keydown="onInputKeydown">
 				<template v-if="input.type === 'password'" #prefix><i class="ti ti-lock"></i></template>
 				<template #caption>
 					<span v-if="okButtonDisabledReason === 'charactersExceeded'" v-text="i18n.tsx._dialog.charactersExceeded({ current: (inputValue as string)?.length ?? 0, max: input.maxLength ?? 'NaN' })"/>
 					<span v-else-if="okButtonDisabledReason === 'charactersBelow'" v-text="i18n.tsx._dialog.charactersBelow({ current: (inputValue as string)?.length ?? 0, min: input.minLength ?? 'NaN' })"/>
+					<span v-else-if="okButtonDisabledReason === 'numberBelow'" v-text="i18n.tsx._dialog.numberBelow({ current: inputValue ?? 'NaN', min: input.min ?? 'NaN' })"/>
+					<span v-else-if="okButtonDisabledReason === 'numberAbove'" v-text="i18n.tsx._dialog.numberAbove({ current: inputValue ?? 'NaN', max: input.max ?? 'NaN' })"/>
+					<span v-else-if="okButtonDisabledReason === 'invalid'" v-text="i18n.tsx._dialog.invalid({ current: inputValue ?? 'NaN' })"/>
 				</template>
 			</MkInput>
 			<MkTextarea v-if="input.type === 'textarea'" v-model="inputValue" :placeholder="input.placeholder || undefined" :autocomplete="input.autocomplete">
@@ -40,6 +43,9 @@ SPDX-License-Identifier: AGPL-3.0-only
 				<template #caption>
 					<span v-if="okButtonDisabledReason === 'charactersExceeded'" v-text="i18n.tsx._dialog.charactersExceeded({ current: (inputValue as string)?.length ?? 0, max: input.maxLength ?? 'NaN' })"/>
 					<span v-else-if="okButtonDisabledReason === 'charactersBelow'" v-text="i18n.tsx._dialog.charactersBelow({ current: (inputValue as string)?.length ?? 0, min: input.minLength ?? 'NaN' })"/>
+					<span v-else-if="okButtonDisabledReason === 'numberBelow'" v-text="i18n.tsx._dialog.numberBelow({ current: inputValue ?? 'NaN', min: input.min ?? 'NaN' })"/>
+					<span v-else-if="okButtonDisabledReason === 'numberAbove'" v-text="i18n.tsx._dialog.numberAbove({ current: inputValue ?? 'NaN', max: input.max ?? 'NaN' })"/>
+					<span v-else-if="okButtonDisabledReason === 'invalid'" v-text="i18n.tsx._dialog.invalid({ current: inputValue ?? 'NaN' })"/>
 				</template>
 			</MkTextarea>
 		</template>
@@ -76,6 +82,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 <script lang="ts" setup>
 import { ref, useTemplateRef, computed, watch, onMounted, onBeforeUnmount } from 'vue';
+import type { InputHTMLAttributes } from 'vue';
 import MkModal from '@/components/MkModal.vue';
 import MkButton from '@/components/MkButton.vue';
 import MkInput from '@/components/MkInput.vue';
@@ -92,6 +99,9 @@ type Input = {
 	default: string | number | null;
 	minLength?: number;
 	maxLength?: number;
+	min?: number;
+	max?: number;
+	step?: InputHTMLAttributes['step'];
 };
 
 type SelectItem = {
@@ -156,6 +166,7 @@ const emit = defineEmits<{
 }>();
 
 const modal = useTemplateRef('modal');
+const inputComponent = useTemplateRef<InstanceType<typeof MkInput>>('inputComponent');
 
 const inputValue = ref<string | number | null>(props.input?.default ?? null);
 const selectedValue = ref(props.select?.default ?? null);
@@ -170,8 +181,32 @@ const okWaitInitiated = computed(() => {
 });
 const okDisabled = computed(() => sec.value > 0);
 
-const okButtonDisabledReason = computed<null | 'charactersExceeded' | 'charactersBelow'>(() => {
+const okButtonDisabledReason = computed<null | 'charactersExceeded' | 'charactersBelow' | 'numberBelow' | 'numberAbove' | 'invalid'>(() => {
 	if (props.input) {
+		if (props.input.type === 'number') {
+			const rawValue = inputValue.value;
+			const numericValue = typeof rawValue === 'number'
+				? rawValue
+				: rawValue === '' || rawValue == null
+					? null
+					: Number(rawValue);
+
+			if (numericValue != null && Number.isFinite(numericValue)) {
+				if (props.input.min != null && numericValue < props.input.min) {
+					return 'numberBelow';
+				}
+				if (props.input.max != null && numericValue > props.input.max) {
+					return 'numberAbove';
+				}
+			} else if (numericValue != null) {
+				return 'invalid';
+			}
+
+			if (inputComponent.value && !inputComponent.value.inputEl.validity.valid) {
+				return 'invalid';
+			}
+		}
+
 		if (props.input.minLength) {
 			if (inputValue.value == null || (inputValue.value as string).length < props.input.minLength) {
 				return 'charactersBelow';
