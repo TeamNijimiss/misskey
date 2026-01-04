@@ -77,6 +77,7 @@ const props = withDefaults(defineProps<{
 	antenna?: string;
 	channel?: string;
 	role?: string;
+	dimension?: number;
 	sound?: boolean;
 	withRenotes?: boolean;
 	withReplies?: boolean;
@@ -99,6 +100,7 @@ const emit = defineEmits<{
 provide('inTimeline', true);
 provide('tl_withSensitive', computed(() => props.withSensitive));
 provide('tl_withAiGenerated', computed(() => props.withAiGenerated));
+provide('tl_dimension', computed(() => props.dimension ?? prefer.r.dimension.value));
 provide('inChannel', computed(() => props.src === 'channel'));
 
 type TimelineQueryType = {
@@ -109,7 +111,8 @@ type TimelineQueryType = {
 	visibility?: string,
 	listId?: string,
 	channelId?: string,
-	roleId?: string
+	roleId?: string,
+	dimension?: number
 };
 
 const prComponent = useTemplateRef('prComponent');
@@ -205,10 +208,10 @@ let connection: Misskey.IChannelConnection<any> | null = null;
 let connection2: Misskey.IChannelConnection<any> | null = null;
 let paginationQuery: Paging | null = null;
 const noGap = !prefer.s.showGapBetweenNotesInTimeline;
-
 const stream = useStream();
 
 function connectChannel() {
+	const dimension = props.dimension ?? prefer.r.dimension.value;
 	if (props.src === 'antenna') {
 		if (props.antenna == null) return;
 		connection = stream.useChannel('antenna', {
@@ -220,6 +223,7 @@ function connectChannel() {
 			withRenotes: props.withRenotes,
 			withFiles: props.onlyFiles ? true : undefined,
 			minimize: true,
+			dimension: dimension,
 		});
 		connection2 = stream.useChannel('main');
 	} else if (props.src === 'local') {
@@ -228,6 +232,7 @@ function connectChannel() {
 			withReplies: props.withReplies,
 			withFiles: props.onlyFiles ? true : undefined,
 			minimize: true,
+			dimension: dimension,
 		});
 	} else if (props.src === 'media') {
 		connection = stream.useChannel('hybridTimeline', {
@@ -235,6 +240,7 @@ function connectChannel() {
 			withReplies: props.withReplies,
 			withFiles: true,
 			minimize: true,
+			dimension: dimension,
 		});
 	} else if (props.src === 'social') {
 		connection = stream.useChannel('hybridTimeline', {
@@ -242,12 +248,14 @@ function connectChannel() {
 			withReplies: props.withReplies,
 			withFiles: props.onlyFiles ? true : undefined,
 			minimize: true,
+			dimension: dimension,
 		});
 	} else if (props.src === 'global') {
 		connection = stream.useChannel('globalTimeline', {
 			withRenotes: props.withRenotes,
 			withFiles: props.onlyFiles ? true : undefined,
 			minimize: true,
+			dimension: dimension,
 		});
 	} else if (props.src === 'mentions') {
 		connection = stream.useChannel('main');
@@ -273,12 +281,14 @@ function connectChannel() {
 		connection = stream.useChannel('channel', {
 			channelId: props.channel,
 			minimize: true,
+			dimension: dimension,
 		});
 	} else if (props.src === 'role') {
 		if (props.role == null) return;
 		connection = stream.useChannel('roleTimeline', {
 			roleId: props.role,
 			minimize: true,
+			dimension: dimension,
 		});
 	}
 	if (props.src !== 'directs' && props.src !== 'mentions') connection?.on('note', prepend);
@@ -292,6 +302,7 @@ function disconnectChannel() {
 function updatePaginationQuery() {
 	let endpoint: keyof Misskey.Endpoints | null;
 	let query: TimelineQueryType | null;
+	const dimension = props.dimension ?? prefer.r.dimension.value;
 
 	if (props.src === 'antenna') {
 		endpoint = 'antennas/notes';
@@ -303,6 +314,7 @@ function updatePaginationQuery() {
 		query = {
 			withRenotes: props.withRenotes,
 			withFiles: props.onlyFiles ? true : undefined,
+			dimension: dimension,
 		};
 	} else if (props.src === 'local') {
 		endpoint = 'notes/local-timeline';
@@ -310,6 +322,7 @@ function updatePaginationQuery() {
 			withRenotes: props.withRenotes,
 			withReplies: props.withReplies,
 			withFiles: props.onlyFiles ? true : undefined,
+			dimension: dimension,
 		};
 	} else if (props.src === 'media') {
 		endpoint = 'notes/hybrid-timeline';
@@ -317,6 +330,7 @@ function updatePaginationQuery() {
 			withRenotes: props.withRenotes,
 			withReplies: props.withReplies,
 			withFiles: true,
+			dimension: dimension,
 		};
 	} else if (props.src === 'social') {
 		endpoint = 'notes/hybrid-timeline';
@@ -324,12 +338,14 @@ function updatePaginationQuery() {
 			withRenotes: props.withRenotes,
 			withReplies: props.withReplies,
 			withFiles: props.onlyFiles ? true : undefined,
+			dimension: dimension,
 		};
 	} else if (props.src === 'global') {
 		endpoint = 'notes/global-timeline';
 		query = {
 			withRenotes: props.withRenotes,
 			withFiles: props.onlyFiles ? true : undefined,
+			dimension: dimension,
 		};
 	} else if (props.src === 'mentions') {
 		endpoint = 'notes/mentions';
@@ -350,11 +366,13 @@ function updatePaginationQuery() {
 		endpoint = 'channels/timeline';
 		query = {
 			channelId: props.channel,
+			dimension: dimension,
 		};
 	} else if (props.src === 'role') {
 		endpoint = 'roles/notes';
 		query = {
 			roleId: props.role,
+			dimension: dimension,
 		};
 	} else {
 		endpoint = null;
@@ -383,7 +401,7 @@ function refreshEndpointAndChannel() {
 
 // デッキのリストカラムでwithRenotesを変更した場合に自動的に更新されるようにさせる
 // IDが切り替わったら切り替え先のTLを表示させたい
-watch(() => [props.list, props.antenna, props.channel, props.role, props.withRenotes], refreshEndpointAndChannel);
+watch(() => [props.list, props.antenna, props.channel, props.role, props.withRenotes, props.dimension], refreshEndpointAndChannel);
 
 // withSensitiveはクライアントで完結する処理のため、単にリロードするだけでOK
 watch(() => props.withSensitive, reloadTimeline);

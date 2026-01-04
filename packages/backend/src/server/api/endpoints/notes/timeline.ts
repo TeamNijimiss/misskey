@@ -16,6 +16,7 @@ import { CacheService } from '@/core/CacheService.js';
 import { UserFollowingService } from '@/core/UserFollowingService.js';
 import { MiLocalUser } from '@/models/User.js';
 import { FanoutTimelineEndpointService } from '@/core/FanoutTimelineEndpointService.js';
+import { normalizeDimension } from '@/misc/dimension.js';
 
 export const meta = {
 	tags: ['notes'],
@@ -48,6 +49,7 @@ export const paramDef = {
 		includeLocalRenotes: { type: 'boolean', default: true },
 		withFiles: { type: 'boolean', default: false },
 		withRenotes: { type: 'boolean', default: true },
+		dimension: { type: 'integer', minimum: 0, nullable: true },
 	},
 	required: [],
 } as const;
@@ -75,7 +77,9 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 		super(meta, paramDef, async (ps, me) => {
 			const untilId = ps.untilId ?? (ps.untilDate ? this.idService.gen(ps.untilDate!) : null);
 			const sinceId = ps.sinceId ?? (ps.sinceDate ? this.idService.gen(ps.sinceDate!) : null);
-
+			const viewerDimension = typeof ps.dimension === 'number'
+				? normalizeDimension(ps.dimension, this.serverSettings.dimensions ?? 1)
+				: null;
 			if (!this.serverSettings.enableFanoutTimeline) {
 				const timeline = await this.getFromDb({
 					untilId,
@@ -92,7 +96,11 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 					this.activeUsersChart.read(me);
 				});
 
-				return await this.noteEntityService.packMany(timeline, me);
+				return await this.noteEntityService.packMany(
+					timeline,
+					me,
+					{ viewerDimension },
+				);
 			}
 
 			const [
@@ -101,12 +109,13 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				this.cacheService.userFollowingsCache.fetch(me.id),
 			]);
 
-			const timeline = this.fanoutTimelineEndpointService.timeline({
+			const timeline = await this.fanoutTimelineEndpointService.timeline({
 				untilId,
 				sinceId,
 				limit: ps.limit,
 				allowPartial: ps.allowPartial,
 				me,
+				viewerDimension,
 				useDbFallback: this.serverSettings.enableFanoutTimelineDbFallback,
 				redisTimelines: ps.withFiles ? [`homeTimelineWithFiles:${me.id}`] : [`homeTimeline:${me.id}`],
 				alwaysIncludeMyNotes: true,
