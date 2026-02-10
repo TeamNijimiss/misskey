@@ -2218,6 +2218,22 @@ export interface Locale extends ILocale {
      */
     "viewingLanguagesShowAllDescription": string;
     /**
+     * メディアはすべて表示する
+     */
+    "viewingLanguagesShowAllMedia": string;
+    /**
+     * 言語設定に関係なくメディア付きの投稿を表示します。
+     */
+    "viewingLanguagesShowAllMediaDescription": string;
+    /**
+     * ハッシュタグはすべて表示する
+     */
+    "viewingLanguagesShowAllHashtags": string;
+    /**
+     * 言語設定に関係なくハッシュタグ付きの投稿を表示します。
+     */
+    "viewingLanguagesShowAllHashtagsDescription": string;
+    /**
      * 未分類の投稿を表示する
      */
     "viewingLanguagesIncludeUnknown": string;
@@ -9676,10 +9692,6 @@ export interface Locale extends ILocale {
          */
         "write:admin:send-email": string;
         /**
-         * サーバーの情報を見る
-         */
-        "read:admin:server-info": string;
-        /**
          * モデレーションログを見る
          */
         "read:admin:show-moderation-log": string;
@@ -10031,10 +10043,6 @@ export interface Locale extends ILocale {
          * ジョブキュー
          */
         "jobQueue": string;
-        /**
-         * サーバーメトリクス
-         */
-        "serverMetric": string;
         /**
          * AiScriptコンソール
          */
