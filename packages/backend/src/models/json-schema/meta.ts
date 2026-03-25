@@ -297,6 +297,10 @@ export const packedMetaLiteSchema = {
 			type: 'string',
 			optional: false, nullable: true,
 		},
+		statusPageUrl: {
+			type: 'string',
+			optional: false, nullable: true,
+		},
 		inquiryUrl: {
 			type: 'string',
 			optional: false, nullable: true,

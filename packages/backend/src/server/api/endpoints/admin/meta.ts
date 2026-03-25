@@ -444,6 +444,10 @@ export const meta = {
 				type: 'string',
 				optional: false, nullable: true,
 			},
+			statusPageUrl: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
 			uri: {
 				type: 'string',
 				optional: false, nullable: false,
@@ -622,6 +626,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				wellKnownWebsites: instance.wellKnownWebsites,
 				notesPerOneAd: instance.notesPerOneAd,
 				commerceDisclosureUrl: instance.commerceDisclosureUrl,
+				statusPageUrl: instance.statusPageUrl,
 				urlPreviewDenyList: instance.urlPreviewDenyList,
 				featuredGameChannels: instance.featuredGameChannels,
 				summalyProxy: instance.urlPreviewSummaryProxyUrl,

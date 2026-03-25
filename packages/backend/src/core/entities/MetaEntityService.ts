@@ -139,6 +139,7 @@ export class MetaEntityService {
 			enableUrlPreview: instance.urlPreviewEnabled,
 			enableSkebStatus: !!this.config.skebStatus,
 			commerceDisclosureUrl: instance.commerceDisclosureUrl,
+			statusPageUrl: instance.statusPageUrl,
 			noteSearchableScope: (this.config.meilisearch == null || this.config.meilisearch.scope !== 'local') ? 'global' : 'local',
 			maxFileSize: this.config.maxFileSize,
 			federation: this.meta.federation,

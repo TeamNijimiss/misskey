@@ -608,6 +608,12 @@ export class MiMeta {
 	public commerceDisclosureUrl: string | null;
 
 	@Column('varchar', {
+		length: 1024,
+		nullable: true,
+	})
+	public statusPageUrl: string | null;
+
+	@Column('varchar', {
 		length: 128,
 		default: 'all',
 	})

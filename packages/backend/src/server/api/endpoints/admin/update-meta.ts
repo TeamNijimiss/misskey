@@ -137,6 +137,7 @@ export const paramDef = {
 		perUserListTimelineCacheMax: { type: 'integer' },
 		notesPerOneAd: { type: 'integer' },
 		commerceDisclosureUrl: { type: 'string', nullable: true },
+		statusPageUrl: { type: 'string', nullable: true },
 		silencedHosts: {
 			type: 'array',
 			nullable: true,
@@ -593,6 +594,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (ps.commerceDisclosureUrl !== undefined) {
 				set.commerceDisclosureUrl = ps.commerceDisclosureUrl;
+			}
+
+			if (ps.statusPageUrl !== undefined) {
+				set.statusPageUrl = ps.statusPageUrl;
 			}
 
 			if (ps.bannedEmailDomains !== undefined) {

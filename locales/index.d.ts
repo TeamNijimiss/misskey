@@ -5281,6 +5281,14 @@ export interface Locale extends ILocale {
      */
     "commerceDisclosureUrl": string;
     /**
+     * ステータスページ
+     */
+    "statusPage": string;
+    /**
+     * ステータスページURL
+     */
+    "statusPageUrl": string;
+    /**
      * アイコンデコレーション
      */
     "avatarDecorations": string;

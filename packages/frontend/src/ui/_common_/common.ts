@@ -150,7 +150,17 @@ export function openInstanceMenu(ev: MouseEvent) {
 		});
 	}
 
-	if (instance.impressumUrl != null || instance.tosUrl != null || instance.postingGuidelinesUrl != null || instance.privacyPolicyUrl != null) {
+	if (instance.statusPageUrl) {
+		menuItems.push({
+			type: 'a',
+			text: i18n.ts.statusPage,
+			icon: 'ti ti-heartbeat',
+			href: instance.statusPageUrl,
+			target: '_blank',
+		});
+	}
+
+	if (instance.impressumUrl != null || instance.tosUrl != null || instance.postingGuidelinesUrl != null || instance.privacyPolicyUrl != null || instance.statusPageUrl != null) {
 		menuItems.push({ type: 'divider' });
 	}
 

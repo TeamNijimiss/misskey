@@ -59,6 +59,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 						<template #prefix><i class="ti ti-link"></i></template>
 					</MkInput>
 
+					<MkInput v-model="infoForm.state.statusPageUrl" type="url">
+						<template #label>{{ i18n.ts.statusPageUrl }}<span v-if="infoForm.modifiedStates.statusPageUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
+						<template #prefix><i class="ti ti-link"></i></template>
+					</MkInput>
+
 					<MkInput v-model="infoForm.state.inquiryUrl" type="url">
 						<template #label>{{ i18n.ts._serverSettings.inquiryUrl }}<span v-if="infoForm.modifiedStates.inquiryUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
 						<template #caption>{{ i18n.ts._serverSettings.inquiryUrlDescription }}</template>
@@ -291,6 +296,7 @@ const infoForm = useForm({
 	postingGuidelinesUrl: meta.postingGuidelinesUrl ?? '',
 	privacyPolicyUrl: meta.privacyPolicyUrl ?? '',
 	commerceDisclosureUrl: meta.commerceDisclosureUrl ?? '',
+	statusPageUrl: meta.statusPageUrl ?? '',
 	inquiryUrl: meta.inquiryUrl ?? '',
 	repositoryUrl: meta.repositoryUrl ?? '',
 	impressumUrl: meta.impressumUrl ?? '',
@@ -306,6 +312,7 @@ const infoForm = useForm({
 		postingGuidelinesUrl: state.postingGuidelinesUrl,
 		privacyPolicyUrl: state.privacyPolicyUrl,
 		commerceDisclosureUrl: state.commerceDisclosureUrl,
+		statusPageUrl: state.statusPageUrl,
 		inquiryUrl: state.inquiryUrl,
 		repositoryUrl: state.repositoryUrl,
 		impressumUrl: state.impressumUrl,
