@@ -289,6 +289,10 @@ export const packedMetaLiteSchema = {
 			type: 'string',
 			optional: false, nullable: true,
 		},
+		postingGuidelinesUrl: {
+			type: 'string',
+			optional: false, nullable: true,
+		},
 		commerceDisclosureUrl: {
 			type: 'string',
 			optional: false, nullable: true,

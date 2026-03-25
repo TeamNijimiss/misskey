@@ -1310,6 +1310,8 @@ impressumUrl: "運営者情報URL"
 impressumDescription: "ドイツなどの一部の国と地域では表示が義務付けられています(Impressum)。"
 privacyPolicy: "プライバシーポリシー"
 privacyPolicyUrl: "プライバシーポリシーURL"
+postingGuidelines: "投稿ガイドライン"
+postingGuidelinesUrl: "投稿ガイドラインURL"
 tosAndPrivacyPolicy: "利用規約・プライバシーポリシー"
 commerceDisclosure: "特定商取引法に基づく表記"
 commerceDisclosureUrl: "特定商取引法に基づく表記URL"
@@ -2694,7 +2696,7 @@ _postForm:
     e: "ここに書いてください"
     f: "あなたが書くのを待っています..."
   policyScheduleNoteMaxDaysExceeded: "予約できる日数の上限は{max}日です。"
-  tosAndGuidelinesInfo: "投稿する前に、[利用規約]({tosUrl})と[NSFWガイドライン](https://nijimiss.org/post-guideline/)を必ずお読みください。"
+  tosAndGuidelinesInfo: "投稿する前に、[利用規約]({tosUrl})と[投稿ガイドライン]({postingGuidelinesUrl})を必ずお読みください。"
   dimensionPrivateNotice: "{dimension}次元はプライベート(>=1000)です。\nこの投稿はローカルのみになり、連合には流れません。"
 
 _profile:

@@ -108,6 +108,7 @@ export class NodeinfoServerService {
 					langs: meta.langs,
 					tosUrl: meta.termsOfServiceUrl,
 					privacyPolicyUrl: meta.privacyPolicyUrl,
+					postingGuidelinesUrl: meta.postingGuidelinesUrl,
 					inquiryUrl: meta.inquiryUrl,
 					impressumUrl: meta.impressumUrl,
 					repositoryUrl: meta.repositoryUrl,

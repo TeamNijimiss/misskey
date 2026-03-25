@@ -99,7 +99,7 @@ SPDX-License-Identifier: AGPL-3.0-only
 		<button class="_button" style="margin-left: auto" @click="scheduledTime = null"><i class="ti ti-x"></i></button>
 	</div>
 	<MkInfo v-if="files.length > 0 && instance.tosUrl" warn style="margin-top: 8px;" :rounded="false">
-		<Mfm :text="i18n.tsx._postForm.tosAndGuidelinesInfo({ tosUrl: instance.tosUrl })"/>
+		<Mfm :text="i18n.tsx._postForm.tosAndGuidelinesInfo({ tosUrl: instance.tosUrl, postingGuidelinesUrl: instance.postingGuidelinesUrl ?? '' })"/>
 	</MkInfo>
 	<XPostFormAttaches v-model="files" @detach="detachFile" @changeSensitive="updateFileSensitive" @changeAiGenerated="updateAiGenerated" @changeName="updateFileName" @replaceFile="replaceFile"/>
 	<MkPollEditor v-if="poll" v-model="poll" @destroyed="poll = null"/>

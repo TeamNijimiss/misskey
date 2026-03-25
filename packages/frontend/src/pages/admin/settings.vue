@@ -44,6 +44,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 						<template #prefix><i class="ti ti-link"></i></template>
 					</MkInput>
 
+					<MkInput v-model="infoForm.state.postingGuidelinesUrl" type="url">
+						<template #label>{{ i18n.ts.postingGuidelinesUrl }}<span v-if="infoForm.modifiedStates.postingGuidelinesUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
+						<template #prefix><i class="ti ti-link"></i></template>
+					</MkInput>
+
 					<MkInput v-model="infoForm.state.privacyPolicyUrl" type="url">
 						<template #label>{{ i18n.ts.privacyPolicyUrl }}<span v-if="infoForm.modifiedStates.privacyPolicyUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
 						<template #prefix><i class="ti ti-link"></i></template>
@@ -283,6 +288,7 @@ const infoForm = useForm({
 	maintainerName: meta.maintainerName ?? '',
 	maintainerEmail: meta.maintainerEmail ?? '',
 	tosUrl: meta.tosUrl ?? '',
+	postingGuidelinesUrl: meta.postingGuidelinesUrl ?? '',
 	privacyPolicyUrl: meta.privacyPolicyUrl ?? '',
 	commerceDisclosureUrl: meta.commerceDisclosureUrl ?? '',
 	inquiryUrl: meta.inquiryUrl ?? '',
@@ -297,6 +303,7 @@ const infoForm = useForm({
 		maintainerName: state.maintainerName,
 		maintainerEmail: state.maintainerEmail,
 		tosUrl: state.tosUrl,
+		postingGuidelinesUrl: state.postingGuidelinesUrl,
 		privacyPolicyUrl: state.privacyPolicyUrl,
 		commerceDisclosureUrl: state.commerceDisclosureUrl,
 		inquiryUrl: state.inquiryUrl,

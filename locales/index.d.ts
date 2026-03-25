@@ -5261,6 +5261,14 @@ export interface Locale extends ILocale {
      */
     "privacyPolicyUrl": string;
     /**
+     * 投稿ガイドライン
+     */
+    "postingGuidelines": string;
+    /**
+     * 投稿ガイドラインURL
+     */
+    "postingGuidelinesUrl": string;
+    /**
      * 利用規約・プライバシーポリシー
      */
     "tosAndPrivacyPolicy": string;
@@ -10276,9 +10284,9 @@ export interface Locale extends ILocale {
          */
         "policyScheduleNoteMaxDaysExceeded": ParameterizedString<"max">;
         /**
-         * 投稿する前に、[利用規約]({tosUrl})と[NSFWガイドライン](https://nijimiss.org/post-guideline/)を必ずお読みください。
+         * 投稿する前に、[利用規約]({tosUrl})と[投稿ガイドライン]({postingGuidelinesUrl})を必ずお読みください。
          */
-        "tosAndGuidelinesInfo": ParameterizedString<"tosUrl">;
+        "tosAndGuidelinesInfo": ParameterizedString<"tosUrl" | "postingGuidelinesUrl">;
         /**
          * {dimension}次元はプライベート(>=1000)です。
          * この投稿はローカルのみになり、連合には流れません。
