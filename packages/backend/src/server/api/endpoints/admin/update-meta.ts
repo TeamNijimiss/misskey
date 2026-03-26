@@ -113,6 +113,7 @@ export const paramDef = {
 		feedbackUrl: { type: 'string', nullable: true },
 		impressumUrl: { type: 'string', nullable: true },
 		privacyPolicyUrl: { type: 'string', nullable: true },
+		inquiryUrl: { type: 'string', nullable: true },
 		postingGuidelinesUrl: { type: 'string', nullable: true },
 		enableIpLogging: { type: 'boolean' },
 		enableActiveEmailValidation: { type: 'boolean' },
@@ -478,6 +479,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (ps.privacyPolicyUrl !== undefined) {
 				set.privacyPolicyUrl = ps.privacyPolicyUrl;
+			}
+
+			if (ps.inquiryUrl !== undefined) {
+				set.inquiryUrl = ps.inquiryUrl;
 			}
 
 			if (ps.postingGuidelinesUrl !== undefined) {
