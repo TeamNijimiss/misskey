@@ -12711,6 +12711,18 @@ export interface Locale extends ILocale {
          * 例: misskey.example.com
          */
         "serverHostPlaceholder": string;
+        /**
+         * 日付範囲
+         */
+        "dateRange": string;
+        /**
+         * 開始日
+         */
+        "dateFrom": string;
+        /**
+         * 終了日
+         */
+        "dateTo": string;
     };
 }
 declare const locales: {

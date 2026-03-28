@@ -88,6 +88,24 @@ SPDX-License-Identifier: AGPL-3.0-only
 				</div>
 			</div>
 		</MkFoldableSection>
+		<MkFoldableSection>
+			<template #header>{{ i18n.ts._search.dateRange }}</template>
+
+			<div class="_gaps_m">
+				<MkInput
+					v-model="sinceDate"
+					type="date"
+				>
+					<template #label>{{ i18n.ts._search.dateFrom }}</template>
+				</MkInput>
+				<MkInput
+					v-model="untilDate"
+					type="date"
+				>
+					<template #label>{{ i18n.ts._search.dateTo }}</template>
+				</MkInput>
+			</div>
+		</MkFoldableSection>
 		<div>
 			<MkButton
 				large
@@ -148,6 +166,8 @@ const notePagination = ref<Paging<'notes/search'>>();
 
 const searchQuery = ref(toRef(props, 'query').value);
 const hostInput = ref(toRef(props, 'host').value);
+const sinceDate = ref('');
+const untilDate = ref('');
 
 const user = shallowRef<Misskey.entities.UserDetailed | null>(null);
 
@@ -304,6 +324,8 @@ async function search() {
 		limit: 10,
 		params: {
 			...searchParams.value,
+			...(sinceDate.value ? { sinceDate: new Date(sinceDate.value).getTime() } : {}),
+			...(untilDate.value ? { untilDate: new Date(untilDate.value + 'T23:59:59.999').getTime() } : {}),
 		},
 	};
 

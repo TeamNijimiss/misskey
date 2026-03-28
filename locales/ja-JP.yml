@@ -3385,3 +3385,6 @@ _search:
   pleaseEnterServerHost: "サーバーのホストを入力してください"
   pleaseSelectUser: "ユーザーを選択してください"
   serverHostPlaceholder: "例: misskey.example.com"
+  dateRange: "日付範囲"
+  dateFrom: "開始日"
+  dateTo: "終了日"
