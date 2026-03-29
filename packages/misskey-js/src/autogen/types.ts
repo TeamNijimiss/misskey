@@ -9757,6 +9757,11 @@ export type components = {
              * Format: id
              * @example xxxxxxxxxx
              */
+            replyUserId?: string | null;
+            /**
+             * Format: id
+             * @example xxxxxxxxxx
+             */
             renoteId?: string | null;
             reply?: ((components['schemas']['Note'] | null) | null) | components['schemas']['Note'] | null;
             renote?: ((components['schemas']['Note'] | null) | null) | components['schemas']['Note'] | null;
@@ -10888,7 +10893,9 @@ export type components = {
             impressumUrl: string | null;
             logoImageUrl: string | null;
             privacyPolicyUrl: string | null;
+            postingGuidelinesUrl: string | null;
             commerceDisclosureUrl: string | null;
+            statusPageUrl: string | null;
             inquiryUrl: string | null;
             serverRules: string[];
             themeColor: string | null;
@@ -15968,6 +15975,7 @@ export interface operations {
                         name: string | null;
                         shortName: string | null;
                         privacyPolicyUrl: string | null;
+                        postingGuidelinesUrl: string | null;
                         repositoryUrl: string | null;
                         /**
                          * @deprecated
@@ -15977,6 +15985,7 @@ export interface operations {
                         themeColor: string | null;
                         tosUrl: string | null;
                         commerceDisclosureUrl: string | null;
+                        statusPageUrl: string | null;
                         uri: string;
                         version: string;
                         urlPreviewEnabled: boolean;
@@ -17514,7 +17523,7 @@ export interface operations {
                     policies: {
                         id?: string | null;
                         /** @enum {string} */
-                        policy: 'gtlAvailable' | 'ltlAvailable' | 'canPublicNote' | 'canScheduleNote' | 'scheduleNoteLimit' | 'scheduleNoteMaxDays' | 'canInitiateConversation' | 'canCreateContent' | 'canUpdateContent' | 'canDeleteContent' | 'canPurgeAccount' | 'canUpdateAvatar' | 'canUpdateBanner' | 'mentionLimit' | 'canInvite' | 'inviteLimit' | 'inviteLimitCycle' | 'inviteExpirationTime' | 'canManageCustomEmojis' | 'canManageAvatarDecorations' | 'canSearchNotes' | 'canUseTranslator' | 'canUseDriveFileInSoundSettings' | 'canUseReaction' | 'canHideAds' | 'driveCapacityMb' | 'maxFileSizeMb' | 'alwaysMarkNsfw' | 'canUpdateBioMedia' | 'skipNsfwDetection' | 'pinLimit' | 'antennaLimit' | 'antennaNotesLimit' | 'wordMuteLimit' | 'webhookLimit' | 'clipLimit' | 'noteEachClipsLimit' | 'userListLimit' | 'userEachUserListsLimit' | 'rateLimitFactor' | 'avatarDecorationLimit' | 'canImportAntennas' | 'canImportBlocking' | 'canImportFollowing' | 'canImportMuting' | 'canImportUserLists' | 'mutualLinkSectionLimit' | 'mutualLinkLimit' | 'chatAvailability';
+                        policy: 'required2fa' | 'gtlAvailable' | 'ltlAvailable' | 'canPublicNote' | 'canScheduleNote' | 'scheduleNoteLimit' | 'scheduleNoteMaxDays' | 'canInitiateConversation' | 'canCreateContent' | 'canUpdateContent' | 'canDeleteContent' | 'canPurgeAccount' | 'canUpdateAvatar' | 'canUpdateBanner' | 'mentionLimit' | 'canInvite' | 'inviteLimit' | 'inviteLimitCycle' | 'inviteExpirationTime' | 'canManageCustomEmojis' | 'canManageAvatarDecorations' | 'canSearchNotes' | 'canUseTranslator' | 'canUseDriveFileInSoundSettings' | 'canUseReaction' | 'canHideAds' | 'driveCapacityMb' | 'maxFileSizeMb' | 'alwaysMarkNsfw' | 'canUpdateBioMedia' | 'skipNsfwDetection' | 'pinLimit' | 'antennaLimit' | 'antennaNotesLimit' | 'wordMuteLimit' | 'webhookLimit' | 'accessTokenLimit' | 'clipLimit' | 'noteEachClipsLimit' | 'userListLimit' | 'userEachUserListsLimit' | 'rateLimitFactor' | 'avatarDecorationLimit' | 'canImportAntennas' | 'canImportBlocking' | 'canImportFollowing' | 'canImportMuting' | 'canImportUserLists' | 'mutualLinkSectionLimit' | 'mutualLinkLimit' | 'allowReport' | 'chatAvailability';
                         /**
                          * @default set
                          * @enum {string}
@@ -19566,6 +19575,8 @@ export interface operations {
                     feedbackUrl?: string | null;
                     impressumUrl?: string | null;
                     privacyPolicyUrl?: string | null;
+                    inquiryUrl?: string | null;
+                    postingGuidelinesUrl?: string | null;
                     enableIpLogging?: boolean;
                     enableActiveEmailValidation?: boolean;
                     enableVerifymailApi?: boolean;
@@ -19589,6 +19600,7 @@ export interface operations {
                     perUserListTimelineCacheMax?: number;
                     notesPerOneAd?: number;
                     commerceDisclosureUrl?: string | null;
+                    statusPageUrl?: string | null;
                     silencedHosts?: string[] | null;
                     sensitiveMediaHosts?: string[] | null;
                     wellKnownWebsites?: string[] | null;
@@ -38783,6 +38795,8 @@ export interface operations {
                     sinceId?: string;
                     /** Format: misskey:id */
                     untilId?: string;
+                    sinceDate?: number;
+                    untilDate?: number;
                     /** @default 10 */
                     limit?: number;
                     /** @default 0 */
@@ -45721,3 +45735,4 @@ export interface operations {
         };
     };
 }
+

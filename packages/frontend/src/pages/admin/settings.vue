@@ -44,6 +44,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 						<template #prefix><i class="ti ti-link"></i></template>
 					</MkInput>
 
+					<MkInput v-model="infoForm.state.postingGuidelinesUrl" type="url">
+						<template #label>{{ i18n.ts.postingGuidelinesUrl }}<span v-if="infoForm.modifiedStates.postingGuidelinesUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
+						<template #prefix><i class="ti ti-link"></i></template>
+					</MkInput>
+
 					<MkInput v-model="infoForm.state.privacyPolicyUrl" type="url">
 						<template #label>{{ i18n.ts.privacyPolicyUrl }}<span v-if="infoForm.modifiedStates.privacyPolicyUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
 						<template #prefix><i class="ti ti-link"></i></template>
@@ -51,6 +56,11 @@ SPDX-License-Identifier: AGPL-3.0-only
 
 					<MkInput v-model="infoForm.state.commerceDisclosureUrl" type="url">
 						<template #label>{{ i18n.ts.commerceDisclosureUrl }}<span v-if="infoForm.modifiedStates.commerceDisclosureUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
+						<template #prefix><i class="ti ti-link"></i></template>
+					</MkInput>
+
+					<MkInput v-model="infoForm.state.statusPageUrl" type="url">
+						<template #label>{{ i18n.ts.statusPageUrl }}<span v-if="infoForm.modifiedStates.statusPageUrl" class="_modified">{{ i18n.ts.modified }}</span></template>
 						<template #prefix><i class="ti ti-link"></i></template>
 					</MkInput>
 
@@ -283,8 +293,10 @@ const infoForm = useForm({
 	maintainerName: meta.maintainerName ?? '',
 	maintainerEmail: meta.maintainerEmail ?? '',
 	tosUrl: meta.tosUrl ?? '',
+	postingGuidelinesUrl: meta.postingGuidelinesUrl ?? '',
 	privacyPolicyUrl: meta.privacyPolicyUrl ?? '',
 	commerceDisclosureUrl: meta.commerceDisclosureUrl ?? '',
+	statusPageUrl: meta.statusPageUrl ?? '',
 	inquiryUrl: meta.inquiryUrl ?? '',
 	repositoryUrl: meta.repositoryUrl ?? '',
 	impressumUrl: meta.impressumUrl ?? '',
@@ -297,8 +309,10 @@ const infoForm = useForm({
 		maintainerName: state.maintainerName,
 		maintainerEmail: state.maintainerEmail,
 		tosUrl: state.tosUrl,
+		postingGuidelinesUrl: state.postingGuidelinesUrl,
 		privacyPolicyUrl: state.privacyPolicyUrl,
 		commerceDisclosureUrl: state.commerceDisclosureUrl,
+		statusPageUrl: state.statusPageUrl,
 		inquiryUrl: state.inquiryUrl,
 		repositoryUrl: state.repositoryUrl,
 		impressumUrl: state.impressumUrl,

@@ -42,6 +42,8 @@ export const paramDef = {
 		query: { type: 'string' },
 		sinceId: { type: 'string', format: 'misskey:id' },
 		untilId: { type: 'string', format: 'misskey:id' },
+		sinceDate: { type: 'integer' },
+		untilDate: { type: 'integer' },
 		limit: { type: 'integer', minimum: 1, maximum: 100, default: 10 },
 		offset: { type: 'integer', default: 0 },
 		host: {
@@ -85,6 +87,8 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 			}, {
 				untilId: ps.untilId,
 				sinceId: ps.sinceId,
+				sinceDate: ps.sinceDate,
+				untilDate: ps.untilDate,
 				limit: ps.limit,
 			})).filter(note => !(me && (isUserRelated(note, userIdsWhoBlockingMe) || isUserRelated(note, userIdsWhoMeMuting))));
 

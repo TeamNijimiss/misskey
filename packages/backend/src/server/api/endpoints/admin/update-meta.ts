@@ -113,6 +113,8 @@ export const paramDef = {
 		feedbackUrl: { type: 'string', nullable: true },
 		impressumUrl: { type: 'string', nullable: true },
 		privacyPolicyUrl: { type: 'string', nullable: true },
+		inquiryUrl: { type: 'string', nullable: true },
+		postingGuidelinesUrl: { type: 'string', nullable: true },
 		enableIpLogging: { type: 'boolean' },
 		enableActiveEmailValidation: { type: 'boolean' },
 		enableVerifymailApi: { type: 'boolean' },
@@ -136,6 +138,7 @@ export const paramDef = {
 		perUserListTimelineCacheMax: { type: 'integer' },
 		notesPerOneAd: { type: 'integer' },
 		commerceDisclosureUrl: { type: 'string', nullable: true },
+		statusPageUrl: { type: 'string', nullable: true },
 		silencedHosts: {
 			type: 'array',
 			nullable: true,
@@ -478,6 +481,14 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				set.privacyPolicyUrl = ps.privacyPolicyUrl;
 			}
 
+			if (ps.inquiryUrl !== undefined) {
+				set.inquiryUrl = ps.inquiryUrl;
+			}
+
+			if (ps.postingGuidelinesUrl !== undefined) {
+				set.postingGuidelinesUrl = ps.postingGuidelinesUrl;
+			}
+
 			if (ps.deeplAuthKey !== undefined) {
 				if (ps.deeplAuthKey === '') {
 					set.deeplAuthKey = null;
@@ -588,6 +599,10 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 
 			if (ps.commerceDisclosureUrl !== undefined) {
 				set.commerceDisclosureUrl = ps.commerceDisclosureUrl;
+			}
+
+			if (ps.statusPageUrl !== undefined) {
+				set.statusPageUrl = ps.statusPageUrl;
 			}
 
 			if (ps.bannedEmailDomains !== undefined) {

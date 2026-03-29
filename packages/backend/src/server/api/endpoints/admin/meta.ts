@@ -418,6 +418,10 @@ export const meta = {
 				type: 'string',
 				optional: false, nullable: true,
 			},
+			postingGuidelinesUrl: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
 			repositoryUrl: {
 				type: 'string',
 				optional: false, nullable: true,
@@ -437,6 +441,10 @@ export const meta = {
 				optional: false, nullable: true,
 			},
 			commerceDisclosureUrl: {
+				type: 'string',
+				optional: false, nullable: true,
+			},
+			statusPageUrl: {
 				type: 'string',
 				optional: false, nullable: true,
 			},
@@ -537,6 +545,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				feedbackUrl: instance.feedbackUrl,
 				impressumUrl: instance.impressumUrl,
 				privacyPolicyUrl: instance.privacyPolicyUrl,
+				postingGuidelinesUrl: instance.postingGuidelinesUrl,
 				disableRegistration: instance.disableRegistration,
 				emailRequiredForSignup: instance.emailRequiredForSignup,
 				enableHcaptcha: instance.enableHcaptcha,
@@ -617,6 +626,7 @@ export default class extends Endpoint<typeof meta, typeof paramDef> { // eslint-
 				wellKnownWebsites: instance.wellKnownWebsites,
 				notesPerOneAd: instance.notesPerOneAd,
 				commerceDisclosureUrl: instance.commerceDisclosureUrl,
+				statusPageUrl: instance.statusPageUrl,
 				urlPreviewDenyList: instance.urlPreviewDenyList,
 				featuredGameChannels: instance.featuredGameChannels,
 				summalyProxy: instance.urlPreviewSummaryProxyUrl,

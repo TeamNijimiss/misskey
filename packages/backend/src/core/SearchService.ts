@@ -45,6 +45,8 @@ export type SearchOpts = {
 export type SearchPagination = {
 	untilId?: MiNote['id'];
 	sinceId?: MiNote['id'];
+	sinceDate?: number;
+	untilDate?: number;
 	limit: number;
 };
 
@@ -305,6 +307,8 @@ export class SearchService {
 
 		if (pagination.untilId) esFilter.bool.must.push({ range: { createdAt: { lt: this.idService.parse(pagination.untilId).date.getTime() } } });
 		if (pagination.sinceId) esFilter.bool.must.push({ range: { createdAt: { gt: this.idService.parse(pagination.sinceId).date.getTime() } } });
+		if (pagination.untilDate) esFilter.bool.must.push({ range: { createdAt: { lt: pagination.untilDate } } });
+		if (pagination.sinceDate) esFilter.bool.must.push({ range: { createdAt: { gt: pagination.sinceDate } } });
 		if (opts.userId) esFilter.bool.must.push({ term: { userId: opts.userId } });
 		if (opts.channelId) esFilter.bool.must.push({ term: { channelId: opts.channelId } });
 		if (opts.host) {
@@ -373,6 +377,13 @@ export class SearchService {
 	): Promise<MiNote[]> {
 		const query = this.queryService.makePaginationQuery(this.notesRepository.createQueryBuilder('note'), pagination.sinceId, pagination.untilId);
 
+		if (pagination.sinceDate) {
+			query.andWhere('note.id > :sinceDate', { sinceDate: this.idService.gen(pagination.sinceDate) });
+		}
+		if (pagination.untilDate) {
+			query.andWhere('note.id < :untilDate', { untilDate: this.idService.gen(pagination.untilDate) });
+		}
+
 		if (opts.userId) {
 			query.andWhere('note.userId = :userId', { userId: opts.userId });
 		} else if (opts.channelId) {
@@ -432,6 +443,16 @@ export class SearchService {
 			op: '>',
 			k: 'createdAt',
 			v: this.idService.parse(pagination.sinceId).date.getTime(),
+		});
+		if (pagination.untilDate) filter.qs.push({
+			op: '<',
+			k: 'createdAt',
+			v: pagination.untilDate,
+		});
+		if (pagination.sinceDate) filter.qs.push({
+			op: '>',
+			k: 'createdAt',
+			v: pagination.sinceDate,
 		});
 		if (opts.userId) filter.qs.push({ op: '=', k: 'userId', v: opts.userId });
 		if (opts.channelId) filter.qs.push({ op: '=', k: 'channelId', v: opts.channelId });

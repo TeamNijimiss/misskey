@@ -401,6 +401,12 @@ export class MiMeta {
 		length: 1024,
 		nullable: true,
 	})
+	public postingGuidelinesUrl: string | null;
+
+	@Column('varchar', {
+		length: 1024,
+		nullable: true,
+	})
 	public inquiryUrl: string | null;
 
 	@Column('varchar', {
@@ -600,6 +606,12 @@ export class MiMeta {
 		nullable: true,
 	})
 	public commerceDisclosureUrl: string | null;
+
+	@Column('varchar', {
+		length: 1024,
+		nullable: true,
+	})
+	public statusPageUrl: string | null;
 
 	@Column('varchar', {
 		length: 128,
